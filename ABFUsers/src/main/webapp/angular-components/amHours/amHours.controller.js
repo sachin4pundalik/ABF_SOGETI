@@ -72,7 +72,7 @@ function amHoursCtrl_fn($scope, $http, amHoursService, toastr, dataSetService) {
 	
 	
 	$scope.openWeek = function (monthNm) {
-		
+		toastr.info("Message", "Heading");
 		$scope.week.currMonth= monthNm;
 		$scope.week.monthIndex = _.findIndex($scope.resources[0].months, function(m) { return m.month === $scope.week.currMonth; });
 		$scope.week.weeklyTmpl = "./angular-components/amHours/weeklyView.html";
