@@ -1,0 +1,40 @@
+<div class="jumbotron">
+	<div class="row">
+		<div class="span4">
+			<p class="lead">Change Password</p>
+			<form name="changePasswordForm" class="form">
+				<div class="form-group">
+					<label for="pw1">Set a password:</label> <input type="password"
+						class="form-control" id="pw1" name="pw1" data-ng-model="pw1"
+						required />
+				</div>
+				<div class="form-group">
+					<label for="pw2">Confirm the password:</label> <input
+						type="password" id="pw2" name="pw2" class="form-control"
+						data-ng-model="pw2" required data-pw-check="pw1"
+						data-ng-maxlength="20" />
+				</div>
+				<div class="form-group">
+					<div class="msg-block" data-ng-show="changePasswordForm.$error">
+						<span class="requiredvalidationerror"
+							data-ng-show="changePasswordForm.pw2.$error.pwmatch">Passwords
+							don't match.</span> <span
+							data-ng-show="changePasswordForm.pw2.$dirty && changePasswordForm.pw2.$error.required"
+							class="requiredvalidationerror">Required</span> <span
+							data-ng-show="changePasswordForm.pw2.$dirty && changePasswordForm.pw2.$error.maxlength"
+							class="requiredvalidationerror">Maximum 20 Char Allowed</span>
+					</div>
+				</div>
+				<button type="submit" data-ng-click="doChangePassword()"
+					class="btn btn-success" value="Change" title="Submit"
+					data-ng-disabled="!changePasswordForm.$valid || changePasswordForm.$pending">
+					Save Changes <span class="glyphicon glyphicon-save"></span>
+				</button>
+			</form>
+			<h3>{{changePasswordStatus}}</h3>
+
+		</div>
+
+	</div>
+
+</div>

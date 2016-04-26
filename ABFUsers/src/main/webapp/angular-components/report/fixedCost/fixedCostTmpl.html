@@ -1,0 +1,26 @@
+<table class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Fixed Cost</th>
+      <th>Jan</th>
+      <th>Feb</th>
+      <th>March</th>
+    </tr>
+  </thead>
+  <tbody ng-repeat="hours in fixedCostHours">
+    <tr>
+      <th>{{hours.typeName}}</th>
+      <td>{{hours.typeValue}}</td>
+      <td>{{hours.typeValue}}</td>
+      <td>{{hours.typeValue}}</td>
+    </tr>
+  </tbody>
+  <tfoot>
+  	<tr>
+      <th>Monthly Total</th>
+      <td>1000</td>
+      <td>1000</td>
+      <td>1000</td>
+    </tr>
+  </tfoot>
+</table>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ABF</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <!-- CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/paper/bootstrap.min.css" rel="stylesheet" integrity="sha384-2mX2PSpkRSXLQzmNzH3gwK6srb06+OfbDlYjbog8LQuALYJjuQ3+Yzy2JIWNV9rW" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-toastr/dist/angular-toastr.min.css" />
+    <!-- JS -->
+    <!-- load angular, nganimate, and ui-router -->
+
+</head>
+
+<link rel="stylesheet" href="styles/common_ui.css">
+
+<body data-ng-app="webappApp">
+	<nav class="navbar navbar-inverse" data-ng-controller="loginCtrl" 
+		data-ng-show="isVisible">
+		<div class="container-fluid">
+			<div>
+				<ul class="nav navbar-nav">
+					<li><a href="#landing">Home</a></li>
+					<li class="dropdown">
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hours <span class="caret"></span></a>
+			          <ul class="dropdown-menu">
+			            <li><a href="#hours">AM Hours</a></li>
+			            <li><a href="#/kt">KT Hours</a></li>
+			            <li><a href="#/fixed">Fixed Hours</a></li>
+			          </ul>
+			        </li>
+					<li><a href="#/changePassword">Change Password</a></li>
+					<li><a href="#/logout"><span class="glyphicon glyphicon-log-out"> </span>Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		<div data-ng-view></div>
+	</div> 
+	<!-- build:js(.) scripts/vendor.js -->
+	<!-- bower:js -->
+	
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/angular/angular.min.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="bower_components/angular-animate/angular-animate.js"></script>
+	<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+	<script src="bower_components/angular-messages/angular-messages.js"></script>
+	<script src="bower_components/angular-resource/angular-resource.js"></script>
+	<script src="bower_components/angular-route/angular-route.js"></script>
+	<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+	<script src="bower_components/angular-touch/angular-touch.js"></script>
+	<script src="bower_components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+	<script src="bower_components/moment/min/moment.min.js"></script>
+	<script src="bower_components/lodash/dist/lodash.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
+	<script src="bower_components/alasql/dist/alasql.min.js"></script>
+	<script src="bower_components/csv/xlsx.core.min.js"></script>
+
+	<script src="scripts/xEditable/ui-bootstrap-tpls.min.js"></script>
+	<script src="scripts/xEditable/xeditable.js"></script>
+
+	<script src="scripts/app.js"></script>
+	
+	<script src="angular-components/common/common.service.js"></script>
+	
+	<!-- <script src="angular-components/abf-header/abfHeader.controller.js"></script>
+	<script src="angular-components/abf-header/abfHeader.directive.js"></script> -->
+	
+	<script src="angular-components/report/report.controller.js"></script>
+	
+	<!-- Report - AM Cost  -->
+	<script src="angular-components/report/amCost/amCost.controller.js"></script>
+	<script src="angular-components/report/amCost/amCost.directive.js"></script>
+	
+	<!-- Report - KT Cost  -->
+	<script src="angular-components/report/ktCost/ktCost.controller.js"></script>
+	<script src="angular-components/report/ktCost/ktCost.directive.js"></script>
+	
+	<!-- Report - Fixed Cost  -->
+	<script src="angular-components/report/fixedCost/fixedCost.controller.js"></script>
+	<script src="angular-components/report/fixedCost/fixedCost.directive.js"></script>
+	
+	<!-- Report - Total Cost  -->
+	<script src="angular-components/report/totCost/totCost.controller.js"></script>
+	<script src="angular-components/report/totCost/totCost.directive.js"></script>
+	
+	<!-- Fixed Hours  -->
+	<script src="angular-components/fixedHours/fixedHours.controller.js"></script>
+	<script src="angular-components/fixedHours/fixedHours.service.js"></script>
+	
+	<!-- AM Hours  -->
+	<script src="angular-components/amHours/amHours.controller.js"></script>
+	<script src="angular-components/amHours/amHours.service.js"></script>
+	<script src="angular-components/amHours/amHours.monthly.directive.js"></script>
+	
+	<!-- KT Hours  -->
+	<script src="angular-components/ktHours/ktHours.controller.js"></script>
+	<script src="angular-components/ktHours/ktHours.service.js"></script>
+	
+	<!-- Dashboard  -->
+	<script src="angular-components/dashboard/dashboard.controller.js"></script>	
+	<script src="angular-components/dashboard/dashboard.service.js"></script>		
+	<script src="angular-components/changepwd/changepwd.controller.js"></script>
+	
+	<!-- Login , Logout -->
+	<script src="angular-components/login/login.controller.js"></script>	
+	<script src="angular-components/login/login.service.js"></script>
+	<script src="angular-components/logout/logout.controller.js"></script>
+	
+	<!-- Create Contract  -->
+	<script src="angular-components/create-contract/createContract.controller.js"></script>
+	<script src="angular-components/create-contract/createContract.service.js"></script>
+	
+	
+</body>
+</html>

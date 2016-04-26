@@ -1,0 +1,139 @@
+<div class="row">
+	<div>
+
+		<div class="container">
+			<div data-ng-controller="ktHoursCtrl">
+
+				<table class="table table-bordered table-hover table-condensed">
+					<th>
+					<td></td>
+					<td></td>
+					<td colspan="4">Jan</td>
+					<td colspan="4">Feb</td>
+					<td colspan="4">March</td>
+					<td>Edit</td>
+					</th>
+					<tr>
+						<td>Project Type</td>
+						<td>Role</td>
+						<td>Price</td>
+						<td>W1</td>
+						<td>W2</td>
+						<td>W3</td>
+						<td>W4</td>
+						<td>W5</td>
+						<td>W6</td>
+						<td>W7</td>
+						<td>W8</td>
+						<td>W9</td>
+						<td>W10</td>
+						<td>W11</td>
+						<td>W12</td>
+						<td></td>
+					</tr>
+
+					<tr data-ng-repeat="amhours in hours">
+						<td><select style="color: green; width: 100px"
+							ng-model="amhours.projectType">
+								<option value="On-site" selected="selected">On-site</option>
+								<option value="Offshore">Offshore</option>
+						</select></td>
+						<td><select style="color: green; width: 100px"
+							ng-model="amhours.role">
+								<option value="P5">P5</option>
+								<option value="P5">P4</option>
+								<option value="P5">P3</option>
+								<option value="P5">P2</option>
+								<option value="P5">P1</option>
+						</select></td>
+						<td><input type="text" data-ng-model="amhours.price"
+							style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="amhours.w1"
+							style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="amhours.w2"
+							style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="amhours.w3"
+							style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="amhours.w4"
+							style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="amhours.w5"
+							style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="amhours.w6"
+							style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="amhours.w7"
+							style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="amhours.w8"
+							style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="amhours.w9"
+							style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="amhours.w10"
+							style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="amhours.w11"
+							style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="amhours.w12"
+							style="width: 35px" /></td>
+						<td>
+							<button class="btn-primary" style="height: 30px"
+								data-ng-click="saveHours(amhours.id,amhours.projectType,amhours.role,amhours.price,amhours.w1,amhours.w2,amhours.w3,amhours.w4,amhours.w5,amhours.w6,amhours.w7,amhours.w8,amhours.w9,amhours.w10,amhours.w11,amhours.w12)">
+								<span class="glyphicon glyphicon-floppy-disk"></span></button>
+							<button class="btn-danger" style="height: 30px"
+								data-ng-click="remove(amhours.id)"><span class="glyphicon glyphicon-trash"></span></button>
+						</td>
+					</tr>
+					<tr data-ng-show="flag">
+						<td><select style="color: green; width: 100px"
+							data-ng-model="newprojectType">
+								<option value="On-site">On-site</option>
+								<option value="Offshore">Off-shore</option>
+						</select></td>
+						<td><select style="color: green; width: 100px"
+							ng-model="newRole">
+								<option value="P5">P5</option>
+								<option value="P5">P4</option>
+								<option value="P5">P3</option>
+								<option value="P5">P2</option>
+								<option value="P5">P1</option>
+						</select></td>
+						<td><input type="text" data-ng-model="newPrice"
+							style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="newW1" style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="newW2" style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="newW3" style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="newW4" style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="newW5" style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="newW6" style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="newW7" style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="newW8" style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="newW9" style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="newW10" style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="newW11" style="width: 35px" /></td>
+						<td><input type="text" data-ng-model="newW12" style="width: 35px" /></td>
+						<td>
+							<button class="btn-primary" style="height: 30px"
+								data-ng-click="addNewRow()">Add</button>
+						</td>
+					</tr>
+
+				</table>
+				<button class="btn btn-default" data-ng-click="addNewAssignmentTest()">
+					Add New Row</button>
+				<br> <br>
+
+				<div align="right">
+					<label>Total Cost</label>&nbsp;&nbsp;<input
+						type="text" style="color:green" value="{{totalCost}}" data-ng-model="totalCost" disabled />
+				</div>
+
+
+				<br> <br>
+				<div class="form-group row">
+					<div class="col-xs-6 col-xs-offset-3">
+						<a href="#/fixed" class="btn btn-block btn-info"> Next <span
+							class="glyphicon glyphicon-circle-arrow-right"></span>
+						</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>

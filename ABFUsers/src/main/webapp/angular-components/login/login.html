@@ -1,0 +1,37 @@
+<div class="well">
+	<h3 class="panel-title">Login</h3>
+	<hr/>
+	<form name="LoginForm" class="form">
+		<div data-ng-show="error" class="alert alert-danger">{{error}}</div>
+		<div class="form-group">
+			<label for="email" class="col-sm-2 control-label">Email</label> <input
+				type="email" data-ng-model="user.userName" name="userName" required
+				placeholder="Enter Email" data-ng-maxlength="100" /> <span
+				data-ng-show="LoginForm.userName.$dirty && LoginForm.userName.$error.required"
+				class="requiredvalidationerror">Email Required</span> <span
+				data-ng-show="LoginForm.userName.$dirty && LoginForm.userName.$error.userName"
+				class="requiredvalidationerror">Invalid Email</span> <span
+				data-ng-show="LoginForm.email.$dirty && LoginForm.email.$error.maxlength"
+				class="requiredvalidationerror">Maximum 100 Char Allowed</span>
+		</div>
+		<div class="form-group">
+			<label for="name" class="col-sm-2 control-label">Password</label> <input
+				name="name" type="password" placeholder="Enter Password" required
+				data-ng-model="user.password" data-ngmaxlength="50" /> <span
+				data-ng-show="LoginForm.password.$dirty && LoginForm.password.$error.required"
+				class="requiredvalidationerror">Required</span> <span
+				data-ng-show="LoginForm.password.$dirty && LoginForm.password.$error.maxlength"
+				class="requiredvalidationerror">Maximum 50 Char Allowed</span>
+		</div>
+		<div class="form-group">
+			<button type="button" data-ngclick="reset()" class="btn btn-default">Reset</button>
+
+			<button type="submit"
+				data-ng-click="doLogin()"
+				class="btn btn-primary" value="Login" title="Submit"
+				data-ng-disabled="!LoginForm.$valid">
+				<span>Login</span>
+			</button>
+		</div>
+	</form>
+</div>

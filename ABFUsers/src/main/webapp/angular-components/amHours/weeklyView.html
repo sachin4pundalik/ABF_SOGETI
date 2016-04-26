@@ -1,0 +1,52 @@
+<div class="panel panel-info">
+	<div class="panel-heading"><h3 class="panel-title">Weekly billing view</h3></div>
+	<div class="panel-body">
+		<div class="well well-sm table-responsive">
+			<table class="table table-bordered table-hover table-condensed">
+				<thead>
+					<tr>
+						<th colspan="6" class="text-center">{{week.currMonth}}</th>
+					</tr>
+					<tr>
+						<th>Resource</th>
+						<th>W1</th>
+						<th>W2</th>
+						<th>W3</th>
+						<th>W4</th>
+						<th>Total(s)</th>
+					</tr>
+				</thead>
+				<tbody data-ng-repeat="resource in resources">
+					<tr>
+						<td>{{resource.type.key}}, {{resource.role.key}},
+							{{resource.grade.key}}, {{resource.price}}</td>
+						<td><input type="text" maxlength="3" size="3"
+							pattern="\d{0,3}" data-ng-blur="calculateWeekTotal()"
+							data-ng-model="resource.months[week.monthIndex].weeks.w1" /></td>
+						<td><input type="text" maxlength="3" size="3"
+							pattern="\d{0,3}" data-ng-blur="calculateWeekTotal()"
+							data-ng-model="resource.months[week.monthIndex].weeks.w2" /></td>
+						<td><input type="text" maxlength="3" size="3"
+							pattern="\d{0,3}" data-ng-blur="calculateWeekTotal()"
+							data-ng-model="resource.months[week.monthIndex].weeks.w3" /></td>
+						<td><input type="text" maxlength="3" size="3"
+							pattern="\d{0,3}" data-ng-blur="calculateWeekTotal()"
+							data-ng-model="resource.months[week.monthIndex].weeks.w4" /></td>
+						<td>{{resource.months[week.monthIndex].total}}</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th colspan="6">
+							<button class="btn btn-sm btn-warning" data-ng-click="resetHours()">Reset <span class="glyphicon glyphicon-remove"></span></button>
+							<button class="btn btn-sm btn-primary"
+								data-ng-click="">Copy to All Months <span class="glyphicon glyphicon-ok"></span></button>
+							<button class="btn btn-sm btn-primary pull-right"
+								data-ng-click="manageView('showMonthly')">Done <span class="glyphicon glyphicon-ok"></span></button>
+						</th>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>

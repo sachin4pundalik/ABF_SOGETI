@@ -1,0 +1,54 @@
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<h3 class="panel-title">Monthly billing view</h3>
+	</div>
+	<div class="panel-body" style="overflow:auto;">
+	<table class="table table-bordered table-hover table-condensed">
+		<tr>
+			<td><strong>Resource</strong></td>
+			<td >
+				<table class="table table-condensed">
+					<tbody>
+						<tr>
+							<td data-ng-repeat="header in headerMonths">
+								<input type="text" class="btn btn-sm btn-default" readonly="readonly"
+									maxlength="5" size="5" data-ng-click="openWeek(header)"
+									value="{{header}}" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+		<tr data-ng-repeat="resource in resources">
+			<td>{{resource.type.key}}, {{resource.role.key}},
+					{{resource.grade.key}}, {{resource.price}}</td>
+			<td>
+				<table class="table table-bordered table-hover table-condensed" >
+						<tbody>
+							<tr>
+								<td data-ng-repeat="month in resource.months"><input
+									type="text" class="btn btn-sm btn-default" readonly="readonly"
+									maxlength="3" size="3" data-ng-click="openWeek(month.month)"
+									value="{{month.total}}" /></td>
+							</tr>
+						</tbody>
+					</table>
+			</td>
+		</tr>
+	</table>
+		<div class="row">
+			<div class="col-xs-1 col-md-1 col-lg-1">
+				<button data-ng-click="manageView('showResource')">
+					Back <span class="glyphicon glyphicon-circle-arrow-left"></span>
+				</button>
+			</div>
+			<div class="col-xs-10 col-md-10 col-lg-10">
+				<button class="btn btn-warning"
+					data-ng-click="manageView('showWeekly')">
+					Book Hours <span class="glyphicon glyphicon-floppy-disk"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

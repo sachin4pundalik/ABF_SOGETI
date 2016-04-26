@@ -1,0 +1,53 @@
+<div class="container">
+	<div class="well">
+		<form class="form-horizontal">
+			<fieldset>
+				<legend>Create Contract</legend>
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Customer Name</label>
+					<div class="col-xs-4 col-md-4 col-lg-4">
+						<input type="text" class="form-control" required="required"
+							data-ng-model="contract.customerName" placeholder="Customer Name">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Contract Name</label>
+					<div class="col-xs-4 col-md-4 col-lg-4">
+						<input type="text" class="form-control" required="required"
+							data-ng-model="contract.contractName" placeholder="Contract Name">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Contract</label>
+					<div class="col-xs-2 col-md-2 col-lg-2">
+						Start 
+						<input type="date" data-ng-model="contract.from">
+					</div>
+					<div class="col-xs-2 col-md-2 col-lg-2">
+						End
+ 						<input type="date" data-ng-model="contract.to"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="textArea"
+						class="col-xs-2 col-md-2 col-lg-2 control-label">Comments</label>
+					<div class="col-xs-6 col-md-6 col-lg-6">
+						<textarea class="form-control" rows="3" id="textArea"
+							data-ng-model="contract.comments"></textarea>
+						<span class="help-block">A longer block of help text that
+							breaks onto a new line and may extend beyond one line.</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-12 col-md-12 col-lg-12">
+						<button type="button" class="btn btn-primary" data-ng-click="createContract()">Save 
+							<span class="glyphicon glyphicon-floppy-disk"></span></button>
+						<button type="button" class="btn btn-warning pull-right" data-ng-click="bookHours()">KT Hours 
+							<span class="glyphicon glyphicon-time"></span></button>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+		<!-- end of new form -->
+	</div>
+</div>
