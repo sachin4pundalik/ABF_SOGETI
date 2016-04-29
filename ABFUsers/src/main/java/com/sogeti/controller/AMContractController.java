@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
-import com.sogeti.db.models.AMContractResource;
+import com.sogeti.db.models.AmContract;
 import com.sogeti.model.ABFResponse;
 import com.sogeti.model.AMContractResourceBean;
 import com.sogeti.service.AmContractService;
@@ -35,7 +35,7 @@ public class AMContractController {
 	AmContractService amContractService;
 	
 	@RequestMapping( value = "/create", method = RequestMethod.POST)
-	public ABFResponse createAmContract(@RequestBody List<AMContractResource> contractResources) {
+	public ABFResponse createAmContract(@RequestBody List<AmContract> contractResources) {
 		
 		return null;
 	}
@@ -43,12 +43,11 @@ public class AMContractController {
 	@RequestMapping( value = "/fetchcontractamhours/{contractId}", method = RequestMethod.GET)
 	public ABFResponse getAmContractForContract(@PathVariable("contractId") String contractId){
 		ABFResponse response = new ABFResponse();
-		
-		// Test Code. Remove after testing
+			
 		try {
 			List<AMContractResourceBean> resourceList = new ArrayList<AMContractResourceBean>();			
-			List<AMContractResource> amContractResources = amContractService.getAmContractResourcesByContractId(Integer.parseInt(contractId));			
-			for(AMContractResource resource : amContractResources){			
+			List<AmContract> AmContracts = amContractService.getAmContractsByContractId(Integer.parseInt(contractId));			
+			for(AmContract resource : AmContracts){			
 				resourceList.add(fillResourceData(resource));				
 			}			
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
@@ -63,7 +62,7 @@ public class AMContractController {
 		return response;		
 	}
 	
-	private AMContractResourceBean fillResourceData(AMContractResource resource){
+	private AMContractResourceBean fillResourceData(AmContract resource){
 		AMContractResourceBean resourceBean = new AMContractResourceBean();
 		resourceBean.setId(resource.getId());
 		resourceBean.setType(resource.getType());

@@ -2,6 +2,7 @@ package com.sogeti.db.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -22,6 +23,10 @@ public class StayType implements Serializable {
 	@Column(name="stay_type", length=45)
 	private String stayType;
 
+	//bi-directional many-to-one association to OffshorePrice
+	@OneToMany(mappedBy="stayType")
+	private List<OffshorePrice> offshorePrices;
+
 	public StayType() {
 	}
 
@@ -39,6 +44,28 @@ public class StayType implements Serializable {
 
 	public void setStayType(String stayType) {
 		this.stayType = stayType;
+	}
+
+	public List<OffshorePrice> getOffshorePrices() {
+		return this.offshorePrices;
+	}
+
+	public void setOffshorePrices(List<OffshorePrice> offshorePrices) {
+		this.offshorePrices = offshorePrices;
+	}
+
+	public OffshorePrice addOffshorePrice(OffshorePrice offshorePrice) {
+		getOffshorePrices().add(offshorePrice);
+		offshorePrice.setStayType(this);
+
+		return offshorePrice;
+	}
+
+	public OffshorePrice removeOffshorePrice(OffshorePrice offshorePrice) {
+		getOffshorePrices().remove(offshorePrice);
+		offshorePrice.setStayType(null);
+
+		return offshorePrice;
 	}
 
 }

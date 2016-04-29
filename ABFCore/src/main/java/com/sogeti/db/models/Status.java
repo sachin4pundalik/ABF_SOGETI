@@ -20,10 +20,10 @@ public class Status implements Serializable {
 	@Column(name="status_id", unique=true, nullable=false)
 	private int statusId;
 
-	@Column(length=256)
+	@Column(length=100)
 	private String description;
 
-	@Column(name="status_name", length=256)
+	@Column(name="status_name", length=45)
 	private String statusName;
 
 	//bi-directional many-to-one association to Contract

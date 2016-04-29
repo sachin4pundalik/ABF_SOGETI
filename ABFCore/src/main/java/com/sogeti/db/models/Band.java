@@ -2,6 +2,7 @@ package com.sogeti.db.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -19,8 +20,12 @@ public class Band implements Serializable {
 	@Column(name="band_id", unique=true, nullable=false)
 	private int bandId;
 
-	@Column(name="band_name", length=20)
+	@Column(name="band_name", length=45)
 	private String bandName;
+
+	//bi-directional many-to-one association to OffshorePrice
+	@OneToMany(mappedBy="band")
+	private List<OffshorePrice> offshorePrices;
 
 	public Band() {
 	}
@@ -39,6 +44,28 @@ public class Band implements Serializable {
 
 	public void setBandName(String bandName) {
 		this.bandName = bandName;
+	}
+
+	public List<OffshorePrice> getOffshorePrices() {
+		return this.offshorePrices;
+	}
+
+	public void setOffshorePrices(List<OffshorePrice> offshorePrices) {
+		this.offshorePrices = offshorePrices;
+	}
+
+	public OffshorePrice addOffshorePrice(OffshorePrice offshorePrice) {
+		getOffshorePrices().add(offshorePrice);
+		offshorePrice.setBand(this);
+
+		return offshorePrice;
+	}
+
+	public OffshorePrice removeOffshorePrice(OffshorePrice offshorePrice) {
+		getOffshorePrices().remove(offshorePrice);
+		offshorePrice.setBand(null);
+
+		return offshorePrice;
 	}
 
 }

@@ -2,7 +2,7 @@ package com.sogeti.db.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -20,25 +20,12 @@ public class Role implements Serializable {
 	@Column(name="role_id", unique=true, nullable=false)
 	private int roleId;
 
-	@Column(name="last_updated_by", length=256)
-	private String lastUpdatedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="last_updated_timestamp")
-	private Date lastUpdatedTimestamp;
-
 	@Column(name="role_type", length=45)
 	private String roleType;
 
-	//bi-directional one-to-one association to AmContract
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="role_id", nullable=false, insertable=false, updatable=false)
-	private AmContract amContract;
-
-	//bi-directional one-to-one association to KtContract
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="role_id", nullable=false, insertable=false, updatable=false)
-	private KtContract ktContract;
+	//bi-directional many-to-one association to OnshorePrice
+	@OneToMany(mappedBy="role")
+	private List<OnshorePrice> onshorePrices;
 
 	public Role() {
 	}
@@ -51,22 +38,6 @@ public class Role implements Serializable {
 		this.roleId = roleId;
 	}
 
-	public String getLastUpdatedBy() {
-		return this.lastUpdatedBy;
-	}
-
-	public void setLastUpdatedBy(String lastUpdatedBy) {
-		this.lastUpdatedBy = lastUpdatedBy;
-	}
-
-	public Date getLastUpdatedTimestamp() {
-		return this.lastUpdatedTimestamp;
-	}
-
-	public void setLastUpdatedTimestamp(Date lastUpdatedTimestamp) {
-		this.lastUpdatedTimestamp = lastUpdatedTimestamp;
-	}
-
 	public String getRoleType() {
 		return this.roleType;
 	}
@@ -75,20 +46,26 @@ public class Role implements Serializable {
 		this.roleType = roleType;
 	}
 
-	public AmContract getAmContract() {
-		return this.amContract;
+	public List<OnshorePrice> getOnshorePrices() {
+		return this.onshorePrices;
 	}
 
-	public void setAmContract(AmContract amContract) {
-		this.amContract = amContract;
+	public void setOnshorePrices(List<OnshorePrice> onshorePrices) {
+		this.onshorePrices = onshorePrices;
 	}
 
-	public KtContract getKtContract() {
-		return this.ktContract;
+	public OnshorePrice addOnshorePrice(OnshorePrice onshorePrice) {
+		getOnshorePrices().add(onshorePrice);
+		onshorePrice.setRole(this);
+
+		return onshorePrice;
 	}
 
-	public void setKtContract(KtContract ktContract) {
-		this.ktContract = ktContract;
+	public OnshorePrice removeOnshorePrice(OnshorePrice onshorePrice) {
+		getOnshorePrices().remove(onshorePrice);
+		onshorePrice.setRole(null);
+
+		return onshorePrice;
 	}
 
 }

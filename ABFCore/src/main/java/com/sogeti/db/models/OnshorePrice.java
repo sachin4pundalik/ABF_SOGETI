@@ -1,23 +1,10 @@
 package com.sogeti.db.models;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 
 /**
@@ -35,37 +22,41 @@ public class OnshorePrice implements Serializable {
 	@Column(name="onshoreprice_id", unique=true, nullable=false)
 	private int onshorepriceId;
 
-	//@Column(name="businessline_id", nullable=false)
-	//bi-directional many-to-one association to Contract
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="businessline_id")
-	private BusinessLine businesslineId;
-
-	@Column(length=256)
+	@Column(length=500)
 	private String description;
 
-	//@Column(name="grade_id", nullable=false)
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="grade_id")
-	private Grade gradeId;
-
-	@Column(name="last_updated_by", length=45)
-	private String lastUpdatedBy;
+	@Column(name="last_updated_by")
+	private int lastUpdatedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="last_updated_timestamp")
-	private Date lastUpdatedTimestamp;
+	@Column(name="last_updated_datetime")
+	private Date lastUpdatedDatetime;
 
-	@Column(nullable=false, precision=10, scale=2)
+	@Column(precision=10, scale=2)
 	private BigDecimal price;
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="role_id")
-	private Role roleId;
-	
 	//bi-directional many-to-one association to AmContract
-	@OneToMany(mappedBy="contract")
-	private List<AMContractResource> amContractResources;
+	@OneToMany(mappedBy="onshorePrice")
+	private List<AmContract> amContracts;
+
+	//bi-directional many-to-one association to KtContract
+	@OneToMany(mappedBy="onshorePrice")
+	private List<KtContract> ktContracts;
+
+	//bi-directional many-to-one association to BusinessLine
+	@ManyToOne
+	@JoinColumn(name="businessline_id")
+	private BusinessLine businessLine;
+
+	//bi-directional many-to-one association to Grade
+	@ManyToOne
+	@JoinColumn(name="grade_id")
+	private Grade grade;
+
+	//bi-directional many-to-one association to Role
+	@ManyToOne
+	@JoinColumn(name="role_id")
+	private Role role;
 
 	public OnshorePrice() {
 	}
@@ -78,8 +69,6 @@ public class OnshorePrice implements Serializable {
 		this.onshorepriceId = onshorepriceId;
 	}
 
-	
-
 	public String getDescription() {
 		return this.description;
 	}
@@ -88,22 +77,20 @@ public class OnshorePrice implements Serializable {
 		this.description = description;
 	}
 
-	
-
-	public String getLastUpdatedBy() {
+	public int getLastUpdatedBy() {
 		return this.lastUpdatedBy;
 	}
 
-	public void setLastUpdatedBy(String lastUpdatedBy) {
+	public void setLastUpdatedBy(int lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
 
-	public Date getLastUpdatedTimestamp() {
-		return this.lastUpdatedTimestamp;
+	public Date getLastUpdatedDatetime() {
+		return this.lastUpdatedDatetime;
 	}
 
-	public void setLastUpdatedTimestamp(Date lastUpdatedTimestamp) {
-		this.lastUpdatedTimestamp = lastUpdatedTimestamp;
+	public void setLastUpdatedDatetime(Date lastUpdatedDatetime) {
+		this.lastUpdatedDatetime = lastUpdatedDatetime;
 	}
 
 	public BigDecimal getPrice() {
@@ -113,42 +100,73 @@ public class OnshorePrice implements Serializable {
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
-	
 
-	public List<AMContractResource> getAmContractResources() {
-		return amContractResources;
+	public List<AmContract> getAmContracts() {
+		return this.amContracts;
 	}
 
-	public void setAmContractResources(List<AMContractResource> amContractResources) {
-		this.amContractResources = amContractResources;
+	public void setAmContracts(List<AmContract> amContracts) {
+		this.amContracts = amContracts;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public AmContract addAmContract(AmContract amContract) {
+		getAmContracts().add(amContract);
+		amContract.setOnshorePrice(this);
+
+		return amContract;
 	}
 
-	public BusinessLine getBusinesslineId() {
-		return businesslineId;
+	public AmContract removeAmContract(AmContract amContract) {
+		getAmContracts().remove(amContract);
+		amContract.setOnshorePrice(null);
+
+		return amContract;
 	}
 
-	public void setBusinesslineId(BusinessLine businesslineId) {
-		this.businesslineId = businesslineId;
+	public List<KtContract> getKtContracts() {
+		return this.ktContracts;
 	}
 
-	public Grade getGradeId() {
-		return gradeId;
+	public void setKtContracts(List<KtContract> ktContracts) {
+		this.ktContracts = ktContracts;
 	}
 
-	public void setGradeId(Grade gradeId) {
-		this.gradeId = gradeId;
+	public KtContract addKtContract(KtContract ktContract) {
+		getKtContracts().add(ktContract);
+		ktContract.setOnshorePrice(this);
+
+		return ktContract;
 	}
 
-	public Role getRoleId() {
-		return roleId;
+	public KtContract removeKtContract(KtContract ktContract) {
+		getKtContracts().remove(ktContract);
+		ktContract.setOnshorePrice(null);
+
+		return ktContract;
 	}
 
-	public void setRoleId(Role roleId) {
-		this.roleId = roleId;
+	public BusinessLine getBusinessLine() {
+		return this.businessLine;
+	}
+
+	public void setBusinessLine(BusinessLine businessLine) {
+		this.businessLine = businessLine;
+	}
+
+	public Grade getGrade() {
+		return this.grade;
+	}
+
+	public void setGrade(Grade grade) {
+		this.grade = grade;
+	}
+
+	public Role getRole() {
+		return this.role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 }

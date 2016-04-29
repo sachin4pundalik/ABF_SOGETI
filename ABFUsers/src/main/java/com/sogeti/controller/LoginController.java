@@ -69,14 +69,7 @@ public class LoginController {
  */
 package com.sogeti.controller;
 
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,14 +81,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
-import com.sogeti.db.models.AMContractResource;
 import com.sogeti.model.ABFResponse;
-import com.sogeti.model.AMContractResourceBean;
 import com.sogeti.model.User;
 import com.sogeti.model.UserForm;
 import com.sogeti.service.AmContractService;
 import com.sogeti.service.LoginService;
-import com.sogeti.xmlbeans.Resource;
 
 @RestController
 @SessionAttributes("currentUser")

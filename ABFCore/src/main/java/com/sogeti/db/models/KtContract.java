@@ -16,49 +16,45 @@ public class KtContract implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="kt_id", unique=true, nullable=false)
-	private int ktId;
+	@Column(name="kt_contract_id", unique=true, nullable=false)
+	private int ktContractId;
 
-	@Column(length=256)
-	private String duration;
-
-	@Column(name="role_id")
-	private int roleId;
+	@Lob
+	@Column(name="details_xml")
+	private String detailsXml;
 
 	//bi-directional many-to-one association to Contract
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="contract_id")
 	private Contract contract;
 
-	//bi-directional one-to-one association to Role
-	@OneToOne(mappedBy="ktContract", fetch=FetchType.LAZY)
-	private Role role;
+	//bi-directional many-to-one association to OffshorePrice
+	@ManyToOne
+	@JoinColumn(name="offshore_price_id")
+	private OffshorePrice offshorePrice;
+
+	//bi-directional many-to-one association to OnshorePrice
+	@ManyToOne
+	@JoinColumn(name="onshore_price_id")
+	private OnshorePrice onshorePrice;
 
 	public KtContract() {
 	}
 
-	public int getKtId() {
-		return this.ktId;
+	public int getKtContractId() {
+		return this.ktContractId;
 	}
 
-	public void setKtId(int ktId) {
-		this.ktId = ktId;
+	public void setKtContractId(int ktContractId) {
+		this.ktContractId = ktContractId;
 	}
 
-	public String getDuration() {
-		return this.duration;
+	public String getDetailsXml() {
+		return this.detailsXml;
 	}
 
-	public void setDuration(String duration) {
-		this.duration = duration;
-	}
-
-	public int getRoleId() {
-		return this.roleId;
-	}
-
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setDetailsXml(String detailsXml) {
+		this.detailsXml = detailsXml;
 	}
 
 	public Contract getContract() {
@@ -69,12 +65,20 @@ public class KtContract implements Serializable {
 		this.contract = contract;
 	}
 
-	public Role getRole() {
-		return this.role;
+	public OffshorePrice getOffshorePrice() {
+		return this.offshorePrice;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setOffshorePrice(OffshorePrice offshorePrice) {
+		this.offshorePrice = offshorePrice;
+	}
+
+	public OnshorePrice getOnshorePrice() {
+		return this.onshorePrice;
+	}
+
+	public void setOnshorePrice(OnshorePrice onshorePrice) {
+		this.onshorePrice = onshorePrice;
 	}
 
 }

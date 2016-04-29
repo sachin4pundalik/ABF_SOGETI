@@ -22,26 +22,27 @@ public class Login implements Serializable {
 	private int loginId;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="last_login")
-	private Date lastLogin;
+	@Column(name="last_login_datetime")
+	private Date lastLoginDatetime;
 
-	@Column(length=256)
+	@Column(length=100)
 	private String password;
 
-	@Column(nullable=false)
-	private int uid;
-
-	@Column(name="user_name", length=256)
+	@Column(name="user_name", length=100)
 	private String userName;
 
-	//bi-directional many-to-one association to ApproverFlow
+	//bi-directional many-to-one association to ApprovalFlow
 	@OneToMany(mappedBy="login")
-	private List<ApproverFlow> approverFlows;
+	private List<ApprovalFlow> approvalFlows;
 
-	//bi-directional many-to-one association to UserType
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="user_type_id")
-	private UserType userType;
+	//bi-directional many-to-one association to Contract
+	@OneToMany(mappedBy="login")
+	private List<Contract> contracts;
+
+	//bi-directional many-to-one association to UserRole
+	@ManyToOne
+	@JoinColumn(name="user_role_id")
+	private UserRole userRole;
 
 	public Login() {
 	}
@@ -54,12 +55,12 @@ public class Login implements Serializable {
 		this.loginId = loginId;
 	}
 
-	public Date getLastLogin() {
-		return this.lastLogin;
+	public Date getLastLoginDatetime() {
+		return this.lastLoginDatetime;
 	}
 
-	public void setLastLogin(Date lastLogin) {
-		this.lastLogin = lastLogin;
+	public void setLastLoginDatetime(Date lastLoginDatetime) {
+		this.lastLoginDatetime = lastLoginDatetime;
 	}
 
 	public String getPassword() {
@@ -70,14 +71,6 @@ public class Login implements Serializable {
 		this.password = password;
 	}
 
-	public int getUid() {
-		return this.uid;
-	}
-
-	public void setUid(int uid) {
-		this.uid = uid;
-	}
-
 	public String getUserName() {
 		return this.userName;
 	}
@@ -86,34 +79,56 @@ public class Login implements Serializable {
 		this.userName = userName;
 	}
 
-	public List<ApproverFlow> getApproverFlows() {
-		return this.approverFlows;
+	public List<ApprovalFlow> getApprovalFlows() {
+		return this.approvalFlows;
 	}
 
-	public void setApproverFlows(List<ApproverFlow> approverFlows) {
-		this.approverFlows = approverFlows;
+	public void setApprovalFlows(List<ApprovalFlow> approvalFlows) {
+		this.approvalFlows = approvalFlows;
 	}
 
-	public ApproverFlow addApproverFlow(ApproverFlow approverFlow) {
-		getApproverFlows().add(approverFlow);
-		approverFlow.setLogin(this);
+	public ApprovalFlow addApprovalFlow(ApprovalFlow approvalFlow) {
+		getApprovalFlows().add(approvalFlow);
+		approvalFlow.setLogin(this);
 
-		return approverFlow;
+		return approvalFlow;
 	}
 
-	public ApproverFlow removeApproverFlow(ApproverFlow approverFlow) {
-		getApproverFlows().remove(approverFlow);
-		approverFlow.setLogin(null);
+	public ApprovalFlow removeApprovalFlow(ApprovalFlow approvalFlow) {
+		getApprovalFlows().remove(approvalFlow);
+		approvalFlow.setLogin(null);
 
-		return approverFlow;
+		return approvalFlow;
 	}
 
-	public UserType getUserType() {
-		return this.userType;
+	public List<Contract> getContracts() {
+		return this.contracts;
 	}
 
-	public void setUserType(UserType userType) {
-		this.userType = userType;
+	public void setContracts(List<Contract> contracts) {
+		this.contracts = contracts;
+	}
+
+	public Contract addContract(Contract contract) {
+		getContracts().add(contract);
+		contract.setLogin(this);
+
+		return contract;
+	}
+
+	public Contract removeContract(Contract contract) {
+		getContracts().remove(contract);
+		contract.setLogin(null);
+
+		return contract;
+	}
+
+	public UserRole getUserRole() {
+		return this.userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 
 }

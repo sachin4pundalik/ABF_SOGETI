@@ -5,13 +5,13 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the approver_flow database table.
+ * The persistent class for the approval_flow database table.
  * 
  */
 @Entity
-@Table(name="approver_flow")
-@NamedQuery(name="ApproverFlow.findAll", query="SELECT a FROM ApproverFlow a")
-public class ApproverFlow implements Serializable {
+@Table(name="approval_flow")
+@NamedQuery(name="ApprovalFlow.findAll", query="SELECT a FROM ApprovalFlow a")
+public class ApprovalFlow implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -19,17 +19,17 @@ public class ApproverFlow implements Serializable {
 	@Column(name="approval_id", unique=true, nullable=false)
 	private int approvalId;
 
-	//bi-directional one-to-one association to Contract
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="contract_id", nullable=false)
+	//bi-directional many-to-one association to Contract
+	@ManyToOne
+	@JoinColumn(name="contract_id")
 	private Contract contract;
 
 	//bi-directional many-to-one association to Login
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="login_id")
 	private Login login;
 
-	public ApproverFlow() {
+	public ApprovalFlow() {
 	}
 
 	public int getApprovalId() {

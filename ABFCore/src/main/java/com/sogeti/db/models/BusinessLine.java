@@ -2,6 +2,7 @@ package com.sogeti.db.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -19,18 +20,26 @@ public class BusinessLine implements Serializable {
 	@Column(name="businessline_id", unique=true, nullable=false)
 	private int businesslineId;
 
-	@Column(name="businessline_name", length=150)
+	@Column(name="businessline_name", length=100)
 	private String businesslineName;
 
 	//bi-directional many-to-one association to ResourceType
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="resourcetype_id", nullable=false)
+	@ManyToOne
+	@JoinColumn(name="resourcetype_id")
 	private ResourceType resourceType;
 
 	//bi-directional many-to-one association to Skill
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="skill_id")
 	private Skill skill;
+
+	//bi-directional many-to-one association to OffshorePrice
+	@OneToMany(mappedBy="businessLine")
+	private List<OffshorePrice> offshorePrices;
+
+	//bi-directional many-to-one association to OnshorePrice
+	@OneToMany(mappedBy="businessLine")
+	private List<OnshorePrice> onshorePrices;
 
 	public BusinessLine() {
 	}
@@ -65,6 +74,50 @@ public class BusinessLine implements Serializable {
 
 	public void setSkill(Skill skill) {
 		this.skill = skill;
+	}
+
+	public List<OffshorePrice> getOffshorePrices() {
+		return this.offshorePrices;
+	}
+
+	public void setOffshorePrices(List<OffshorePrice> offshorePrices) {
+		this.offshorePrices = offshorePrices;
+	}
+
+	public OffshorePrice addOffshorePrice(OffshorePrice offshorePrice) {
+		getOffshorePrices().add(offshorePrice);
+		offshorePrice.setBusinessLine(this);
+
+		return offshorePrice;
+	}
+
+	public OffshorePrice removeOffshorePrice(OffshorePrice offshorePrice) {
+		getOffshorePrices().remove(offshorePrice);
+		offshorePrice.setBusinessLine(null);
+
+		return offshorePrice;
+	}
+
+	public List<OnshorePrice> getOnshorePrices() {
+		return this.onshorePrices;
+	}
+
+	public void setOnshorePrices(List<OnshorePrice> onshorePrices) {
+		this.onshorePrices = onshorePrices;
+	}
+
+	public OnshorePrice addOnshorePrice(OnshorePrice onshorePrice) {
+		getOnshorePrices().add(onshorePrice);
+		onshorePrice.setBusinessLine(this);
+
+		return onshorePrice;
+	}
+
+	public OnshorePrice removeOnshorePrice(OnshorePrice onshorePrice) {
+		getOnshorePrices().remove(onshorePrice);
+		onshorePrice.setBusinessLine(null);
+
+		return onshorePrice;
 	}
 
 }

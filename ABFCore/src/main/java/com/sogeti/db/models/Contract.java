@@ -1,12 +1,7 @@
 package com.sogeti.db.models;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.Date;
 import java.util.List;
 
@@ -15,11 +10,9 @@ import java.util.List;
  * The persistent class for the contract database table.
  * 
  */
-
 @Entity
 @Table(name="contract")
 @NamedQuery(name="Contract.findAll", query="SELECT c FROM Contract c")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Contract implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,64 +21,75 @@ public class Contract implements Serializable {
 	@Column(name="contract_id", unique=true, nullable=false)
 	private int contractId;
 
-	@Column(length=256)
+	@Column(length=500)
 	private String comments;
 
-	@Column(name="company_name", length=256)
+	@Column(name="company_name", length=100)
 	private String companyName;
 
-	@Column(name="contract_created_by", length=256)
-	private String contractCreatedBy;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="contract_created_datetime")
+	private Date contractCreatedDatetime;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="contract_end_date")
 	private Date contractEndDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="contract_modified_date_time")
+	private Date contractModifiedDateTime;
+
+	@Column(name="contract_name", length=100)
+	private String contractName;
+
 	@Temporal(TemporalType.DATE)
 	@Column(name="contract_start_date")
 	private Date contractStartDate;
 
-	@Column(name="customer_name", length=256)
+	@Column(name="customer_name", length=100)
 	private String customerName;
 
-	@Column(name="login_id")
-	private int loginId;
-
 	//bi-directional many-to-one association to AmContract
-	@JsonIgnore
 	@OneToMany(mappedBy="contract")
 	private List<AmContract> amContracts;
 
-	//bi-directional one-to-one association to ApproverFlow
-	@JsonIgnore
-	@OneToOne(mappedBy="contract", fetch=FetchType.LAZY)
-	private ApproverFlow approverFlow;
+	//bi-directional many-to-one association to ApprovalFlow
+	@OneToMany(mappedBy="contract")
+	private List<ApprovalFlow> approvalFlows;
+
+	//bi-directional many-to-one association to Login
+	@ManyToOne
+	@JoinColumn(name="login_id")
+	private Login login;
 
 	//bi-directional many-to-one association to Status
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="status_id")
-	@JsonIgnore
 	private Status status;
 
-	//bi-directional one-to-one association to Fixed
-	@JsonIgnore
-	@OneToOne(mappedBy="contract", fetch=FetchType.LAZY)
-	private Fixed fixed;
+	//bi-directional many-to-one association to FixedContract
+	@OneToMany(mappedBy="contract")
+	private List<FixedContract> fixedContracts;
 
 	//bi-directional many-to-one association to KtContract
-	@JsonIgnore
 	@OneToMany(mappedBy="contract")
 	private List<KtContract> ktContracts;
 
 	//bi-directional many-to-one association to RiskComment
-	@JsonIgnore
 	@OneToMany(mappedBy="contract")
 	private List<RiskComment> riskComments;
 
 	public Contract() {
 	}
 
-	
+	public int getContractId() {
+		return this.contractId;
+	}
+
+	public void setContractId(int contractId) {
+		this.contractId = contractId;
+	}
+
 	public String getComments() {
 		return this.comments;
 	}
@@ -102,12 +106,12 @@ public class Contract implements Serializable {
 		this.companyName = companyName;
 	}
 
-	public String getContractCreatedBy() {
-		return this.contractCreatedBy;
+	public Date getContractCreatedDatetime() {
+		return this.contractCreatedDatetime;
 	}
 
-	public void setContractCreatedBy(String contractCreatedBy) {
-		this.contractCreatedBy = contractCreatedBy;
+	public void setContractCreatedDatetime(Date contractCreatedDatetime) {
+		this.contractCreatedDatetime = contractCreatedDatetime;
 	}
 
 	public Date getContractEndDate() {
@@ -118,6 +122,22 @@ public class Contract implements Serializable {
 		this.contractEndDate = contractEndDate;
 	}
 
+	public Date getContractModifiedDateTime() {
+		return this.contractModifiedDateTime;
+	}
+
+	public void setContractModifiedDateTime(Date contractModifiedDateTime) {
+		this.contractModifiedDateTime = contractModifiedDateTime;
+	}
+
+	public String getContractName() {
+		return this.contractName;
+	}
+
+	public void setContractName(String contractName) {
+		this.contractName = contractName;
+	}
+
 	public Date getContractStartDate() {
 		return this.contractStartDate;
 	}
@@ -126,28 +146,12 @@ public class Contract implements Serializable {
 		this.contractStartDate = contractStartDate;
 	}
 
-	public int getContractId() {
-		return this.contractId;
-	}
-
-	public void setContractId(int contractId) {
-		this.contractId = contractId;
-	}
-
 	public String getCustomerName() {
 		return this.customerName;
 	}
 
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
-	}
-
-	public int getLoginId() {
-		return this.loginId;
-	}
-
-	public void setLoginId(int loginId) {
-		this.loginId = loginId;
 	}
 
 	public List<AmContract> getAmContracts() {
@@ -172,12 +176,34 @@ public class Contract implements Serializable {
 		return amContract;
 	}
 
-	public ApproverFlow getApproverFlow() {
-		return this.approverFlow;
+	public List<ApprovalFlow> getApprovalFlows() {
+		return this.approvalFlows;
 	}
 
-	public void setApproverFlow(ApproverFlow approverFlow) {
-		this.approverFlow = approverFlow;
+	public void setApprovalFlows(List<ApprovalFlow> approvalFlows) {
+		this.approvalFlows = approvalFlows;
+	}
+
+	public ApprovalFlow addApprovalFlow(ApprovalFlow approvalFlow) {
+		getApprovalFlows().add(approvalFlow);
+		approvalFlow.setContract(this);
+
+		return approvalFlow;
+	}
+
+	public ApprovalFlow removeApprovalFlow(ApprovalFlow approvalFlow) {
+		getApprovalFlows().remove(approvalFlow);
+		approvalFlow.setContract(null);
+
+		return approvalFlow;
+	}
+
+	public Login getLogin() {
+		return this.login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
 	public Status getStatus() {
@@ -188,12 +214,26 @@ public class Contract implements Serializable {
 		this.status = status;
 	}
 
-	public Fixed getFixed() {
-		return this.fixed;
+	public List<FixedContract> getFixedContracts() {
+		return this.fixedContracts;
 	}
 
-	public void setFixed(Fixed fixed) {
-		this.fixed = fixed;
+	public void setFixedContracts(List<FixedContract> fixedContracts) {
+		this.fixedContracts = fixedContracts;
+	}
+
+	public FixedContract addFixedContract(FixedContract fixedContract) {
+		getFixedContracts().add(fixedContract);
+		fixedContract.setContract(this);
+
+		return fixedContract;
+	}
+
+	public FixedContract removeFixedContract(FixedContract fixedContract) {
+		getFixedContracts().remove(fixedContract);
+		fixedContract.setContract(null);
+
+		return fixedContract;
 	}
 
 	public List<KtContract> getKtContracts() {
@@ -239,45 +279,5 @@ public class Contract implements Serializable {
 
 		return riskComment;
 	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Contract [contractId=");
-		builder.append(contractId);
-		
-		builder.append(", comments=");
-		builder.append(comments);
-		builder.append(", companyName=");
-		builder.append(companyName);
-		builder.append(", contractCreatedBy=");
-		builder.append(contractCreatedBy);
-		builder.append(", contractEndDate=");
-		builder.append(contractEndDate);
-		builder.append(", contractStartDate=");
-		builder.append(contractStartDate);
-		builder.append(", customerName=");
-		builder.append(customerName);
-		builder.append(", loginId=");
-		builder.append(loginId);
-		builder.append(", amContracts=");
-		builder.append(amContracts);
-		builder.append(", approverFlow=");
-		builder.append(approverFlow);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", fixed=");
-		builder.append(fixed);
-		builder.append(", ktContracts=");
-		builder.append(ktContracts);
-		builder.append(", riskComments=");
-		builder.append(riskComments);
-		builder.append("]");
-		return builder.toString();
-	}
-	
 
 }

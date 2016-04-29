@@ -19,11 +19,11 @@ public class RiskComment implements Serializable {
 	@Column(name="risk_id", unique=true, nullable=false)
 	private int riskId;
 
-	@Column(length=256)
+	@Column(length=500)
 	private String description;
 
 	//bi-directional many-to-one association to Contract
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="contract_id")
 	private Contract contract;
 

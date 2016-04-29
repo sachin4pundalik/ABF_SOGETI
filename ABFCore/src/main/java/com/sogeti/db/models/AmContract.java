@@ -1,7 +1,19 @@
 package com.sogeti.db.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 /**
@@ -16,49 +28,75 @@ public class AmContract implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="am_id", unique=true, nullable=false)
-	private int amId;
+	@Column(name="am_contract_id", unique=true, nullable=false)
+	private int amContractId;
 
-	@Column(length=256)
-	private String duration;
-
-	@Column(name="role_id", unique=true)
-	private int roleId;
+	@Lob
+	@Column(name="details_xml")
+	private String detailsXml;
 
 	//bi-directional many-to-one association to Contract
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="contract_id")
 	private Contract contract;
 
-	//bi-directional one-to-one association to Role
-	@OneToOne(mappedBy="amContract", fetch=FetchType.LAZY)
-	private Role role;
+	//bi-directional many-to-one association to OffshorePrice
+	@ManyToOne
+	@JoinColumn(name="offshore_price_id")
+	private OffshorePrice offshorePrice;
+
+	//bi-directional many-to-one association to OnshorePrice
+	@ManyToOne
+	@JoinColumn(name="onshore_price_id")
+	private OnshorePrice onshorePrice;
+	
+	@Transient
+	private List<String> months;
+	
+	@Transient
+	private String id;
+	
+	@Transient
+	private String type;
+	
+	@Transient
+	private String bline;
+	
+	@Transient
+	private String Skill;
+	
+	@Transient
+	private String band;
+	
+	@Transient
+	private String role;
+	
+	@Transient
+	private String grade;
+	
+	@Transient
+	private String stay;
+	
+	@Transient
+	private String price;
 
 	public AmContract() {
 	}
 
-	public int getAmId() {
-		return this.amId;
+	public int getAmContractId() {
+		return this.amContractId;
 	}
 
-	public void setAmId(int amId) {
-		this.amId = amId;
+	public void setAmContractId(int amContractId) {
+		this.amContractId = amContractId;
 	}
 
-	public String getDuration() {
-		return this.duration;
+	public String getDetailsXml() {
+		return this.detailsXml;
 	}
 
-	public void setDuration(String duration) {
-		this.duration = duration;
-	}
-
-	public int getRoleId() {
-		return this.roleId;
-	}
-
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setDetailsXml(String detailsXml) {
+		this.detailsXml = detailsXml;
 	}
 
 	public Contract getContract() {
@@ -69,12 +107,104 @@ public class AmContract implements Serializable {
 		this.contract = contract;
 	}
 
-	public Role getRole() {
-		return this.role;
+	public OffshorePrice getOffshorePrice() {
+		return this.offshorePrice;
 	}
 
-	public void setRole(Role role) {
+	public void setOffshorePrice(OffshorePrice offshorePrice) {
+		this.offshorePrice = offshorePrice;
+	}
+
+	public OnshorePrice getOnshorePrice() {
+		return this.onshorePrice;
+	}
+
+	public void setOnshorePrice(OnshorePrice onshorePrice) {
+		this.onshorePrice = onshorePrice;
+	}
+
+	public List<String> getMonths() {
+		return months;
+	}
+
+	public void setMonths(List<String> months) {
+		this.months = months;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getBline() {
+		return bline;
+	}
+
+	public void setBline(String bline) {
+		this.bline = bline;
+	}
+
+	public String getSkill() {
+		return Skill;
+	}
+
+	public void setSkill(String skill) {
+		Skill = skill;
+	}
+
+	public String getBand() {
+		return band;
+	}
+
+	public void setBand(String band) {
+		this.band = band;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	public String getStay() {
+		return stay;
+	}
+
+	public void setStay(String stay) {
+		this.stay = stay;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

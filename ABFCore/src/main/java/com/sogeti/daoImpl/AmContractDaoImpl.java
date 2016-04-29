@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.dao.AmContractDao;
-import com.sogeti.db.models.AMContractResource;
+import com.sogeti.db.models.AmContract;
 import com.sogeti.db.models.Contract;
 
 @Repository("amContractDao")
@@ -41,28 +41,28 @@ public class AmContractDaoImpl implements AmContractDao {
 	}
 
 	 @SuppressWarnings("unchecked")
-	public List<AMContractResource> getAmContractResourcesByContractId(Contract contractId) {
+	public List<AmContract> getAmContractsByContractId(Contract contractId) {
 		try
 	      {
-	         Query query = this.entityManager.createQuery("select amc from AMContractResource amc where amc.contract = :contract");
+	         Query query = this.entityManager.createQuery("select amc from AmContract amc where amc.contract = :contract");
 	         query.setParameter("contract", contractId);
 	         return query.getResultList();
 	      }
 	      catch (PersistenceException e)
 	      {
-	         throw new TechnicalException("Technical Exception in AmContractDaoImpl.getAmContractResourcesByContractId()", e);
+	         throw new TechnicalException("Technical Exception in AmContractDaoImpl.getAmContractsByContractId()", e);
 	      }
 	}
 
-	public AMContractResource getAmContractById(int amId) {
+	public AmContract getAmContractById(int amId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public boolean saveAmContractResource(AMContractResource amContractResource) throws TechnicalException{
+	public boolean saveAmContract(AmContract AmContract) throws TechnicalException{
 		boolean result = false;
         try {
-            entityManager.merge(amContractResource);
+            entityManager.merge(AmContract);
             flushAndClear();
             result = true;
         } catch (PersistenceException e) {
@@ -73,7 +73,7 @@ public class AmContractDaoImpl implements AmContractDao {
 
 	}
 
-	public boolean saveAmContractResourceBatch(List<AMContractResource> amContractResources) {
+	public boolean saveAmContractBatch(List<AmContract> AmContracts) {
 		// TODO Auto-generated method stub
 		return false;
 
@@ -83,10 +83,5 @@ public class AmContractDaoImpl implements AmContractDao {
         entityManager.flush();
         entityManager.clear();
     }
-
-	public AMContractResource getAmContractResourceById(int amId) throws TechnicalException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

@@ -22,34 +22,41 @@ public class OffshorePrice implements Serializable {
 	@Column(name="offshoreprice_id", unique=true, nullable=false)
 	private int offshorepriceId;
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="band_id")
-	private Band bandId;
-
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="businessline_id")
-	private BusinessLine businesslineId;
-
-	@Column(length=256)
+	@Column(length=500)
 	private String description;
 
-	@Column(name="last_updated_by", length=45)
-	private String lastUpdatedBy;
+	@Column(name="last_updated_by")
+	private int lastUpdatedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="last_updated_timestamp")
-	private Date lastUpdatedTimestamp;
+	@Column(name="last_updated_datetime")
+	private Date lastUpdatedDatetime;
 
 	@Column(precision=10, scale=2)
 	private BigDecimal price;
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="stay_type_id")
-	private StayType stayTypeId;
-	
 	//bi-directional many-to-one association to AmContract
-	@OneToMany(mappedBy="contract")
-	private List<AMContractResource> amContractResources;
+	@OneToMany(mappedBy="offshorePrice")
+	private List<AmContract> amContracts;
+
+	//bi-directional many-to-one association to KtContract
+	@OneToMany(mappedBy="offshorePrice")
+	private List<KtContract> ktContracts;
+
+	//bi-directional many-to-one association to Band
+	@ManyToOne
+	@JoinColumn(name="band_id")
+	private Band band;
+
+	//bi-directional many-to-one association to BusinessLine
+	@ManyToOne
+	@JoinColumn(name="businessline_id")
+	private BusinessLine businessLine;
+
+	//bi-directional many-to-one association to StayType
+	@ManyToOne
+	@JoinColumn(name="stay_type_id")
+	private StayType stayType;
 
 	public OffshorePrice() {
 	}
@@ -60,7 +67,7 @@ public class OffshorePrice implements Serializable {
 
 	public void setOffshorepriceId(int offshorepriceId) {
 		this.offshorepriceId = offshorepriceId;
-	}	
+	}
 
 	public String getDescription() {
 		return this.description;
@@ -70,20 +77,20 @@ public class OffshorePrice implements Serializable {
 		this.description = description;
 	}
 
-	public String getLastUpdatedBy() {
+	public int getLastUpdatedBy() {
 		return this.lastUpdatedBy;
 	}
 
-	public void setLastUpdatedBy(String lastUpdatedBy) {
+	public void setLastUpdatedBy(int lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
 
-	public Date getLastUpdatedTimestamp() {
-		return this.lastUpdatedTimestamp;
+	public Date getLastUpdatedDatetime() {
+		return this.lastUpdatedDatetime;
 	}
 
-	public void setLastUpdatedTimestamp(Date lastUpdatedTimestamp) {
-		this.lastUpdatedTimestamp = lastUpdatedTimestamp;
+	public void setLastUpdatedDatetime(Date lastUpdatedDatetime) {
+		this.lastUpdatedDatetime = lastUpdatedDatetime;
 	}
 
 	public BigDecimal getPrice() {
@@ -94,40 +101,72 @@ public class OffshorePrice implements Serializable {
 		this.price = price;
 	}
 
-	public List<AMContractResource> getAmContractResources() {
-		return amContractResources;
+	public List<AmContract> getAmContracts() {
+		return this.amContracts;
 	}
 
-	public void setAmContractResources(List<AMContractResource> amContractResources) {
-		this.amContractResources = amContractResources;
+	public void setAmContracts(List<AmContract> amContracts) {
+		this.amContracts = amContracts;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public AmContract addAmContract(AmContract amContract) {
+		getAmContracts().add(amContract);
+		amContract.setOffshorePrice(this);
+
+		return amContract;
 	}
 
-	public Band getBandId() {
-		return bandId;
+	public AmContract removeAmContract(AmContract amContract) {
+		getAmContracts().remove(amContract);
+		amContract.setOffshorePrice(null);
+
+		return amContract;
 	}
 
-	public void setBandId(Band bandId) {
-		this.bandId = bandId;
+	public List<KtContract> getKtContracts() {
+		return this.ktContracts;
 	}
 
-	public BusinessLine getBusinesslineId() {
-		return businesslineId;
+	public void setKtContracts(List<KtContract> ktContracts) {
+		this.ktContracts = ktContracts;
 	}
 
-	public void setBusinesslineId(BusinessLine businesslineId) {
-		this.businesslineId = businesslineId;
+	public KtContract addKtContract(KtContract ktContract) {
+		getKtContracts().add(ktContract);
+		ktContract.setOffshorePrice(this);
+
+		return ktContract;
 	}
 
-	public StayType getStayTypeId() {
-		return stayTypeId;
+	public KtContract removeKtContract(KtContract ktContract) {
+		getKtContracts().remove(ktContract);
+		ktContract.setOffshorePrice(null);
+
+		return ktContract;
 	}
 
-	public void setStayTypeId(StayType stayTypeId) {
-		this.stayTypeId = stayTypeId;
+	public Band getBand() {
+		return this.band;
+	}
+
+	public void setBand(Band band) {
+		this.band = band;
+	}
+
+	public BusinessLine getBusinessLine() {
+		return this.businessLine;
+	}
+
+	public void setBusinessLine(BusinessLine businessLine) {
+		this.businessLine = businessLine;
+	}
+
+	public StayType getStayType() {
+		return this.stayType;
+	}
+
+	public void setStayType(StayType stayType) {
+		this.stayType = stayType;
 	}
 
 }
