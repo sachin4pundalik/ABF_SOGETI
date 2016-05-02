@@ -1,9 +1,23 @@
 package com.sogeti.db.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -51,32 +65,39 @@ public class Contract implements Serializable {
 
 	//bi-directional many-to-one association to AmContract
 	@OneToMany(mappedBy="contract")
+	@JsonIgnore
 	private List<AmContract> amContracts;
 
 	//bi-directional many-to-one association to ApprovalFlow
 	@OneToMany(mappedBy="contract")
+	@JsonIgnore
 	private List<ApprovalFlow> approvalFlows;
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
 	@JoinColumn(name="login_id")
+	@JsonIgnore
 	private Login login;
 
 	//bi-directional many-to-one association to Status
 	@ManyToOne
 	@JoinColumn(name="status_id")
+	@JsonIgnore
 	private Status status;
 
 	//bi-directional many-to-one association to FixedContract
 	@OneToMany(mappedBy="contract")
+	@JsonIgnore
 	private List<FixedContract> fixedContracts;
 
 	//bi-directional many-to-one association to KtContract
 	@OneToMany(mappedBy="contract")
+	@JsonIgnore
 	private List<KtContract> ktContracts;
 
 	//bi-directional many-to-one association to RiskComment
 	@OneToMany(mappedBy="contract")
+	@JsonIgnore
 	private List<RiskComment> riskComments;
 
 	public Contract() {
