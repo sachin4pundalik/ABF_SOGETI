@@ -104,7 +104,7 @@ public class ABFController {
 		{
 			logger.error("Exception in method ... ABFController.deleteContract" + e);
 			response.setFailureResponse(e.getMessage());
-			response.setStatus(ABFConstants.STATUS_FAILURE);
+			  response.setStatus(ABFConstants.STATUS_FAILURE);
 		}
 
 		return response;
