@@ -2,6 +2,9 @@ package com.sogeti.db.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -27,6 +30,7 @@ public class Status implements Serializable {
 	private String statusName;
 
 	//bi-directional many-to-one association to Contract
+	@JsonIgnore
 	@OneToMany(mappedBy="status")
 	private List<Contract> contracts;
 

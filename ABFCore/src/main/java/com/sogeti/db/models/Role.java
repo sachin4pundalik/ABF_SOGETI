@@ -2,6 +2,9 @@ package com.sogeti.db.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -24,6 +27,7 @@ public class Role implements Serializable {
 	private String roleType;
 
 	//bi-directional many-to-one association to OnshorePrice
+	@JsonIgnore
 	@OneToMany(mappedBy="role")
 	private List<OnshorePrice> onshorePrices;
 

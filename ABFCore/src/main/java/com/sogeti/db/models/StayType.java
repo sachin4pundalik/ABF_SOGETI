@@ -2,6 +2,9 @@ package com.sogeti.db.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -24,6 +27,7 @@ public class StayType implements Serializable {
 	private String stayType;
 
 	//bi-directional many-to-one association to OffshorePrice
+	@JsonIgnore
 	@OneToMany(mappedBy="stayType")
 	private List<OffshorePrice> offshorePrices;
 

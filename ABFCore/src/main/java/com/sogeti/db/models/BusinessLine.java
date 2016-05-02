@@ -2,6 +2,9 @@ package com.sogeti.db.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -24,20 +27,24 @@ public class BusinessLine implements Serializable {
 	private String businesslineName;
 
 	//bi-directional many-to-one association to ResourceType
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="resourcetype_id")
 	private ResourceType resourceType;
 
 	//bi-directional many-to-one association to Skill
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="skill_id")
 	private Skill skill;
 
 	//bi-directional many-to-one association to OffshorePrice
+	@JsonIgnore
 	@OneToMany(mappedBy="businessLine")
 	private List<OffshorePrice> offshorePrices;
 
 	//bi-directional many-to-one association to OnshorePrice
+	@JsonIgnore
 	@OneToMany(mappedBy="businessLine")
 	private List<OnshorePrice> onshorePrices;
 

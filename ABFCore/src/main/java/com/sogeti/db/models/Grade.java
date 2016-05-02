@@ -2,6 +2,9 @@ package com.sogeti.db.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -24,6 +27,7 @@ public class Grade implements Serializable {
 	private String gradeType;
 
 	//bi-directional many-to-one association to OnshorePrice
+	@JsonIgnore
 	@OneToMany(mappedBy="grade")
 	private List<OnshorePrice> onshorePrices;
 
