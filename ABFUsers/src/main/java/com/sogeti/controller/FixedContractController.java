@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
+import com.sogeti.db.models.BusinessLine;
 import com.sogeti.db.models.Contract;
 import com.sogeti.db.models.FixedContract;
 import com.sogeti.model.ABFResponse;
@@ -73,7 +74,7 @@ public class FixedContractController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public ABFResponse createContract(@RequestBody FixedContractDT contract) {
+	public ABFResponse create(@RequestBody FixedContractDT contract) {
 
 		ABFResponse response = new ABFResponse();
 		FixedContract fixedContract = new FixedContract();
@@ -94,7 +95,7 @@ public class FixedContractController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public ABFResponse updateContract(@RequestBody FixedContractDT contract)
+	public ABFResponse update(@RequestBody FixedContractDT contract)
 
 	{
 		ABFResponse response = new ABFResponse();
@@ -116,7 +117,7 @@ public class FixedContractController {
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-	public ABFResponse deleteContract(@PathVariable("id") Integer fixedContractId)
+	public ABFResponse delete(@PathVariable("id") Integer fixedContractId)
 
 	{
 		ABFResponse response = new ABFResponse();
@@ -133,4 +134,24 @@ public class FixedContractController {
 		return response;
 	}
 
+	@RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
+	public ABFResponse find(@PathVariable("id") int fixedContractId)
+
+	{
+		ABFResponse response = new ABFResponse();
+
+		try {
+			
+			FixedContract fixedContract = fixedService.find(fixedContractId);
+			response.setSuccessResponse(fixedContract);
+			response.setStatus(ABFConstants.STATUS_SUCCESS);
+		} catch (TechnicalException e) {
+			logger.error("Exception in method ... ABFController.deleteContract" + e);
+			response.setFailureResponse(e.getMessage());
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+		}
+
+		return response;
+	}
+	
 }

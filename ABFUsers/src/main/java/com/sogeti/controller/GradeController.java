@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
 import com.sogeti.db.models.Grade;
-import com.sogeti.db.models.Skill;
 import com.sogeti.model.ABFResponse;
 import com.sogeti.model.GradeDT;
-import com.sogeti.model.SkillDT;
 import com.sogeti.service.GradeService;
 
 /**
@@ -72,7 +70,7 @@ public class GradeController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public ABFResponse createGrade(@RequestBody GradeDT gradeDT) {
+	public ABFResponse create(@RequestBody GradeDT gradeDT) {
 
 		ABFResponse response = new ABFResponse();
 		Grade gradeEntity = new Grade();
@@ -91,7 +89,7 @@ public class GradeController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public ABFResponse updateGrade(@RequestBody GradeDT gradeDT)
+	public ABFResponse update(@RequestBody GradeDT gradeDT)
 
 	{
 		ABFResponse response = new ABFResponse();
@@ -110,7 +108,7 @@ public class GradeController {
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-	public ABFResponse deleteGrade(@PathVariable("id") int gradeId)
+	public ABFResponse delete(@PathVariable("id") int gradeId)
 
 	{
 		ABFResponse response = new ABFResponse();
@@ -127,7 +125,7 @@ public class GradeController {
 	}
 
 	@RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
-	public ABFResponse findGrade(@PathVariable("id") int gradeId)
+	public ABFResponse find(@PathVariable("id") int gradeId)
 
 	{
 		ABFResponse response = new ABFResponse();

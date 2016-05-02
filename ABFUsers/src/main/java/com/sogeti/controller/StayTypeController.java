@@ -125,7 +125,7 @@ public class StayTypeController {
 	}
 
 	@RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
-	public ABFResponse findBusinessLine(@PathVariable("id") int stayTypeId)
+	public ABFResponse find(@PathVariable("id") int stayTypeId)
 
 	{
 		ABFResponse response = new ABFResponse();

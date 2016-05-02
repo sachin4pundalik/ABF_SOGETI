@@ -73,7 +73,7 @@ public class SkillController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public ABFResponse createSkill(@RequestBody SkillDT skillDT) {
+	public ABFResponse create(@RequestBody SkillDT skillDT) {
 
 		ABFResponse response = new ABFResponse();
 		Skill skillEntity = new Skill();
@@ -92,7 +92,7 @@ public class SkillController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public ABFResponse updateContract(@RequestBody SkillDT skillDT)
+	public ABFResponse update(@RequestBody SkillDT skillDT)
 
 	{
 		ABFResponse response = new ABFResponse();
@@ -111,7 +111,7 @@ public class SkillController {
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-	public ABFResponse deleteContract(@PathVariable("id") int skillId)
+	public ABFResponse delete(@PathVariable("id") int skillId)
 
 	{
 		ABFResponse response = new ABFResponse();
@@ -128,7 +128,7 @@ public class SkillController {
 	}
 
 	@RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
-	public ABFResponse findBusinessLine(@PathVariable("id") int skillId)
+	public ABFResponse find(@PathVariable("id") int skillId)
 
 	{
 		ABFResponse response = new ABFResponse();

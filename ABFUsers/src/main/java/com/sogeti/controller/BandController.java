@@ -73,7 +73,7 @@ public class BandController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public ABFResponse createSkill(@RequestBody BandDT bandDT) {
+	public ABFResponse create(@RequestBody BandDT bandDT) {
 
 		ABFResponse response = new ABFResponse();
 		Band bandEntity = new Band();
@@ -92,7 +92,7 @@ public class BandController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public ABFResponse updateContract(@RequestBody BandDT bandDT)
+	public ABFResponse update(@RequestBody BandDT bandDT)
 
 	{
 		ABFResponse response = new ABFResponse();
@@ -111,7 +111,7 @@ public class BandController {
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-	public ABFResponse deleteContract(@PathVariable("id") int bandId)
+	public ABFResponse delete(@PathVariable("id") int bandId)
 
 	{
 		ABFResponse response = new ABFResponse();
@@ -128,7 +128,7 @@ public class BandController {
 	}
 
 	@RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
-	public ABFResponse findBusinessLine(@PathVariable("id") int bandId)
+	public ABFResponse find(@PathVariable("id") int bandId)
 
 	{
 		ABFResponse response = new ABFResponse();

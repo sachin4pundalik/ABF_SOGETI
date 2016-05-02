@@ -50,7 +50,7 @@ import com.sogeti.service.ResourceTypeManager;
  * </PRE>
  */
 @RestController
-@RequestMapping("/businessLine")
+@RequestMapping("/businessline")
 public class BusinessLineController {
 	private Logger logger = Logger.getLogger(BusinessLineController.class);
 
@@ -61,19 +61,39 @@ public class BusinessLineController {
 	ResourceTypeManager resourceTypeManager;
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public ABFResponse getBusinessLines() {
+	public ABFResponse getAll() {
 
 		ABFResponse response = new ABFResponse();
 		List<BusinessLine> businessLines = new ArrayList<BusinessLine>();
-		businessLines = businessLineService.findAll();
-		response.setSuccessResponse(businessLines);
-		response.setStatus(ABFConstants.STATUS_SUCCESS);
+		List<BusinessLineDT> finalList = new ArrayList<>();
+		BusinessLineDT businessLineDT = null;
+		try {
+			businessLines = businessLineService.findAll();
+			for (BusinessLine businessLine : businessLines) {
+				
+				businessLineDT = new BusinessLineDT();
+				businessLineDT.setBusinesslineId(businessLine.getBusinesslineId());
+				businessLineDT.setBusinesslineName(businessLine.getBusinesslineName());
+				businessLineDT.setResourceTypeId(businessLine.getResourceType().getResourcetypeId());
+				businessLineDT.setResourceType(businessLine.getResourceType().getResourceType());
+				businessLineDT.setSkillId(businessLine.getSkill().getSkillId());
+				businessLineDT.setSkillName(businessLine.getSkill().getSkillName());
+				finalList.add(businessLineDT);
+			}
+			
+			response.setSuccessResponse(finalList);
+			response.setStatus(ABFConstants.STATUS_SUCCESS);
+		} catch (Exception e) {
+			logger.error("Exception :: ", e);
+			response.setSuccessResponse("No Business Lines, please ask Admin to setup data.");
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+		}
 
 		return response;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public ABFResponse createBusinessLine(@RequestBody BusinessLineDT businessLine) {
+	public ABFResponse create(@RequestBody BusinessLineDT businessLine) {
 
 		ABFResponse response = new ABFResponse();
 		BusinessLine businessLineEntity = new BusinessLine();
@@ -94,7 +114,7 @@ public class BusinessLineController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public ABFResponse updateContract(@RequestBody BusinessLineDT businessLine)
+	public ABFResponse update(@RequestBody BusinessLineDT businessLine)
 
 	{
 		ABFResponse response = new ABFResponse();
@@ -115,7 +135,7 @@ public class BusinessLineController {
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-	public ABFResponse deleteContract(@PathVariable("id") int businessLineId)
+	public ABFResponse delete(@PathVariable("id") int businessLineId)
 
 	{
 		ABFResponse response = new ABFResponse();
@@ -137,7 +157,7 @@ public class BusinessLineController {
 	
 
 	@RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
-	public ABFResponse findBusinessLine(@PathVariable("id") int businessLineId)
+	public ABFResponse find(@PathVariable("id") int businessLineId)
 
 	{
 		ABFResponse response = new ABFResponse();
@@ -145,7 +165,16 @@ public class BusinessLineController {
 		try {
 			
 			BusinessLine businessLine = businessLineService.find(businessLineId);
-			response.setSuccessResponse(businessLine);
+			
+			BusinessLineDT businessLineDT = new BusinessLineDT();
+			businessLineDT.setBusinesslineId(businessLine.getBusinesslineId());
+			businessLineDT.setBusinesslineName(businessLine.getBusinesslineName());
+			businessLineDT.setResourceTypeId(businessLine.getResourceType().getResourcetypeId());
+			businessLineDT.setResourceType(businessLine.getResourceType().getResourceType());
+			businessLineDT.setSkillId(businessLine.getSkill().getSkillId());
+			businessLineDT.setSkillName(businessLine.getSkill().getSkillName());
+			
+			response.setSuccessResponse(businessLineDT);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 		} catch (TechnicalException e) {
 			logger.error("Exception in method ... ABFController.deleteContract" + e);

@@ -125,7 +125,7 @@ public class RoleController {
 	}
 
 	@RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
-	public ABFResponse findBusinessLine(@PathVariable("id") int roleId)
+	public ABFResponse find(@PathVariable("id") int roleId)
 
 	{
 		ABFResponse response = new ABFResponse();

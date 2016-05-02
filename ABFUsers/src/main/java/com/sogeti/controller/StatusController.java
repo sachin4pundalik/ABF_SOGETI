@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
 import com.sogeti.db.models.Status;
-import com.sogeti.db.models.StayType;
 import com.sogeti.model.ABFResponse;
 import com.sogeti.model.StatusDT;
-import com.sogeti.model.StayTypeDT;
 import com.sogeti.service.StatusService;
 
 /**

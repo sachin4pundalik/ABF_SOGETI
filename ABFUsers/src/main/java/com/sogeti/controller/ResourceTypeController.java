@@ -47,7 +47,7 @@ import com.sogeti.service.ResourceTypeManager;
  * </PRE>
  */
 @RestController
-@RequestMapping("/resourceType")
+@RequestMapping("/resourcetype")
 public class ResourceTypeController {
 	private Logger logger = Logger.getLogger(ResourceTypeController.class);
 
@@ -55,7 +55,7 @@ public class ResourceTypeController {
 	ResourceTypeManager resourceTypeManager;
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public ABFResponse getAllFixedContracts() {
+	public ABFResponse getAll() {
 
 		ABFResponse response = new ABFResponse();
 		List<com.sogeti.db.models.ResourceType> resourceTypes = new ArrayList<com.sogeti.db.models.ResourceType>();
@@ -67,7 +67,7 @@ public class ResourceTypeController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public ABFResponse createContract(@RequestBody ResourceType resourcetype) {
+	public ABFResponse create(@RequestBody ResourceType resourcetype) {
 
 		ABFResponse response = new ABFResponse();
 		com.sogeti.db.models.ResourceType resourceTypeEntity = new com.sogeti.db.models.ResourceType();
@@ -86,7 +86,7 @@ public class ResourceTypeController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public ABFResponse updateContract(@RequestBody ResourceType resourcetype)
+	public ABFResponse update(@RequestBody ResourceType resourcetype)
 
 	{
 		ABFResponse response = new ABFResponse();
@@ -108,7 +108,7 @@ public class ResourceTypeController {
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-	public ABFResponse deleteContract(@PathVariable("id") int resourcetypeId)
+	public ABFResponse delete(@PathVariable("id") int resourcetypeId)
 
 	{
 		ABFResponse response = new ABFResponse();
@@ -127,4 +127,21 @@ public class ResourceTypeController {
 		return response;
 	}
 
+	@RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
+	public ABFResponse find(@PathVariable("id") int resourceTypeId)
+	{
+		ABFResponse response = new ABFResponse();
+
+		try {
+
+			com.sogeti.db.models.ResourceType role = resourceTypeManager.find(resourceTypeId);
+			response.setSuccessResponse(role);
+			response.setStatus(ABFConstants.STATUS_SUCCESS);
+		} catch (TechnicalException e) {
+			response.setFailureResponse(e.getMessage());
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+		}
+
+		return response;
+	}
 }

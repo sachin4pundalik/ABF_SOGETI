@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import java.util.List;
 
@@ -27,13 +28,13 @@ public class BusinessLine implements Serializable {
 	private String businesslineName;
 
 	//bi-directional many-to-one association to ResourceType
-	@JsonIgnore
+	@JsonView
 	@ManyToOne
 	@JoinColumn(name="resourcetype_id")
 	private ResourceType resourceType;
 
 	//bi-directional many-to-one association to Skill
-	@JsonIgnore
+	@JsonView
 	@ManyToOne
 	@JoinColumn(name="skill_id")
 	private Skill skill;
