@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
+import com.sogeti.db.models.ResourceType;
 import com.sogeti.model.ABFResponse;
-import com.sogeti.model.ResourceType;
+import com.sogeti.model.ResourceTypeDT;
 import com.sogeti.service.ResourceTypeManager;
 /**
  * FixedContractController class  provides implementations for the contract. 
@@ -59,8 +60,15 @@ public class ResourceTypeController {
 
 		ABFResponse response = new ABFResponse();
 		List<com.sogeti.db.models.ResourceType> resourceTypes = new ArrayList<com.sogeti.db.models.ResourceType>();
+		List<ResourceTypeDT> resourceTypeDtList = new ArrayList<ResourceTypeDT>();
 		resourceTypes = resourceTypeManager.findAll();
-		response.setSuccessResponse(resourceTypes);
+		for(ResourceType resourceType : resourceTypes){
+			ResourceTypeDT tempDT = new ResourceTypeDT();
+			tempDT.setResourcetypeId(resourceType.getResourcetypeId());
+			tempDT.setResourceType(resourceType.getResourceType());
+			resourceTypeDtList.add(tempDT);
+		}
+		response.setSuccessResponse(resourceTypeDtList);
 		response.setStatus(ABFConstants.STATUS_SUCCESS);
 
 		return response;

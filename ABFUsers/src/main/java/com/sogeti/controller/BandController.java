@@ -65,8 +65,15 @@ public class BandController {
 
 		ABFResponse response = new ABFResponse();
 		List<Band> bands = new ArrayList<Band>();
+		List<BandDT> bandsDt = new ArrayList<BandDT>();
 		bands = bandService.findAll();
-		response.setSuccessResponse(bands);
+		for(Band band : bands){
+			BandDT tempDt = new BandDT();
+			tempDt.setBandId(band.getBandId());
+			tempDt.setBandName(band.getBandName());
+			bandsDt.add(tempDt);
+		}
+		response.setSuccessResponse(bandsDt);
 		response.setStatus(ABFConstants.STATUS_SUCCESS);
 
 		return response;

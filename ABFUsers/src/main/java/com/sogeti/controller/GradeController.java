@@ -62,8 +62,15 @@ public class GradeController {
 
 		ABFResponse response = new ABFResponse();
 		List<Grade> grades = new ArrayList<Grade>();
+		List<GradeDT> gradesDT = new ArrayList<GradeDT>();
 		grades = gradeService.findAll();
-		response.setSuccessResponse(grades);
+		for(Grade grade : grades){
+			GradeDT tempDt = new GradeDT();
+			tempDt.setGradeId(grade.getGradeId());
+			tempDt.setGradeType(grade.getGradeType());
+			gradesDT.add(tempDt);
+		}
+		response.setSuccessResponse(gradesDT);
 		response.setStatus(ABFConstants.STATUS_SUCCESS);
 
 		return response;
