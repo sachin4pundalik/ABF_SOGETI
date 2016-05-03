@@ -1,0 +1,14 @@
+{
+"status":"success",
+"successResponse":[
+    {"roleId":1,"roleType":"1"},
+    {"roleId":2,"roleType":"2"},
+    {"roleId":3,"roleType":"3"},
+    {"roleId":4,"roleType":"4"},
+    {"roleId":5,"roleType":"5"},
+    {"roleId":6,"roleType":"6"},
+    {"roleId":7,"roleType":"7"},
+    {"roleId":8,"roleType":"8"},
+    {"roleId":8,"roleType":"9"},
+    {"roleId":8,"roleType":"10"}
+]}

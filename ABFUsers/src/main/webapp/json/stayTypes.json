@@ -1,0 +1,8 @@
+{
+"status":"success",
+"successResponse":[
+    {"stayTypeId":1,"stayType":"Standard"},
+    {"stayTypeId":2,"stayType":"Long"},
+    {"stayTypeId":3,"stayType":"Short"}
+]
+}

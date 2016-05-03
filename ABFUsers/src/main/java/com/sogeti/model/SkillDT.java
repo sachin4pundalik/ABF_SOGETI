@@ -24,5 +24,19 @@ public class SkillDT {
 		this.skillName = skillName;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SkillDT [skillId=");
+		builder.append(skillId);
+		builder.append(", skillName=");
+		builder.append(skillName);
+		builder.append("]");
+		return builder.toString();
+	}
+
 	
 }

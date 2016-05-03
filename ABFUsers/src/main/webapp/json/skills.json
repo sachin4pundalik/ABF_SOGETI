@@ -1,0 +1,15 @@
+{
+"status":"success",
+"successResponse":[
+    {"skillId":1,"skillName":"Java"},
+    {"skillId":2,"skillName":"Microsoft"},
+    {"skillId":3,"skillName":"Testing"},
+    {"skillId":4,"skillName":"SAP"},
+    {"skillId":5,"skillName":"Infra Structure"},
+    {"skillId":6,"skillName":"Business Analyst"},
+    {"skillId":7,"skillName":"Data warehouse"},
+    {"skillId":8,"skillName":"JavaScript"},
+    {"skillId":8,"skillName":"Web Designing"},
+    {"skillId":8,"skillName":"Architech"}
+]
+}

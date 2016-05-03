@@ -1,0 +1,13 @@
+{
+"status":"success",
+"successResponse":[
+    {"businesslineId":"1","businesslineName":"Bline1","resourceTypeId":"1","skillId":"1"},
+    {"businesslineId":"2","businesslineName":"Bline2","resourceTypeId":"1","skillId":"1"},
+    {"businesslineId":"3","businesslineName":"Bline3","resourceTypeId":"1","skillId":"1"},
+    {"businesslineId":"4","businesslineName":"Bline4","resourceTypeId":"1","skillId":"1"},
+    {"businesslineId":"5","businesslineName":"Bline5","resourceTypeId":"1","skillId":"1"},
+    {"businesslineId":"6","businesslineName":"Bline6","resourceTypeId":"1","skillId":"1"},
+    {"businesslineId":"7","businesslineName":"Bline7","resourceTypeId":"1","skillId":"1"}
+    
+]
+}

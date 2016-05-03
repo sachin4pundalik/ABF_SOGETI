@@ -38,4 +38,24 @@ public class FixedContractDT {
 	public void setFixedcostId(int fixedcostId) {
 		this.fixedcostId = fixedcostId;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("FixedContractDT [price=");
+		builder.append(price);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", contractId=");
+		builder.append(contractId);
+		builder.append(", fixedId=");
+		builder.append(fixedId);
+		builder.append(", fixedcostId=");
+		builder.append(fixedcostId);
+		builder.append("]");
+		return builder.toString();
+	}
+	
 }

@@ -15,5 +15,19 @@ public class RoleDT {
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RoleDT [roleId=");
+		builder.append(roleId);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append("]");
+		return builder.toString();
+	}
+	
 	
 }

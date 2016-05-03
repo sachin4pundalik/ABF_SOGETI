@@ -1,6 +1,6 @@
 'use strict';
 
-webappApp.service('createContractService', ['$http', '$q', 'toastr',function($http, $q, toastr) {
+webappApp.service('createContractService', ['$http', '$q', function($http, $q) {
 
 	var contractService = this;
 
@@ -19,37 +19,43 @@ webappApp.service('createContractService', ['$http', '$q', 'toastr',function($ht
 	             					];
 	
 	contractService.createContract = function (contract){
+		
 		return $http.post('./contract/create',contract)
         .then(function(response) {
-            if (typeof response.data === 'object') {
-                return response.data;
+        	
+        	var status = response.data.status;
+        	var successRes = null;
+        	var failureRes = null;
+            if (angular.equals(status,"success")) {
+            	console.log("Success " + JSON.stringify(response.data));
+            	return $q.resolve(response.data.successResponse);
             } else {
-            		toastr.error("Error in operation.", "Operation Failure");
-            	 return response.data;
+            	console.log("Failure " + JSON.stringify(response.data));
+                return $q.reject(response.data.successResponse);
             }
-
         }, function(response) {
             // something went wrong
-            //return $q.reject(response.data);
-        	toastr.error(JSON.stringify(response,null,2), "Failed Operation");
+        	console.log("Failure " + JSON.stringify(response));
+            return $q.reject(response.data);
         });
 	}
 	
-	contractService.getAllContracts = function() {/*
-		return $http.get('http://fishing-weather-api.com/sunday/afternoon')
+	contractService.getAllContracts = function() {
+		return $http.get('./contract/all')
         .then(function(response) {
-            if (typeof response.data === 'object') {
-                return response.data;
+        	var status = response.data.status;
+        	var successRes = null;
+        	var failureRes = null;
+            if (angular.equals(status,'success')) {
+            	return $q.resolve(response.data.successResponse);
             } else {
-                // invalid response
-                return $q.reject(response.data);
+                return $q.reject(response.data.successResponse);
             }
-
         }, function(response) {
             // something went wrong
             return $q.reject(response.data);
         });
-	*/};
+	};
 
 	contractService.getUserContracts = function() {
 		

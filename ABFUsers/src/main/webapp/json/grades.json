@@ -1,0 +1,15 @@
+{
+"status":"success",
+"successResponse":[
+    {"gradeId":1,"gradeType":"1"},
+    {"gradeId":2,"gradeType":"2"},
+    {"gradeId":3,"gradeType":"3"},
+    {"gradeId":4,"gradeType":"4"},
+    {"gradeId":5,"gradeType":"5"},
+    {"gradeId":6,"gradeType":"6"},
+    {"gradeId":7,"gradeType":"7"},
+    {"gradeId":8,"gradeType":"8"},
+    {"gradeId":8,"gradeType":"9"},
+    {"gradeId":8,"gradeType":"10"}
+]
+}

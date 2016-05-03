@@ -1,0 +1,68 @@
+<blockquote>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+		posuere erat a ante.</p>
+	<small>Someone famous in <cite title="Source Title">ABF Admin</cite></small>
+</blockquote>
+
+<div class="well well-sm">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Master data - Stay</h3>
+		</div>
+		<div class="panel-body">
+			<div data-ng-switch="currentView">
+			<div data-ng-switch-when="new">
+					<form name="stayNewForm" >
+						<div class="form-group">
+						  <label class="control-label" for="focusedInput">Stay</label>
+						  <input class="form-control" id="focusedInput" type="text" maxlength="50" data-ng-model="stay.stayType" required="required" placeholder="Stay type">
+						</div>
+						<div class="form-group">
+						  <button data-ng-click="goBack()" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+						  <button data-ng-click="save()" data-ng-disabled="!stayNewForm.$valid" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-save"></span> Save</button>
+						</div>
+					</form>
+				</div>
+				<div data-ng-switch-when="edit">
+					<form name="stayEditForm" >
+						<div class="form-group">
+						  <label class="control-label" for="focusedInput">Stay</label>
+						  <input class="form-control" id="focusedInput" type="text" maxlength="50" data-ng-model="stay.stayType" required="required" placeholder="Stay Type">
+						</div>
+						<div class="form-group">
+						  <button data-ng-click="goBack()" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+						  <button data-ng-click="update()" data-ng-disabled="!stayEditForm.$valid" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-save"></span> Save</button>
+						</div>
+					</form>
+				</div>
+				<div data-ng-switch-default>
+					<table class="table table-striped table-hover ">
+						<thead>
+							<tr>
+								<th colspan="3">
+									<input type="text" data-ng-model="stayFilter"  placeholder="Search...">
+									<button class="btn btn-warning btn-sm pull-right" data-ng-click="newStay()"><span class="glyphicon glyphicon-plus"></span> New</button>
+								</th>
+							</tr>
+							<tr>
+								<th>ID#</th>
+								<th>Stay Type</th>
+								<th>Edit/Del</th>
+							</tr>
+						</thead>
+						<tbody data-ng-repeat="stay in stayTypes| filter:stayFilter">
+							<tr>
+								<td>{{stay.stayTypeId}}</td>
+								<td>{{stay.stayType}}</td>
+								<td>
+									<button data-ng-click="edit(stay.stayTypeId)" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
+									<button data-ng-click="remove(stay.stayTypeId)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

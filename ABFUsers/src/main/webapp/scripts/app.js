@@ -20,6 +20,29 @@ return {
     }
 }
 }]);
+
+webappApp.constant("ABF_CONSTANTS", {
+	"FAILURE_HEADER":"Failure Message",
+	"INFO_HEADER":"Message",
+	
+	"SUCCESS":"success",
+	"FAILURE":"failure",
+    "FAILURE_MESSAGE":"Unable to perform operation!!",
+    
+    "MASTER_DATA": "Master Data - ",
+    "RESOURCE_TYPES":"Resource Type(s)",
+    "BANDS": "Band(s)",
+    "GRADES": "Grade(s)",
+    "ROLES": "Role(s)",
+    "USER_ROLE":"User Role(s)",
+    "ONSHORE_PRICES": "Onshore Price(s)",
+    "OFFSHORE_PRICES": "Offshore Price(s)",
+    "STAY_TYPE": "Stay Type(s)",
+    "STATUS": "Status(s)",
+    "SKILLS": "Skill(s)",
+    "BUSINESS_LINES": "Business Line(s)",
+    "FIXED_HOURS": "Fixed Hour(s)"
+});
 /*webappApp.config(function(toastrConfig) {
 	  angular.extend(toastrConfig, {
 	    allowHtml: false,
@@ -89,17 +112,76 @@ webappApp.config([ '$routeProvider', 'toastrConfig', function($routeProvider, to
     	templateUrl : 'angular-components/create-contract/create-contract.html',
 		controller : 'createContractCtrl'
 	})
+	//Master data settings start
+	.when('/mrtype', {
+    	templateUrl : 'angular-components/master/resourcetype/resourcetype.html',
+		controller : 'MasterResourceTypeCtrl'
+	})
+	.when('/mskill', {
+    	templateUrl : 'angular-components/master/skill/skill.html',
+		controller : 'MasterSkillCtrl'
+	})
+	.when('/mband', {
+    	templateUrl : 'angular-components/master/band/band.html',
+		controller : 'MasterBandCtrl'
+	})
+	.when('/mbline', {
+    	templateUrl : 'angular-components/master/bline/bline.html',
+		controller : 'MasterBlineCtrl'
+	})
+	.when('/mrole', {
+    	templateUrl : 'angular-components/master/role/role.html',
+		controller : 'MasterRoleCtrl'
+	})
+	.when('/mgrade', {
+    	templateUrl : 'angular-components/master/grade/grade.html',
+		controller : 'MasterGradeCtrl'
+	})
+	.when('/mstatus', {
+    	templateUrl : 'angular-components/master/status/status.html',
+		controller : 'MasterApprovalStatusCtrl'
+	})
+	.when('/mstay', {
+    	templateUrl : 'angular-components/master/stay/stay.html',
+		controller : 'MasterStayCtrl'
+	})
+	.when('/monshoreprice', {
+    	templateUrl : 'angular-components/master/onshoreprice/onshoreprice.html',
+		controller : 'MasterOnshorePriceCtrl'
+	})
+	.when('/moffshoreprice', {
+    	templateUrl : 'angular-components/master/offshoreprice/offshoreprice.html',
+		controller : 'MasterOffshorePriceCtrl'
+	})
+	.when('/mfixedhours', {
+    	templateUrl : 'angular-components/master/fixedhours/fixedhours.html',
+		controller : 'MasterFixedHourCtrl'
+	})
+	.when('/muserrole', {
+    	templateUrl : 'angular-components/master/userrole/userrole.html',
+		controller : 'MasterUserRoleCtrl'
+	})
+	//Master data setting end
 	.otherwise({
 		redirectTo : '/login'
 	});
-  	
+  	/*
+  	 	toast-top-right (Default)
+		toast-top-center
+		toast-top-left
+		toast-top-full-width
+		toast-bottom-right
+		toast-bottom-center
+		toast-bottom-left
+		toast-bottom-full-width 
+  	 */
   	//toastr configuration
-  	angular.extend(toastrConfig, {
+  	/*angular.extend(toastrConfig, {
 	   
-	    positionClass: 'toast-top-right',
+	    positionClass: 'toast-bottom-full-width',
 	    progressBar: true
 	   
-	  });
+	  });*/
 } ])
 .run (['$rootScope', '$location',  '$http', '$cookieStore', 
            function ($rootScope, $location,  $http ,$cookieStore ){

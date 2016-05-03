@@ -23,4 +23,19 @@ public class GradeDT {
 		this.gradeType = gradeType;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("GradeDT [gradeId=");
+		builder.append(gradeId);
+		builder.append(", gradeType=");
+		builder.append(gradeType);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	
 }

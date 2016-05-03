@@ -1,0 +1,51 @@
+<blockquote>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+		posuere erat a ante.</p>
+	<small>Someone famous in <cite title="Source Title">Source
+			Title</cite></small>
+</blockquote>
+
+<div class="well well-sm">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Master data - Band</h3>
+		</div>
+		<div class="panel-body">
+			<div ng-switch="currentView">
+				<div data-ng-switch-when="edit">
+					<form name="bandForm" >
+						<div class="form-group">
+						  <label class="control-label" for="focusedInput">Focused input</label>
+						  <input class="form-control" id="focusedInput" type="text" value="This is focused...">
+						</div>
+						<div class="form-group">
+						  <a href="#" data-ng-click="goBack()" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+									<a href="#" data-ng-click="save()" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> Save</a>
+						</div>
+					</form>
+				</div>
+				<div data-ng-switch-default>
+					<table class="table table-striped table-hover ">
+						<thead>
+							<tr>
+								<th>ID#</th>
+								<th>Band</th>
+								<th>Edit/Del</th>
+							</tr>
+						</thead>
+						<tbody data-ng-repeat="band in bands">
+							<tr>
+								<td>{{band.bandId}}</td>
+								<td>{{band.bandName}}</td>
+								<td>
+									<a href="#" data-ng-click="edit(band.bandId)" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a>
+									<a href="#" data-ng-click="remove(band.bandId)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

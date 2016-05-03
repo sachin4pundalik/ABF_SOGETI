@@ -6,8 +6,25 @@ function dataSetService_Fn(){
 	this.startContract = moment();
 	this.endContract = moment().add(24, 'month');
 	
-	this.resourceType = [{key:"Onshore", value:"1"}, {key:"Offshore",value:"2"}];
-	this.projectTypes = [{projType:"Onshore", id:"1"}, {projType:"Offshore",id:"2"}];
+	//Master data set
+	this.rTypes = [{key:"Onshore", value:"1"}, {key:"Offshore",value:"2"}];
+	this.bands=[];
+	this.roles=[];
+	this.grades=[];
+	this.stayTypes=[];
+	this.blines=[];
+	this.skills=[];
+	this.userRoles=[];
+	this.fixedHours=[];
+	this.statuses=[];
+	this.onshorepice=[];
+	this.offshoreprice=[];
+	
+	//Toaster alerts
+	this.errorAlertOptions= {title: "title", body:"Error Text",positionClass:'toast-top-full-width',progressBar: true};
+	this.infoAlertOptions= {title: "title", body:"Info Text",positionClass:'toast-top-right',progressBar: true};
+	this.warningAlertOptions= {title: "title", body:"Warning Text",positionClass:'toast-top-right',progressBar: true};
+	this.successAlertOptions= {title: "title", body:"Success Text",positionClass:'toast-bottom-full-width',progressBar: true};
 	
 	
 }

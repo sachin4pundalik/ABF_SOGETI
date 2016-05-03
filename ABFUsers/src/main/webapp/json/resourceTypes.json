@@ -1,0 +1,8 @@
+{
+"status":"success",
+"successResponse":
+[
+    {"resourcetypeId":1,"resourceType":"Onshore"},
+    {"resourcetypeId":2,"resourceType":"Offshore"}
+]
+}

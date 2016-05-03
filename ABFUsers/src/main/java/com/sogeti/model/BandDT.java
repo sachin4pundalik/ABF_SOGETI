@@ -20,5 +20,19 @@ public class BandDT {
 		this.bandName = bandName;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("BandDT [bandId=");
+		builder.append(bandId);
+		builder.append(", bandName=");
+		builder.append(bandName);
+		builder.append("]");
+		return builder.toString();
+	}
+
 
 }

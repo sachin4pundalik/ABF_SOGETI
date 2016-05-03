@@ -76,8 +76,11 @@ public class BusinessLineController {
 				businessLineDT.setBusinesslineName(businessLine.getBusinesslineName());
 				businessLineDT.setResourceTypeId(businessLine.getResourceType().getResourcetypeId());
 				businessLineDT.setResourceType(businessLine.getResourceType().getResourceType());
-				businessLineDT.setSkillId(businessLine.getSkill().getSkillId());
-				businessLineDT.setSkillName(businessLine.getSkill().getSkillName());
+				if(businessLine.getSkill()!=null){
+					businessLineDT.setSkillId(businessLine.getSkill().getSkillId());
+					businessLineDT.setSkillName(businessLine.getSkill().getSkillName());
+				}
+				
 				finalList.add(businessLineDT);
 			}
 			
@@ -171,8 +174,10 @@ public class BusinessLineController {
 			businessLineDT.setBusinesslineName(businessLine.getBusinesslineName());
 			businessLineDT.setResourceTypeId(businessLine.getResourceType().getResourcetypeId());
 			businessLineDT.setResourceType(businessLine.getResourceType().getResourceType());
-			businessLineDT.setSkillId(businessLine.getSkill().getSkillId());
-			businessLineDT.setSkillName(businessLine.getSkill().getSkillName());
+			if(businessLine.getSkill()!=null){
+				businessLineDT.setSkillId(businessLine.getSkill().getSkillId());
+				businessLineDT.setSkillName(businessLine.getSkill().getSkillName());
+			}
 			
 			response.setSuccessResponse(businessLineDT);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);

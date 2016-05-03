@@ -1,0 +1,103 @@
+<blockquote>
+	<p>Resource specific to the business line and skill set</p>
+	<small>Someone famous in <cite title="Source Title">ABF Admin</cite></small>
+</blockquote>
+
+<div class="well well-sm">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Master data - Business Line</h3>
+		</div>
+		<div class="panel-body">
+			<div data-ng-switch="currentView">
+				<div data-ng-switch-when="new">
+					<form name="blineNewForm" >
+						<div class="form-group">
+							<label for="select" class="col-lg-2 control-label">Resource Type</label>
+							<div class="col-lg-10">
+								<select class="form-control"  data-ng-model="bline.resourceTypeId" required="required">
+							      <option data-ng-repeat="option in dataSetService.rTypes" value="{{option.resourcetypeId}}">{{option.resourceType}}</option>
+							    </select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="select" class="col-lg-2 control-label">Skill</label>
+							<div class="col-lg-10">
+								<select class="form-control"  data-ng-model="bline.skillId">
+							      <option data-ng-repeat="option in dataSetService.skills" value="{{option.skillId}}">{{option.skillName}}</option>
+							    </select>
+							</div>
+						</div>
+						<div class="form-group">
+						  <label class="control-label" for="focusedInput">Business Line</label>
+						  <input class="form-control" id="focusedInput" type="text" data-ng-model="bline.businesslineName" maxlength="50" required="required" placeholder="Business line">
+						</div>
+						<div class="form-group">
+						  <button data-ng-click="goBack()" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+						  <button data-ng-click="save()" data-ng-disabled="!blineNewForm.$valid" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-save"></span> Save</button>
+						</div>
+					</form>
+				</div>
+				<div data-ng-switch-when="edit">
+					<form name="blineEditForm" >
+						<div class="form-group">
+							<label for="select" class="col-lg-2 control-label">Resource Type</label>
+							<div class="col-lg-10">
+								<select class="form-control"  data-ng-model="bline.resourceTypeId" required="required">
+							      <option data-ng-repeat="option in dataSetService.rTypes" value="{{option.resourcetypeId}}">{{option.resourceType}}</option>
+							    </select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="select" class="col-lg-2 control-label">Skill</label>
+							<div class="col-lg-10">
+								<select class="form-control"  data-ng-model="bline.skillId">
+							      <option data-ng-repeat="option in dataSetService.skills" value="{{option.skillId}}">{{option.skillName}}</option>
+							    </select>
+							</div>
+						</div>
+						<div class="form-group">
+						  <label class="control-label" for="focusedInput">Business Line</label>
+						  <input class="form-control" id="focusedInput" type="text" data-ng-model="bline.businesslineName" maxlength="50" required="required" placeholder="Business line">
+						</div>
+						<div class="form-group">
+						  <button data-ng-click="goBack()" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+						  <button data-ng-click="update()" data-ng-disabled="!blineEditForm.$valid" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-save"></span> Save</button>
+						</div>
+					</form>
+				</div>
+				<div data-ng-switch-default>
+					<table class="table table-striped table-hover ">
+						<thead>
+							<tr>
+								<th colspan="5">
+									<input type="text" data-ng-model="blineFilter"  placeholder="Search..."> 
+									<button class="btn btn-warning btn-sm pull-right" data-ng-click="newBline()"><span class="glyphicon glyphicon-plus"></span> New</button>
+								</th>
+							</tr>
+							<tr>
+								<th>ID#</th>
+								<th>Business Line</th>
+								<th>Resource Type</th>
+								<th>Skill Name</th>
+								<th>Edit/Del</th>
+							</tr>
+						</thead>
+						<tbody data-ng-repeat="bline in blines | filter:blineFilter">
+							<tr>
+								<td width="50">{{bline.businesslineId}}</td>
+								<td>{{bline.businesslineName}}</td>
+								<td>{{bline.resourceType}}</td>
+								<td>{{bline.skillName}}</td>
+								<td>
+									<button data-ng-click="edit(bline.businesslineId)" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
+									<button data-ng-click="remove(bline.businesslineId)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

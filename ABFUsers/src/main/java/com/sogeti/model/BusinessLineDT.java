@@ -68,5 +68,28 @@ public class BusinessLineDT {
 	public void setSkillName(String skillName) {
 		this.skillName = skillName;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("BusinessLineDT [businesslineId=");
+		builder.append(businesslineId);
+		builder.append(", businesslineName=");
+		builder.append(businesslineName);
+		builder.append(", resourceTypeId=");
+		builder.append(resourceTypeId);
+		builder.append(", skillId=");
+		builder.append(skillId);
+		builder.append(", resourceType=");
+		builder.append(resourceType);
+		builder.append(", skillName=");
+		builder.append(skillName);
+		builder.append("]");
+		return builder.toString();
+	}
+
 	
 }

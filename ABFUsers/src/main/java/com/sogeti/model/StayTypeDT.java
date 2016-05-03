@@ -15,4 +15,19 @@ public class StayTypeDT {
 	public void setStayType(String stayType) {
 		this.stayType = stayType;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("StayTypeDT [stayTypeId=");
+		builder.append(stayTypeId);
+		builder.append(", stayType=");
+		builder.append(stayType);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 }
