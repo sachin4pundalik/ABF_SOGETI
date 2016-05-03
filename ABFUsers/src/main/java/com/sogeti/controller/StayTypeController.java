@@ -61,9 +61,16 @@ public class StayTypeController {
 	public ABFResponse getStayTypes() {
 
 		ABFResponse response = new ABFResponse();
-		List<StayType> skills = new ArrayList<StayType>();
-		skills = stayTypeService.findAll();
-		response.setSuccessResponse(skills);
+		List<StayType> stayTypes = new ArrayList<StayType>();
+		List<StayTypeDT> stayTypesDT = new ArrayList<StayTypeDT>();
+		stayTypes = stayTypeService.findAll();
+		for(StayType stayType : stayTypes){
+			StayTypeDT tempDT = new StayTypeDT();
+			tempDT.setStayTypeId(stayType.getStayTypeId());
+			tempDT.setStayType(stayType.getStayType());
+			stayTypesDT.add(tempDT);
+		}
+		response.setSuccessResponse(stayTypesDT);
 		response.setStatus(ABFConstants.STATUS_SUCCESS);
 
 		return response;

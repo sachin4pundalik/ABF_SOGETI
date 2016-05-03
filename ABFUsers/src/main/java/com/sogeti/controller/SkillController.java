@@ -65,8 +65,15 @@ public class SkillController {
 
 		ABFResponse response = new ABFResponse();
 		List<Skill> skills = new ArrayList<Skill>();
+		List<SkillDT> skillsDT = new ArrayList<SkillDT>();
 		skills = skillService.findAll();
-		response.setSuccessResponse(skills);
+		for(Skill skill : skills){
+			SkillDT tempDT = new SkillDT();
+			tempDT.setSkillId(skill.getSkillId());
+			tempDT.setSkillName(skill.getSkillName());
+			skillsDT.add(tempDT);
+		}
+		response.setSuccessResponse(skillsDT);
 		response.setStatus(ABFConstants.STATUS_SUCCESS);
 
 		return response;

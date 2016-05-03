@@ -62,8 +62,15 @@ public class RoleController {
 
 		ABFResponse response = new ABFResponse();
 		List<Role> roles = new ArrayList<Role>();
+		List<RoleDT> rolesDT = new ArrayList<RoleDT>();
 		roles = roleService.findAll();
-		response.setSuccessResponse(roles);
+		for(Role role : roles){
+			RoleDT tempDT = new RoleDT();
+			tempDT.setRoleId(role.getRoleId());
+			tempDT.setRoleType(role.getRoleType());
+			rolesDT.add(tempDT);
+		}
+		response.setSuccessResponse(rolesDT);
 		response.setStatus(ABFConstants.STATUS_SUCCESS);
 
 		return response;
