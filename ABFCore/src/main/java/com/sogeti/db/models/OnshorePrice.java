@@ -26,7 +26,7 @@ public class OnshorePrice implements Serializable {
 	private String description;
 
 	@Column(name="last_updated_by")
-	private int lastUpdatedBy;
+	private Integer lastUpdatedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="last_updated_datetime")
@@ -77,11 +77,11 @@ public class OnshorePrice implements Serializable {
 		this.description = description;
 	}
 
-	public int getLastUpdatedBy() {
+	public Integer getLastUpdatedBy() {
 		return this.lastUpdatedBy;
 	}
 
-	public void setLastUpdatedBy(int lastUpdatedBy) {
+	public void setLastUpdatedBy(Integer lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
 
