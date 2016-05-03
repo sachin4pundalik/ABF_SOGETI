@@ -95,7 +95,7 @@ function MasterFixedHourCtrl_Fn($scope, $location,toastr, dataSetService, master
 		masterDataService.remove('./fixedCost/delete/', fhourId)
 		.then(function(response){
 			$scope.getfixedHours();
-			toastr.success("Fixed Hours is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BUSINESS_LINES);
+			toastr.success("Fixed Hours is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.FIXED_HOURS);
 		}, function(error){
 			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
 			console.log(JSON.stringify(error));
@@ -105,13 +105,17 @@ function MasterFixedHourCtrl_Fn($scope, $location,toastr, dataSetService, master
 	$scope.goBack = function(){
 		
 		$scope.currentView ='';
-		
+		$scope.reset();
+	}
+	
+	$scope.reset=function(){
+
 		$scope.fHour= {
 				fixedcostId:'',
 				fixedcostName:'',
 				fixedcostDescription:''
 		};
-	}
+	};
 	
 	$scope.getfixedHours();
 }
