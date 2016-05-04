@@ -12,15 +12,42 @@ import java.util.Date;
 public class Contract {
 
 	private int contractId;
-    private String contractName;
-	private String customerName;
-	private String companyName;
 	private String comments;
-	private String contractCreatedBy;
+	private String companyName;
+	private String contractName;
 	private Date contractStartDate;
 	private Date contractEndDate;
+
+	private Date contractCreatedDatetime;
+	private Date contractModifiedDateTime;
+	private String customerName;
 	private int loginId;
-    /**
+	
+	/**
+	 * @return the contractId
+	 */
+	public int getContractId() {
+		return contractId;
+	}
+	/**
+	 * @param contractId the contractId to set
+	 */
+	public void setContractId(int contractId) {
+		this.contractId = contractId;
+	}
+	/**
+	 * @return the comments
+	 */
+	public String getComments() {
+		return comments;
+	}
+	/**
+	 * @param comments the comments to set
+	 */
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+	/**
 	 * @return the companyName
 	 */
 	public String getCompanyName() {
@@ -33,28 +60,16 @@ public class Contract {
 		this.companyName = companyName;
 	}
 	/**
-	 * @return the contractCreatedBy
+	 * @return the contractCreatedDatetime
 	 */
-	public String getContractCreatedBy() {
-		return contractCreatedBy;
+	public Date getContractCreatedDatetime() {
+		return contractCreatedDatetime;
 	}
 	/**
-	 * @param contractCreatedBy the contractCreatedBy to set
+	 * @param contractCreatedDatetime the contractCreatedDatetime to set
 	 */
-	public void setContractCreatedBy(String contractCreatedBy) {
-		this.contractCreatedBy = contractCreatedBy;
-	}
-	/**
-	 * @return the contractStartDate
-	 */
-	public Date getContractStartDate() {
-		return contractStartDate;
-	}
-	/**
-	 * @param contractStartDate the contractStartDate to set
-	 */
-	public void setContractStartDate(Date contractStartDate) {
-		this.contractStartDate = contractStartDate;
+	public void setContractCreatedDatetime(Date contractCreatedDatetime) {
+		this.contractCreatedDatetime = contractCreatedDatetime;
 	}
 	/**
 	 * @return the contractEndDate
@@ -69,29 +84,16 @@ public class Contract {
 		this.contractEndDate = contractEndDate;
 	}
 	/**
-	 * @return the loginId
+	 * @return the contractModifiedDateTime
 	 */
-	public int getLoginId() {
-		return loginId;
+	public Date getContractModifiedDateTime() {
+		return contractModifiedDateTime;
 	}
 	/**
-	 * @param loginId the loginId to set
+	 * @param contractModifiedDateTime the contractModifiedDateTime to set
 	 */
-	public void setLoginId(int loginId) {
-		this.loginId = loginId;
-	}
-	private Status status;
-	/**
-	 * @return the contractId
-	 */
-	public int getContractId() {
-		return contractId;
-	}
-	/**
-	 * @param contractId the contractId to set
-	 */
-	public void setContractId(int contractId) {
-		this.contractId = contractId;
+	public void setContractModifiedDateTime(Date contractModifiedDateTime) {
+		this.contractModifiedDateTime = contractModifiedDateTime;
 	}
 	/**
 	 * @return the contractName
@@ -106,6 +108,18 @@ public class Contract {
 		this.contractName = contractName;
 	}
 	/**
+	 * @return the contractStartDate
+	 */
+	public Date getContractStartDate() {
+		return contractStartDate;
+	}
+	/**
+	 * @param contractStartDate the contractStartDate to set
+	 */
+	public void setContractStartDate(Date contractStartDate) {
+		this.contractStartDate = contractStartDate;
+	}
+	/**
 	 * @return the customerName
 	 */
 	public String getCustomerName() {
@@ -118,29 +132,16 @@ public class Contract {
 		this.customerName = customerName;
 	}
 	/**
-	 * @return the comments
+	 * @return the loginId
 	 */
-	public String getComments() {
-		return comments;
+	public int getLoginId() {
+		return loginId;
 	}
 	/**
-	 * @param comments the comments to set
+	 * @param loginId the loginId to set
 	 */
-	public void setComments(String comments) {
-		this.comments = comments;
-	}
-	
-	/**
-	 * @return the status
-	 */
-	public Status getStatus() {
-		return status;
-	}
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setLoginId(int loginId) {
+		this.loginId = loginId;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -150,28 +151,27 @@ public class Contract {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Contract [contractId=");
 		builder.append(contractId);
-		builder.append(", contractName=");
-		builder.append(contractName);
-		builder.append(", customerName=");
-		builder.append(customerName);
-		builder.append(", companyName=");
-		builder.append(companyName);
 		builder.append(", comments=");
 		builder.append(comments);
-		builder.append(", contractCreatedBy=");
-		builder.append(contractCreatedBy);
-		builder.append(", contractStartDate=");
-		builder.append(contractStartDate);
+		builder.append(", companyName=");
+		builder.append(companyName);
+		builder.append(", contractCreatedDatetime=");
+		builder.append(contractCreatedDatetime);
 		builder.append(", contractEndDate=");
 		builder.append(contractEndDate);
+		builder.append(", contractModifiedDateTime=");
+		builder.append(contractModifiedDateTime);
+		builder.append(", contractName=");
+		builder.append(contractName);
+		builder.append(", contractStartDate=");
+		builder.append(contractStartDate);
+		builder.append(", customerName=");
+		builder.append(customerName);
 		builder.append(", loginId=");
 		builder.append(loginId);
-		builder.append(", status=");
-		builder.append(status);
 		builder.append("]");
 		return builder.toString();
 	}
-    
-    
+	
 	
 }

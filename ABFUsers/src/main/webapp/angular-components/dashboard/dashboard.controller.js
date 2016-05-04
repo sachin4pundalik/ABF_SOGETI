@@ -1,34 +1,32 @@
-webappApp.controller('dashboardCtrl', ['$scope', 'dashboardService', 'toastr', dashboardCtrl_fn]);
+webappApp.controller('dashboardCtrl', ['$scope', 'dashboardService', 'toastr', 'ABF_CONSTANTS', 'dataSetService', dashboardCtrl_fn]);
 
-function dashboardCtrl_fn($scope, dashboardService, toastr){
+function dashboardCtrl_fn($scope, dashboardService, toastr, ABF_CONSTANTS, dataSetService){
 	
 	$scope.contractsbyMe = [];
 	$scope.contractNeedApproval = [];
 	
-	$scope.loadMyContracts = function (){
+	$scope.getAllContracts = function(){
+		toastr.options = dataSetService.errorAlertOptions;
+		dashboardService.loadMyContracts()
+		.then(
+				function(response) {
+					if (angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)) {
+						
+						$scope.contractsbyMe = response.data.successResponse;
+						toastr.options = dataSetService.successAlertOptions;
+						toastr.success(
+								'Contract(s) loaded successfully!!',
+								'Message');					
+					} else {
+						toastr.error(ABF_CONSTANTS.FAILURE_MESSAGE, ABF_CONSTANTS.FAILURE_HEADER);
+						console.error(JSON.stringify(error, null, 2));
+					}
+				},function(error){
+					toastr.error(ABF_CONSTANTS.FAILURE_MESSAGE, ABF_CONSTANTS.FAILURE_HEADER);
+					console.error(JSON.stringify(error, null, 2));
+				});
 		
-		//var promise = dashboardService.loadMyContracts();
-		//promise.then(function(response) {
-			var responseData = [
-			                    {contractId:1, typeOfProj:'Onshore', contractName:'Sog_Ctract', customerName:'KPN', start_dt:'01/01/2016', end_dt:'31/03/2016', status:'Pending AM Hours' },
-			                    {contractId:1, typeOfProj:'Offshore', contractName:'Cap_Ctract', customerName:'Philips', start_dt:'01/01/2016', end_dt:'31/03/2016', status:'Pending KT Hours' },
-			                    {contractId:1, typeOfProj:'Onshore', contractName:'Cap_Ctract', customerName:'DSML', start_dt:'01/01/2016', end_dt:'31/03/2016', status:'Pending Fixed Hours' },
-			                    {contractId:1, typeOfProj:'Offshore', contractName:'Sog_Ctract', customerName:'ASML', start_dt:'01/01/2016', end_dt:'31/03/2016', status:'Completed' },
-			                    ];
-			/*angular.forEach(response.data.successResponse, function(item){
-				$scope.contractsbyMe.push(item);
-			});*/
-			
-			angular.forEach(responseData, function(item){
-				$scope.contractsbyMe.push(item);
-			});
-		/*	
-		}, function(reason) {
-			toastr.error('Failed: ' + reason, 'Failure Message');
-		}, function(update) {
-			toastr.error('Got notification: ' + update, 'Failure Message');
-		});*/
-	}
+	};
 	
-	$scope.loadMyContracts();
+	$scope.getAllContracts();
 }

@@ -1,9 +1,9 @@
 'use strict';
 
-webappApp.controller('createContractCtrl', ['$scope','createContractService', '$location', 'dataSetService', 'toastr',createContractCtrl_Fn]);
+webappApp.controller('createContractCtrl', ['$scope','createContractService', '$location', 'dataSetService', 'toastr','ABF_CONSTANTS', createContractCtrl_Fn]);
 
 	
-function createContractCtrl_Fn($scope, createContractService, $location, dataSetService, toastr) { 
+function createContractCtrl_Fn($scope, createContractService, $location, dataSetService, toastr, ABF_CONSTANTS) { 
 	
 	
 	$scope.contract = {
@@ -17,6 +17,7 @@ function createContractCtrl_Fn($scope, createContractService, $location, dataSet
 			contractEndDate:'',
 			loginId:'2'
 		};
+	$scope.contractList = [];
 	
 	function resetContract(){
 		$scope.contract = {
@@ -32,37 +33,56 @@ function createContractCtrl_Fn($scope, createContractService, $location, dataSet
 			};
 	}
 	
-	$scope.createContract = function (){
-		toastr.options=dataSetService.errorAlertOptions;
-		
-		createContractService.createContract($scope.contract).then(function(response){
+	$scope.createContract = function() {
+		toastr.options = dataSetService.errorAlertOptions;
+		createContractService
+		.createContract($scope.contract)
+		.then(
+				function(response) {
+					if (angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)) {
+						resetContract();
+						toastr.options = dataSetService.successAlertOptions;
+						toastr.success(
+								'Contract created successfully!!',
+								'Message');
+						$location.path('/landing');
 
-			resetContract();
-			toastr.options=dataSetService.successAlertOptions;
-			toastr.success('Contract created successfully!!','Message');
-			$location.path('/landing');
-		}, function(error){
-			toastr.error('Unable to perform task, Please contact support.','Failure Message');
-			console.error(JSON.stringify(error, null,2));
-		});
-	}
+					} else {
+						toastr.error(ABF_CONSTANTS.FAILURE_MESSAGE, ABF_CONSTANTS.FAILURE_HEADER);
+						console.error(JSON.stringify(error, null, 2));
+					}
+				},
+				function(error) {
+					toastr.error(ABF_CONSTANTS.FAILURE_MESSAGE, ABF_CONSTANTS.FAILURE_HEADER);
+					console.error(JSON.stringify(error, null, 2));
+				});
+	};
+	
 	$scope.goBack = function(){
 		$location.path('/landing');
 	};
 	
 	$scope.bookHours = function() {
-		toastr.options=dataSetService.errorAlertOptions;
-		
-		createContractService.createContract($scope.contract).then(function(response){
-			
-			resetContract();
-			toastr.options=dataSetService.successAlertOptions;
-			toastr.success('Contract created successfully!!','Message');
-			$location.path('/hours');
-			
-		}, function(error){
-			toastr.error('Unable to perform task, Please contact support.','Failure Message');
-			console.error(JSON.stringify(error, null,2));
-		});
+		toastr.options = dataSetService.errorAlertOptions;
+		if (angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)) {
+			createContractService
+					.createContract($scope.contract)
+					.then(
+							function(response) {
+								resetContract();
+								toastr.options = dataSetService.successAlertOptions;
+								toastr.success(
+										'Contract created successfully!!',
+										'Message');
+								$location.path('/hours');
+							},
+							function(error) {
+								toastr.error(ABF_CONSTANTS.FAILURE_MESSAGE, ABF_CONSTANTS.FAILURE_HEADER);
+								console.error(JSON.stringify(error, null, 2));
+							});
+		} else {
+			toastr.error(ABF_CONSTANTS.FAILURE_MESSAGE, ABF_CONSTANTS.FAILURE_HEADER);
+			console.error(JSON.stringify(error, null, 2));
+		}
 	}	
 }

@@ -5,40 +5,49 @@
 		<div class="col-sm-3 col-md-3 col-lg-3">
 			<!-- side panel -->
 			<select  multiple="multiple" class="form-control" size="15" style="height:100%" data-ng-model="selectedFixedTypes">
-		      <option data-ng-repeat="option in fixedHoursDataSet" value="{{option.name}}">{{option.name}}</option>
+		      <option data-ng-repeat="option in fixedHoursDataSet" value="{{option}}">{{option.fixedcostName}}</option>
 		    </select>
 					<button class="btn btn-sm btn-primary" type="button"
 						data-ng-click="addFixedHourBilling()">Select</button>
 		</div>
 		<div class="col-sm-8 col-md-8 col-lg-8">
-			<!--Body content-->
-			<table class="table table-bordered table-hover table-condensed">
+			<!--Body content-->	
+			<form class="form-horizontal" name="fixedHourForm">
+				<table class="table table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
-						<th>Fixed type</th>
+						<th>Fixed Cost</th>
 						<th>Value</th>
-						<th>&nbsp;</th>
+						<th>Description</th>
+						<th>Edit/Del</th>
 					</tr>
 				</thead>
 				<tbody data-ng-repeat="fixedHour in fixedProjectHoursList">
 					<tr>
-						<td>{{fixedHour.typeName}}</td>
-						<td><input type="text" pattern="\d{0,3}" maxlength="3" size="3" data-ng-model="fixedHour.typeValue"/></td>
+						<td>{{fixedHour.fixedcostName}}</td>
+						<td><input type="text" pattern="\d{0,3}" required="required" maxlength="3" size="3" data-ng-model="fixedHour.price" title="Only numeric value is allowed."/></td>
+						<td>
+							<textarea class="form-control" rows="3" id="textArea"
+									data-ng-model="fixedHour.description"></textarea>
+						</td>
 						<td>
 							<button class="btn btn-block btn-danger outline" type="button">
 							<span class="glyphicon glyphicon-trash" data-ng-click="removeItem(fixedHour)"></span>
-							</button></td>
+							</button>
+						</td>
 					</tr>
 				</tbody>
 				<tfoot data-ng-show="fixedProjectHoursList.length >0">
 					<tr>
-					<td colspan="3"><button class="btn btn-sm btn-warning pull-left" type="button"
+					<td colspan="4"><button class="btn btn-sm btn-warning pull-left" type="button"
 						data-ng-click="resetFixedHours()">Reset</button>
 						<button class="btn btn-sm btn-warning pull-right" type="button"
-						data-ng-click="saveFixedHours()">Save</button></td>
+						data-ng-click="saveFixedHours()" data-ng-disabled="!fixedHourForm.$valid">Save</button></td>
 					</tr>
 				</tfoot>
 			</table>
+			</form>
+			
 		</div>
 	</div>
 </div>

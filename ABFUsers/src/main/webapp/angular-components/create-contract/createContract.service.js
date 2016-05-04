@@ -1,6 +1,6 @@
 'use strict';
 
-webappApp.service('createContractService', ['$http', '$q', function($http, $q) {
+webappApp.service('createContractService', ['$http', function($http, ABF_CONSTANTS) {
 
 	var contractService = this;
 
@@ -20,41 +20,12 @@ webappApp.service('createContractService', ['$http', '$q', function($http, $q) {
 	
 	contractService.createContract = function (contract){
 		
-		return $http.post('./contract/create',contract)
-        .then(function(response) {
-        	
-        	var status = response.data.status;
-        	var successRes = null;
-        	var failureRes = null;
-            if (angular.equals(status,"success")) {
-            	console.log("Success " + JSON.stringify(response.data));
-            	return $q.resolve(response.data.successResponse);
-            } else {
-            	console.log("Failure " + JSON.stringify(response.data));
-                return $q.reject(response.data.successResponse);
-            }
-        }, function(response) {
-            // something went wrong
-        	console.log("Failure " + JSON.stringify(response));
-            return $q.reject(response.data);
-        });
+		return $http.post('./contract/create',contract);
+		
 	}
 	
 	contractService.getAllContracts = function() {
-		return $http.get('./contract/all')
-        .then(function(response) {
-        	var status = response.data.status;
-        	var successRes = null;
-        	var failureRes = null;
-            if (angular.equals(status,'success')) {
-            	return $q.resolve(response.data.successResponse);
-            } else {
-                return $q.reject(response.data.successResponse);
-            }
-        }, function(response) {
-            // something went wrong
-            return $q.reject(response.data);
-        });
+		return $http.get('./contract/all');
 	};
 
 	contractService.getUserContracts = function() {

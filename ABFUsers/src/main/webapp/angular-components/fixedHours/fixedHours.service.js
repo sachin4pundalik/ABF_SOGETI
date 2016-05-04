@@ -10,8 +10,12 @@ function fixedHoursService_fn($http) {
 		fixedHoursService.hours = hoursItems;
 	};
 	
-	fixedHoursService.getFixedHours= function(hoursItems){
-		return fixedHoursService.hours;
+	fixedHoursService.getFixedCosts= function(){
+		return $http.get('./fixedCost/all');
 	};
+	
+	fixedHoursService.save=function(list){
+		return $http.post('./fixedContract/create', list);
+	}
 	
 }

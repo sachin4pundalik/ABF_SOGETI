@@ -7,6 +7,7 @@ import javax.persistence.PersistenceException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -78,10 +79,23 @@ public class ABFController {
 	public ABFResponse getContracts(){
 		
 		ABFResponse  response = new ABFResponse();			
-		List<com.sogeti.db.models.Contract> contracts = new ArrayList<com.sogeti.db.models.Contract>();
-		contracts = contractManager.allContracts();	
-		response.setSuccessResponse(contracts);
-		response.setStatus(ABFConstants.STATUS_SUCCESS);
+		List<com.sogeti.db.models.Contract> contracts =null;
+		List<Contract> finalContracts = new ArrayList<Contract>();
+		
+		try {
+			contracts = contractManager.allContracts();	
+			Contract locContract = null;
+			for (com.sogeti.db.models.Contract contract : contracts) {
+				locContract = new Contract();
+				BeanUtils.copyProperties(contract, locContract);
+				finalContracts.add(locContract);
+			}
+			response.setSuccessResponse(finalContracts);
+			response.setStatus(ABFConstants.STATUS_SUCCESS);
+		} catch (BeansException e) {
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+			response.setFailureResponse(e.getMessage());
+		}
 
 		return response;
 	}

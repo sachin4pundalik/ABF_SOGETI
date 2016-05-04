@@ -1,16 +1,15 @@
-webappApp.service('dashboardService', ['$http', '$q', dashboardService_fn]);
+webappApp.service('dashboardService', ['$http', dashboardService_fn]);
 
-function dashboardService_fn($http, $q){
+function dashboardService_fn($http){
 	
-	function loadMyContracts(){
-		// is the same as
-		var promise = $http.get('/api/v1/movies/avengers');
-		return promise;
-	}
+	var self = this;
 	
-	function loadApprovalReqContracts(){
-		var promise = $http.get('/api/v1/movies/avengers');
-		return promise;
-	}
+	self.loadMyContracts= function (){
+		return $http.get('./contract/all');
+	};
+	
+	self.loadApprovalReqContracts= function (){
+		return $http.get('./contract/all');
+	};
 	
 }

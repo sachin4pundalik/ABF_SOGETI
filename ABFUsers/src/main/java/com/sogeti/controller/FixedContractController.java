@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
-import com.sogeti.db.models.BusinessLine;
 import com.sogeti.db.models.Contract;
 import com.sogeti.db.models.FixedContract;
 import com.sogeti.model.ABFResponse;
@@ -65,10 +64,26 @@ public class FixedContractController {
 	public ABFResponse getAllFixedContracts() {
 
 		ABFResponse response = new ABFResponse();
-		List<FixedContract> contracts = new ArrayList<FixedContract>();
-		contracts = fixedService.findAll();
-		response.setSuccessResponse(contracts);
-		response.setStatus(ABFConstants.STATUS_SUCCESS);
+		List<FixedContract> contracts = null;
+		List<FixedContractDT> fixedContracts = new ArrayList<>();
+		FixedContractDT contractDT = null;
+		try {
+			contracts = fixedService.findAll();
+			
+			for (FixedContract contract : contracts) {
+				contractDT = new FixedContractDT();
+				
+				BeanUtils.copyProperties(contract, contractDT);
+				fixedContracts.add(contractDT);
+			}
+			
+			response.setSuccessResponse(fixedContracts);
+			response.setStatus(ABFConstants.STATUS_SUCCESS);
+			
+		} catch (Exception e) {
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+			response.setFailureResponse(e.getMessage());
+		}
 
 		return response;
 	}
@@ -96,7 +111,6 @@ public class FixedContractController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ABFResponse update(@RequestBody FixedContractDT contract)
-
 	{
 		ABFResponse response = new ABFResponse();
 
