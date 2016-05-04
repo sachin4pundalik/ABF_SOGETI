@@ -12,7 +12,7 @@ function MasterSkillCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 	$scope.currentView='';
 	
 	$scope.getskills = function (){
-		var url = './json/skills.json'; //'./masterdata/skills';
+		var url = './skill/all'; //'./masterdata/skills';
 		
 		masterDataService.fetchAll(url)
 		.then(function(response){
@@ -32,16 +32,16 @@ function MasterSkillCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 	
 	$scope.newSkill = function(){
 		$scope.currentView ="new";
+		$scope.remove();
 	}
 	
 	$scope.update=function(){
-		masterDataService.update('./masterdata/skill/update', $scope.skill)
+		masterDataService.update('./skill/update', $scope.skill)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response));
-				$scope.skills = dataSetService.skills = response.data.successResponse;
+				$scope.getskills()
 				goBack();
-				toastr.info("rTypes updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.RESOURCE_TYPES);
+				toastr.info("rTypes updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.SKILLS);
 			}else{
 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
 			}
@@ -53,11 +53,10 @@ function MasterSkillCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 	
 	$scope.save= function(){
 		
-		masterDataService.save('./masterdata/skill/save', $scope.skill)
+		masterDataService.save('./skill/create', $scope.skill)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response.data.successResponse));
-				$scope.skills = dataSetService.skills = response.data.successResponse;
+				$scope.getskills();
 				goBack();
 				toastr.info("skills updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.SKILLS);
 			}else{
@@ -76,7 +75,7 @@ function MasterSkillCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 	};
 	
 	$scope.getskill = function ( skillId ){
-		masterDataService.fetch('./masterdata/skill/', skillId)
+		masterDataService.fetch('./skill/find/', skillId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				console.log("Success : " + JSON.stringify(response.data.successResponse));
@@ -106,11 +105,13 @@ function MasterSkillCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 	$scope.goBack = function(){
 		
 		$scope.currentView ='';
+		$scope.reset();
+	}
+	$scope.reset=function(){
 		$scope.skill= {
 				skillId:'',
 				skillName:''
 		};
-	}
-	
+	};
 	$scope.getskills();
 }

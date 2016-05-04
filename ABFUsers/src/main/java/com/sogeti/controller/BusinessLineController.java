@@ -18,10 +18,12 @@ import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
 import com.sogeti.db.models.BusinessLine;
 import com.sogeti.db.models.ResourceType;
+import com.sogeti.db.models.Skill;
 import com.sogeti.model.ABFResponse;
 import com.sogeti.model.BusinessLineDT;
 import com.sogeti.service.BusinessLineService;
 import com.sogeti.service.ResourceTypeManager;
+import com.sogeti.service.SkillService;
 /**
  * FixedContractController class  provides implementations for the contract. 
  * <P>
@@ -60,6 +62,9 @@ public class BusinessLineController {
 	@Autowired
 	ResourceTypeManager resourceTypeManager;
 
+	@Autowired
+	SkillService skillService;
+	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ABFResponse getAll() {
 
@@ -102,6 +107,11 @@ public class BusinessLineController {
 		BusinessLine businessLineEntity = new BusinessLine();
 		BeanUtils.copyProperties(businessLine, businessLineEntity);
 		ResourceType resourceType = resourceTypeManager.find(businessLine.getResourceTypeId());
+		if(businessLine.getSkillId()>0){
+			Skill skill = skillService.find(businessLine.getSkillId());
+			businessLineEntity.setSkill(skill);
+		}
+		
 		businessLineEntity.setResourceType(resourceType);
 		logger.info("ContractData:" + businessLineEntity);
 

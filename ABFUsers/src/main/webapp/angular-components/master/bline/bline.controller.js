@@ -4,8 +4,10 @@ webappApp.controller('MasterBlineCtrl', [ '$scope', '$location',
 function MasterBlineCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
 	
 	$scope.blines = dataSetService.blines;
+	$scope.rTypes = dataSetService.rTypes;
+	$scope.skills= dataSetService.skills;
 	
-	$scope.bline= {businesslineId:"",businesslineName:"",resourceTypeId:"",skillId:""};
+	$scope.bline= {businesslineId:"",businesslineName:"",resourceTypeId:"-1",skillId:"-1"};
 	
 	$scope.currentView='';
 	
@@ -18,7 +20,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 				console.log("Success : " + JSON.stringify(response));
 				$scope.blines = dataSetService.blines = response.data.successResponse;
 				$scope.goBack();
-				toastr.info("Roles updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BUSINESS_LINES);
+				toastr.info("Business line updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BUSINESS_LINES);
 			}else{
 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
 			}
@@ -40,7 +42,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 				
 				$scope.goBack();
 				$scope.getblines();
-				toastr.info("Roles updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BUSINESS_LINES);
+				toastr.info("Business line updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BUSINESS_LINES);
 			}else{
 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
 			}
@@ -58,7 +60,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 				
 				$scope.goBack();
 				$scope.getblines();
-				toastr.info("Roles updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BUSINESS_LINES);
+				toastr.info("Business line updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BUSINESS_LINES);
 			}else{
 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
 			}
@@ -79,7 +81,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				console.log("Success : " + JSON.stringify(response));
 				$scope.bline=response.data.successResponse;
-				toastr.info("bline is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BUSINESS_LINES);
+				toastr.info("Business line is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BUSINESS_LINES);
 				
 			}else{
 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
@@ -101,7 +103,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 	};
 	
 	$scope.reset= function(){
-		$scope.bline= {businesslineId:"",businesslineName:"",resourceTypeId:"",skillId:""};
+		$scope.bline= {businesslineId:"",businesslineName:"",resourceTypeId:"-1",skillId:"-1"};
 	};
 	
 	$scope.goBack = function(){
@@ -109,5 +111,31 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 		$scope.currentView ='';
 		$scope.reset();
 	}
+	
 	$scope.getblines();
+	
+	masterDataService.fetchAll('./resourcetype/all')
+	.then(function(response){
+		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
+			$scope.rTypes = dataSetService.rTypes = response.data.successResponse;
+		}else{
+			toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
+		}
+	}, function(error){
+		toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
+		console.log(JSON.stringify(error));
+	});
+	masterDataService.fetchAll('./skill/all')
+	.then(function(response){
+		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
+			console.log("Success : " + JSON.stringify(response));
+			$scope.skills = dataSetService.blines = response.data.successResponse;
+		}else{
+			toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
+		}
+	}, function(error){
+		toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
+		console.log(JSON.stringify(error));
+	});
+	
 }

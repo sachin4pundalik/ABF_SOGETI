@@ -16,7 +16,7 @@
 							<label for="select" class="col-lg-2 control-label">Resource Type</label>
 							<div class="col-lg-10">
 								<select class="form-control"  data-ng-model="bline.resourceTypeId" required="required">
-							      <option data-ng-repeat="option in dataSetService.rTypes" value="{{option.resourcetypeId}}">{{option.resourceType}}</option>
+							      <option data-ng-repeat="option in rTypes" value="{{option.resourcetypeId}}">{{option.resourceType}}</option>
 							    </select>
 							</div>
 						</div>
@@ -24,7 +24,7 @@
 							<label for="select" class="col-lg-2 control-label">Skill</label>
 							<div class="col-lg-10">
 								<select class="form-control"  data-ng-model="bline.skillId">
-							      <option data-ng-repeat="option in dataSetService.skills" value="{{option.skillId}}">{{option.skillName}}</option>
+							      <option data-ng-repeat="option in skills" value="{{option.skillId}}">{{option.skillName}}</option>
 							    </select>
 							</div>
 						</div>
