@@ -26,6 +26,10 @@ public class OffshorePriceDT {
 	private Integer bandId;
 
 	private Integer stayTypeId;
+	
+	private String bandName;
+	
+	private String stayTypeName;
 
 	@JsonIgnore
 	private BusinessLine businessLine;
@@ -124,6 +128,22 @@ public class OffshorePriceDT {
 
 	public void setStayType(StayType stayType) {
 		this.stayType = stayType;
+	}
+
+	public String getBandName() {
+		return bandName;
+	}
+
+	public void setBandName(String bandName) {
+		this.bandName = bandName;
+	}
+
+	public String getStayTypeName() {
+		return stayTypeName;
+	}
+
+	public void setStayTypeName(String stayTypeName) {
+		this.stayTypeName = stayTypeName;
 	}
 
 

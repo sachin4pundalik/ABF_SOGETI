@@ -87,6 +87,10 @@ public class OffshorePriceController {
 			offshorePriceDT.setLastUpdatedBy(offshorePrice.getLastUpdatedBy());
 			offshorePriceDT.setLastUpdatedDatetime(offshorePrice.getLastUpdatedDatetime()+"");
 			offshorePriceDT.setDescription(offshorePrice.getDescription());
+			offshorePriceDT.setBandId(offshorePrice.getBand().getBandId());
+			offshorePriceDT.setBandName(offshorePrice.getBand().getBandName());
+			offshorePriceDT.setStayTypeId(offshorePrice.getStayType().getStayTypeId());
+			offshorePriceDT.setStayTypeName(offshorePrice.getStayType().getStayType());
 			offshorePricesDTList.add(offshorePriceDT)	;
 			
 		}
@@ -130,22 +134,22 @@ public class OffshorePriceController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public ABFResponse update(@RequestBody OffshorePriceDT OffshorePriceDT)
+	public ABFResponse update(@RequestBody OffshorePriceDT offshorePriceDT)
 
 	{
 		ABFResponse response = new ABFResponse();
 
 		try {
-			OffshorePrice OffshorePriceEntity = new OffshorePrice();
-			BeanUtils.copyProperties(OffshorePriceDT, OffshorePriceEntity);
-			java.util.Date lastUpdatedDate = DateUtils.parseDateStrictly(OffshorePriceDT.getLastUpdatedDatetime(), 
+			OffshorePrice offshorePriceEntity = new OffshorePrice();
+			BeanUtils.copyProperties(offshorePriceDT, offshorePriceEntity);
+			java.util.Date lastUpdatedDate = DateUtils.parseDateStrictly(offshorePriceDT.getLastUpdatedDatetime(), 
 		            new String[] {"yyyy/MM/dd",
 		                "dd/MM/yyyy"});
-			OffshorePriceEntity.setLastUpdatedDatetime(lastUpdatedDate);
-			OffshorePriceEntity.setBusinessLine(businessLineService.find(OffshorePriceDT.getBusinessLineId()));
-			OffshorePriceEntity.setBand(bandService.find(OffshorePriceDT.getBandId()));
-			OffshorePriceEntity.setStayType(stayTypeService.find(OffshorePriceDT.getStayTypeId()));
-			offshorePriceService.update(OffshorePriceEntity);
+			offshorePriceEntity.setLastUpdatedDatetime(lastUpdatedDate);
+			offshorePriceEntity.setBusinessLine(businessLineService.find(offshorePriceDT.getBusinessLineId()));
+			offshorePriceEntity.setBand(bandService.find(offshorePriceDT.getBandId()));
+			offshorePriceEntity.setStayType(stayTypeService.find(offshorePriceDT.getStayTypeId()));
+			offshorePriceService.update(offshorePriceEntity);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 		} catch (ParseException e) {
 			   response.setFailureResponse(e.getMessage());
@@ -161,13 +165,13 @@ public class OffshorePriceController {
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-	public ABFResponse delete(@PathVariable("id") int OffshorePriceId)
+	public ABFResponse delete(@PathVariable("id") int offshorePriceId)
 
 	{
 		ABFResponse response = new ABFResponse();
 
 		try {
-			offshorePriceService.delete(OffshorePriceId);
+			offshorePriceService.delete(offshorePriceId);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 		} catch (TechnicalException e) {
 			response.setFailureResponse(e.getMessage());
@@ -178,25 +182,28 @@ public class OffshorePriceController {
 	}
 
 	@RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
-	public ABFResponse findBusinessLine(@PathVariable("id") int OffshorePriceId)
+	public ABFResponse findBusinessLine(@PathVariable("id") int offshorePriceId)
 
 	{
 		ABFResponse response = new ABFResponse();
 
 		try {
 
-			OffshorePrice OffshorePrice = offshorePriceService.find(OffshorePriceId);
-			OffshorePriceDT OffshorePriceDT = new OffshorePriceDT();
-			OffshorePriceDT.setOffshorepriceId(OffshorePrice.getOffshorepriceId());
-			OffshorePriceDT.setPrice(OffshorePrice.getPrice());
-			OffshorePriceDT.setBand(OffshorePrice.getBand());
-			OffshorePriceDT.setLastUpdatedBy(OffshorePrice.getLastUpdatedBy());
-			OffshorePriceDT.setLastUpdatedDatetime(OffshorePrice.getLastUpdatedDatetime()+"");
-			OffshorePriceDT.setBusinessLine(OffshorePrice.getBusinessLine());
-			OffshorePriceDT.setDescription(OffshorePrice.getDescription());
-			OffshorePriceDT.setStayType(OffshorePrice.getStayType());
+			OffshorePrice offshorePrice = offshorePriceService.find(offshorePriceId);
+			OffshorePriceDT offshorePriceDT = new OffshorePriceDT();
+			offshorePriceDT.setOffshorepriceId(offshorePrice.getOffshorepriceId());
+			offshorePriceDT.setPrice(offshorePrice.getPrice());
+			offshorePriceDT.setBand(offshorePrice.getBand());
+			offshorePriceDT.setLastUpdatedBy(offshorePrice.getLastUpdatedBy());
+			offshorePriceDT.setLastUpdatedDatetime(offshorePrice.getLastUpdatedDatetime()+"");
+			offshorePriceDT.setBusinessLine(offshorePrice.getBusinessLine());
+			offshorePriceDT.setDescription(offshorePrice.getDescription());
+			offshorePriceDT.setBandId(offshorePrice.getBand().getBandId());
+			offshorePriceDT.setBandName(offshorePrice.getBand().getBandName());
+			offshorePriceDT.setStayTypeId(offshorePrice.getStayType().getStayTypeId());
+			offshorePriceDT.setStayTypeName(offshorePrice.getStayType().getStayType());
 		
-			response.setSuccessResponse(OffshorePriceDT);
+			response.setSuccessResponse(offshorePriceDT);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 		} catch (TechnicalException e) {
 			response.setFailureResponse(e.getMessage());
