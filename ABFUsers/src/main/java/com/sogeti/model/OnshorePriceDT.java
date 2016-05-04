@@ -17,7 +17,6 @@ public class OnshorePriceDT {
 
 	private String lastUpdatedDatetime;
 
-	@JsonIgnore
 	private BigDecimal price;
 
 	private Integer businessLineId;
@@ -25,6 +24,10 @@ public class OnshorePriceDT {
 	private Integer gradeId;
 
 	private Integer roleId;
+	
+	private String gradeType;
+	
+	private String roleType;
 
 	@JsonIgnore
 	private BusinessLine businessLine;
@@ -121,6 +124,22 @@ public class OnshorePriceDT {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public String getGradeType() {
+		return gradeType;
+	}
+
+	public void setGradeType(String gradeType) {
+		this.gradeType = gradeType;
+	}
+
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
 	}
 
 }

@@ -87,6 +87,10 @@ public class OnshorePriceController {
 			onshorePriceDT.setLastUpdatedBy(onshorePrice.getLastUpdatedBy());
 			onshorePriceDT.setLastUpdatedDatetime(onshorePrice.getLastUpdatedDatetime()+"");
 			onshorePriceDT.setDescription(onshorePrice.getDescription());
+			onshorePriceDT.setGradeType(onshorePrice.getGrade().getGradeType());
+			onshorePriceDT.setRoleId(onshorePrice.getRole().getRoleId());
+			onshorePriceDT.setRoleType(onshorePrice.getRole().getRoleType());
+			onshorePriceDT.setGradeId(onshorePrice.getGrade().getGradeId());
 			onshorePricesDTList.add(onshorePriceDT)	;
 			
 		}
@@ -189,12 +193,14 @@ public class OnshorePriceController {
 			OnshorePriceDT onshorePriceDT = new OnshorePriceDT();
 			onshorePriceDT.setOnshorepriceId(onshorePrice.getOnshorepriceId());
 			onshorePriceDT.setPrice(onshorePrice.getPrice());
-			onshorePriceDT.setRole(onshorePrice.getRole());
 			onshorePriceDT.setLastUpdatedBy(onshorePrice.getLastUpdatedBy());
 			onshorePriceDT.setLastUpdatedDatetime(onshorePrice.getLastUpdatedDatetime()+"");
 			onshorePriceDT.setBusinessLine(onshorePrice.getBusinessLine());
 			onshorePriceDT.setDescription(onshorePrice.getDescription());
-			onshorePriceDT.setGrade(onshorePrice.getGrade());
+			onshorePriceDT.setGradeType(onshorePrice.getGrade().getGradeType());
+			onshorePriceDT.setRoleId(onshorePrice.getRole().getRoleId());
+			onshorePriceDT.setRoleType(onshorePrice.getRole().getRoleType());
+			onshorePriceDT.setGradeId(onshorePrice.getGrade().getGradeId());
 		
 			response.setSuccessResponse(onshorePriceDT);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
