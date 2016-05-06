@@ -10,6 +10,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,6 +92,8 @@ public class OffshorePriceController {
 			offshorePriceDT.setBandName(offshorePrice.getBand().getBandName());
 			offshorePriceDT.setStayTypeId(offshorePrice.getStayType().getStayTypeId());
 			offshorePriceDT.setStayTypeName(offshorePrice.getStayType().getStayType());
+			offshorePriceDT.setBusinessLineId(offshorePrice.getBusinessLine().getBusinesslineId());
+			offshorePriceDT.setBusinessLineName(offshorePrice.getBusinessLine().getBusinesslineName());
 			offshorePricesDTList.add(offshorePriceDT)	;
 			
 		}
@@ -173,7 +176,10 @@ public class OffshorePriceController {
 		try {
 			offshorePriceService.delete(offshorePriceId);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
-		} catch (TechnicalException e) {
+		} catch(DataIntegrityViolationException diEx){
+			response.setFailureResponse(diEx.getMessage());
+			response.setStatus(ABFConstants.STATUS_DI_EXCEPTION);
+		} 	catch (TechnicalException e) {
 			response.setFailureResponse(e.getMessage());
 			response.setStatus(ABFConstants.STATUS_FAILURE);
 		}
@@ -193,15 +199,15 @@ public class OffshorePriceController {
 			OffshorePriceDT offshorePriceDT = new OffshorePriceDT();
 			offshorePriceDT.setOffshorepriceId(offshorePrice.getOffshorepriceId());
 			offshorePriceDT.setPrice(offshorePrice.getPrice());
-			offshorePriceDT.setBand(offshorePrice.getBand());
 			offshorePriceDT.setLastUpdatedBy(offshorePrice.getLastUpdatedBy());
 			offshorePriceDT.setLastUpdatedDatetime(offshorePrice.getLastUpdatedDatetime()+"");
-			offshorePriceDT.setBusinessLine(offshorePrice.getBusinessLine());
 			offshorePriceDT.setDescription(offshorePrice.getDescription());
 			offshorePriceDT.setBandId(offshorePrice.getBand().getBandId());
 			offshorePriceDT.setBandName(offshorePrice.getBand().getBandName());
 			offshorePriceDT.setStayTypeId(offshorePrice.getStayType().getStayTypeId());
 			offshorePriceDT.setStayTypeName(offshorePrice.getStayType().getStayType());
+			offshorePriceDT.setBusinessLineId(offshorePrice.getBusinessLine().getBusinesslineId());
+			offshorePriceDT.setBusinessLineName(offshorePrice.getBusinessLine().getBusinesslineName());
 		
 			response.setSuccessResponse(offshorePriceDT);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);

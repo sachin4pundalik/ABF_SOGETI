@@ -8,6 +8,7 @@ import javax.persistence.PersistenceException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -126,6 +127,10 @@ public class BandController {
 		try {
 			bandService.delete(bandId);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
+		} 
+		catch(DataIntegrityViolationException diEx){
+			response.setFailureResponse(diEx.getMessage());
+			response.setStatus(ABFConstants.STATUS_DI_EXCEPTION);
 		} catch (TechnicalException e) {
 			response.setFailureResponse(e.getMessage());
 			response.setStatus(ABFConstants.STATUS_FAILURE);

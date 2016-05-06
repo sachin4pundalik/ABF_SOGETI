@@ -31,14 +31,8 @@ public class OffshorePriceDT {
 	
 	private String stayTypeName;
 
-	@JsonIgnore
-	private BusinessLine businessLine;
-
-	@JsonIgnore
-	private Band band;
-
-	@JsonIgnore
-	private StayType stayType;
+	
+	private String businessLineName;
 
 	public String getDescription() {
 		return description;
@@ -80,15 +74,6 @@ public class OffshorePriceDT {
 		this.businessLineId = businessLineId;
 	}
 
-	
-	public BusinessLine getBusinessLine() {
-		return businessLine;
-	}
-
-	public void setBusinessLine(BusinessLine businessLine) {
-		this.businessLine = businessLine;
-	}
-
 
 	public Integer getOffshorepriceId() {
 		return offshorepriceId;
@@ -114,22 +99,6 @@ public class OffshorePriceDT {
 		this.stayTypeId = stayTypeId;
 	}
 
-	public Band getBand() {
-		return band;
-	}
-
-	public void setBand(Band band) {
-		this.band = band;
-	}
-
-	public StayType getStayType() {
-		return stayType;
-	}
-
-	public void setStayType(StayType stayType) {
-		this.stayType = stayType;
-	}
-
 	public String getBandName() {
 		return bandName;
 	}
@@ -144,6 +113,14 @@ public class OffshorePriceDT {
 
 	public void setStayTypeName(String stayTypeName) {
 		this.stayTypeName = stayTypeName;
+	}
+
+	public String getBusinessLineName() {
+		return businessLineName;
+	}
+
+	public void setBusinessLineName(String businessLineName) {
+		this.businessLineName = businessLineName;
 	}
 
 

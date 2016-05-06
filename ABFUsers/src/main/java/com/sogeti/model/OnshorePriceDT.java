@@ -29,15 +29,8 @@ public class OnshorePriceDT {
 	
 	private String roleType;
 
-	@JsonIgnore
-	private BusinessLine businessLine;
-
-	@JsonIgnore
-	private Grade grade;
-
-	@JsonIgnore
-	private Role role;
-
+	private String businessLineName;
+	
 	public String getDescription() {
 		return description;
 	}
@@ -102,29 +95,6 @@ public class OnshorePriceDT {
 		this.onshorepriceId = onshorepriceId;
 	}
 
-	public BusinessLine getBusinessLine() {
-		return businessLine;
-	}
-
-	public void setBusinessLine(BusinessLine businessLine) {
-		this.businessLine = businessLine;
-	}
-
-	public Grade getGrade() {
-		return grade;
-	}
-
-	public void setGrade(Grade grade) {
-		this.grade = grade;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
 
 	public String getGradeType() {
 		return gradeType;
@@ -140,6 +110,14 @@ public class OnshorePriceDT {
 
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
+	}
+
+	public String getBusinessLineName() {
+		return businessLineName;
+	}
+
+	public void setBusinessLineName(String businessLineName) {
+		this.businessLineName = businessLineName;
 	}
 
 }
