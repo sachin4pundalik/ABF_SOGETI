@@ -83,7 +83,7 @@ public class ABFController {
 	}
 
 	@RequestMapping( value = "/all", method = RequestMethod.GET)
-	public ABFResponse getContracts(){
+	public ABFResponse getContracts(){ 
 		
 		ABFResponse  response = new ABFResponse();			
 		List<com.sogeti.db.models.Contract> contracts =null;

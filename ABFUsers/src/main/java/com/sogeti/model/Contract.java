@@ -9,7 +9,7 @@ import java.util.Date;
  * @author rajukaly
  *
  */
-public class Contract {
+public class Contract { 
 
 	private int contractId;
 	private String comments;
