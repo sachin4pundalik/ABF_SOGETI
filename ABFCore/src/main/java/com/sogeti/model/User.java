@@ -27,9 +27,9 @@ import javax.persistence.Table;
 /**
  * The persistent class for the users database table.
  */
-@Entity
-@Table(name = "login")
-@NamedQueries({ @NamedQuery(name = User.getUserCustomeData, query = "select u.userName ,u.password from User u") })
+//@Entity
+//@Table(name = "login")
+//@NamedQueries({ @NamedQuery(name = User.getUserCustomeData, query = "select u.userName ,u.password from User u") })
 public class User implements Serializable {
 
 	/**

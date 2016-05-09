@@ -2,6 +2,9 @@ package com.sogeti.db.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import java.util.List;
 
@@ -42,7 +45,12 @@ public class Login implements Serializable {
 	//bi-directional many-to-one association to UserRole
 	@ManyToOne
 	@JoinColumn(name="user_role_id")
+	@JsonIgnore
 	private UserRole userRole;
+	
+	private int roleId;
+	
+	private String role;
 
 	public Login() {
 	}
@@ -129,6 +137,22 @@ public class Login implements Serializable {
 
 	public void setUserRole(UserRole userRole) {
 		this.userRole = userRole;
+	}
+
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }
