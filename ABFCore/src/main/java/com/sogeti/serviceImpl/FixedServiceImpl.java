@@ -35,6 +35,10 @@ public class FixedServiceImpl implements FixedService{
 	public FixedContract update(FixedContract fixedContract) {
 		return fixedDAO.update(fixedContract);
 	}
+	
+	public List<FixedContract> getFixedContractsForAContract(Integer contractId){
+		return fixedDAO.getFixedContractsForAContract(contractId);
+	}
 
 
 

@@ -1,9 +1,11 @@
 package com.sogeti.model;
 
+import java.math.BigDecimal;
+
 public class FixedContractDT {
 
 	
-	private String price;
+	private BigDecimal price;
 	private String description;
 	private Integer contractId;
 	private int fixedId;
@@ -14,10 +16,10 @@ public class FixedContractDT {
 	public void setContractId(Integer contractId) {
 		this.contractId = contractId;
 	}
-	public String getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
-	public void setPrice(String price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 	public String getDescription() {

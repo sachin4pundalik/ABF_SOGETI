@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -90,22 +91,41 @@ public class FixedContractController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public ABFResponse create(@RequestBody FixedContractDT contract) {
+	public ABFResponse create(@RequestBody List<FixedContractDT> contracts) {
 
 		ABFResponse response = new ABFResponse();
-		FixedContract fixedContract = new FixedContract();
-		BeanUtils.copyProperties(contract, fixedContract);
-		logger.info("ContractData:" + contract);
 
-		try {
-			Contract contractObj = contractManager.getContract(contract.getContractId());
-			fixedContract.setContract(contractObj);
-			fixedService.create(fixedContract);
-			response.setStatus(ABFConstants.STATUS_SUCCESS);
+		List<FixedContract> fcsAlreadyPresentForContract = fixedService.findAll();
 
-		} catch (PersistenceException e) {
-			response.setStatus(ABFConstants.STATUS_FAILURE);
-			response.setFailureResponse(e.getMessage());
+		
+		
+		if (!CollectionUtils.isEmpty(contracts)) {
+			List<FixedContract> fcsAlreadyPresentForContracts =  fixedService.getFixedContractsForAContract(contracts.get(0).getContractId());
+			if (!CollectionUtils.isEmpty(fcsAlreadyPresentForContracts)) {
+				for (FixedContract fc : fcsAlreadyPresentForContract) {
+					fixedService.delete(fc.getFixedcontractId());
+				}
+			}
+		}
+	
+		
+		
+		for (FixedContractDT fixedContractDT : contracts) {
+			FixedContract fixedContract = new FixedContract();
+			BeanUtils.copyProperties(fixedContractDT, fixedContract);
+			logger.info("ContractData:" + fixedContractDT);
+
+			try {
+
+				Contract contractObj = contractManager.getContract(fixedContractDT.getContractId());
+				fixedContract.setContract(contractObj);
+				fixedService.create(fixedContract);
+				response.setStatus(ABFConstants.STATUS_SUCCESS);
+
+			} catch (PersistenceException e) {
+				response.setStatus(ABFConstants.STATUS_FAILURE);
+				response.setFailureResponse(e.getMessage());
+			}
 		}
 		return response;
 	}
@@ -114,7 +134,6 @@ public class FixedContractController {
 	public ABFResponse update(@RequestBody FixedContractDT contract)
 	{
 		ABFResponse response = new ABFResponse();
-
 		try {
 			FixedContract fixedContract = new FixedContract();
 			BeanUtils.copyProperties(contract, fixedContract);
@@ -127,7 +146,6 @@ public class FixedContractController {
 			response.setFailureResponse(e.getMessage());
 			response.setStatus(ABFConstants.STATUS_FAILURE);
 		}
-
 		return response;
 	}
 
