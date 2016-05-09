@@ -2,17 +2,9 @@ package com.sogeti.model;
 
 import java.math.BigDecimal;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.sogeti.db.models.Band;
-import com.sogeti.db.models.BusinessLine;
-import com.sogeti.db.models.Grade;
-import com.sogeti.db.models.Role;
-import com.sogeti.db.models.StayType;
-
 public class OffshorePriceDT {
 
-	private Integer offshorepriceId;
+	private int offshorepriceId;
 	private String description;
 
 	private Integer lastUpdatedBy;
@@ -70,16 +62,16 @@ public class OffshorePriceDT {
 		return businessLineId;
 	}
 
-	public void setBusinessLineId(Integer businessLineId) {
+	public void setBusinessLineId(int businessLineId) {
 		this.businessLineId = businessLineId;
 	}
 
 
-	public Integer getOffshorepriceId() {
+	public int getOffshorepriceId() {
 		return offshorepriceId;
 	}
 
-	public void setOffshorepriceId(Integer offshorepriceId) {
+	public void setOffshorepriceId(int offshorepriceId) {
 		this.offshorepriceId = offshorepriceId;
 	}
 
