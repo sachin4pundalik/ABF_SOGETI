@@ -114,14 +114,13 @@ public class LoginController {
 			user = loginService.getEmployee(userObj.getUserName(), userObj.getPassword());
 			user.setRoleId(user.getUserRole().getUserRoleId());
 			user.setRole(user.getUserRole().getUserRole());
-			user.setPassword("");
 			//user = loginService.authenticateUser(userObj.getUserName(), userObj.getPassword());
 			request.getSession().setAttribute("currentUser", user);
 			logger.info("Login successful");
 			response.setSuccessResponse(user);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);			
 		} catch (TechnicalException e) {
-			logger.error("Login error");
+			logger.error("Login error",e);
 			response.setFailureResponse(e.getMessage());
 			response.setStatus(ABFConstants.STATUS_FAILURE);
 		}		
