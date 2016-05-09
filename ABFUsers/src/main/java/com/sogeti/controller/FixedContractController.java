@@ -193,4 +193,24 @@ public class FixedContractController {
 		return response;
 	}
 	
+	
+	@RequestMapping(value = "/contract/find/{id}", method = RequestMethod.GET)
+	public ABFResponse findFixedForAContract(@PathVariable("id") int contractId)
+
+	{
+		ABFResponse response = new ABFResponse();
+
+		try {
+			List<FixedContract> fcsAlreadyPresentForContracts =  fixedService.getFixedContractsForAContract(contractId);
+			response.setSuccessResponse(fcsAlreadyPresentForContracts);
+			response.setStatus(ABFConstants.STATUS_SUCCESS);
+		} catch (TechnicalException e) {
+			logger.error("Exception in method ... ABFController.deleteContract" + e);
+			response.setFailureResponse(e.getMessage());
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+		}
+
+		return response;
+	}
+	
 }
