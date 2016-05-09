@@ -18,36 +18,37 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
-import com.sogeti.db.models.AmContract;
+import com.sogeti.db.models.KtContract;
 import com.sogeti.model.ABFResponse;
-import com.sogeti.model.AMContractResourceBean;
-import com.sogeti.service.AmContractService;
+import com.sogeti.model.KTContractResourceBean;
+import com.sogeti.service.KtContractService;
 import com.sogeti.xmlbeans.Month;
 import com.sogeti.xmlbeans.Resource;
 
 @RestController
-@RequestMapping(value = "/amhours")
-public class AMContractController {
+@RequestMapping(value = "/kthours")
+public class KTContractController {	
+
 	
-	private static final Logger logger = Logger.getLogger(AMContractController.class);
+	private static final Logger logger = Logger.getLogger(KTContractController.class);
 
 	@Autowired(required = true)
-	AmContractService amContractService;
+	KtContractService ktContractService;
 	
 	@RequestMapping( value = "/create", method = RequestMethod.POST)
-	public ABFResponse createAmContract(@RequestBody List<AmContract> contractResources) {
+	public ABFResponse createKtContract(@RequestBody List<KtContract> contractResources) {
 		
 		return null;
 	}
 	
-	@RequestMapping( value = "/fetchcontractamhours/{contractId}", method = RequestMethod.GET)
+	@RequestMapping( value = "/fetchcontractkthours/{contractId}", method = RequestMethod.GET)
 	public ABFResponse getAmContractForContract(@PathVariable("contractId") String contractId){
 		ABFResponse response = new ABFResponse();
 			
 		try {
-			List<AMContractResourceBean> resourceList = new ArrayList<AMContractResourceBean>();			
-			List<AmContract> AmContracts = amContractService.getAmContractsByContractId(Integer.parseInt(contractId));			
-			for(AmContract resource : AmContracts){			
+			List<KTContractResourceBean> resourceList = new ArrayList<KTContractResourceBean>();			
+			List<KtContract> KtContracts = ktContractService.getKtContractsByContractId(Integer.parseInt(contractId));			
+			for(KtContract resource : KtContracts){			
 				resourceList.add(fillResourceData(resource));				
 			}			
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
@@ -62,8 +63,8 @@ public class AMContractController {
 		return response;		
 	}
 	
-	private AMContractResourceBean fillResourceData(AmContract resource){
-		AMContractResourceBean resourceBean = new AMContractResourceBean();
+	private KTContractResourceBean fillResourceData(KtContract resource){
+		KTContractResourceBean resourceBean = new KTContractResourceBean();
 		resourceBean.setId(resource.getId());
 		resourceBean.setType(resource.getType());
 		resourceBean.setBline(resource.getBline());
@@ -87,4 +88,6 @@ public class AMContractController {
 		}		
 		return resourceBean;
 	}
+
+
 }
