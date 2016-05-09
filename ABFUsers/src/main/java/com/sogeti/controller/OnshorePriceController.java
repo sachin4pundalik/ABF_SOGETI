@@ -10,6 +10,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,6 +92,9 @@ public class OnshorePriceController {
 			onshorePriceDT.setRoleId(onshorePrice.getRole().getRoleId());
 			onshorePriceDT.setRoleType(onshorePrice.getRole().getRoleType());
 			onshorePriceDT.setGradeId(onshorePrice.getGrade().getGradeId());
+			onshorePriceDT.setBusinessLineId(onshorePrice.getBusinessLine().getBusinesslineId());
+			onshorePriceDT.setBusinessLineName(onshorePrice.getBusinessLine().getBusinesslineName());
+
 			onshorePricesDTList.add(onshorePriceDT)	;
 			
 		}
@@ -173,7 +177,10 @@ public class OnshorePriceController {
 		try {
 			onshorePriceService.delete(onshorePriceId);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
-		} catch (TechnicalException e) {
+		} catch(DataIntegrityViolationException diEx){
+			response.setFailureResponse(diEx.getMessage());
+			response.setStatus(ABFConstants.STATUS_DI_EXCEPTION);
+		} 	catch (TechnicalException e) {
 			response.setFailureResponse(e.getMessage());
 			response.setStatus(ABFConstants.STATUS_FAILURE);
 		}
@@ -195,13 +202,13 @@ public class OnshorePriceController {
 			onshorePriceDT.setPrice(onshorePrice.getPrice());
 			onshorePriceDT.setLastUpdatedBy(onshorePrice.getLastUpdatedBy());
 			onshorePriceDT.setLastUpdatedDatetime(onshorePrice.getLastUpdatedDatetime()+"");
-			onshorePriceDT.setBusinessLine(onshorePrice.getBusinessLine());
 			onshorePriceDT.setDescription(onshorePrice.getDescription());
 			onshorePriceDT.setGradeType(onshorePrice.getGrade().getGradeType());
 			onshorePriceDT.setRoleId(onshorePrice.getRole().getRoleId());
 			onshorePriceDT.setRoleType(onshorePrice.getRole().getRoleType());
 			onshorePriceDT.setGradeId(onshorePrice.getGrade().getGradeId());
-		
+			onshorePriceDT.setBusinessLineId(onshorePrice.getBusinessLine().getBusinesslineId());
+			onshorePriceDT.setBusinessLineName(onshorePrice.getBusinessLine().getBusinesslineName());
 			response.setSuccessResponse(onshorePriceDT);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 		} catch (TechnicalException e) {
