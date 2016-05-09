@@ -81,8 +81,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
+import com.sogeti.db.models.Login;
 import com.sogeti.model.ABFResponse;
-import com.sogeti.model.User;
 import com.sogeti.model.UserForm;
 import com.sogeti.service.AmContractService;
 import com.sogeti.service.LoginService;
@@ -105,13 +105,16 @@ public class LoginController {
 
 		ABFResponse response = new ABFResponse();
 		
-		User user = null;
+		Login user = null;
 
 		logger.info(" login controller email :: " + userObj.getUserName());
 		logger.info(" login controller password :: " + userObj.getPassword());
 
 		try {
 			user = loginService.getEmployee(userObj.getUserName(), userObj.getPassword());
+			user.setRoleId(user.getUserRole().getUserRoleId());
+			user.setRole(user.getUserRole().getUserRole());
+			user.setPassword("");
 			//user = loginService.authenticateUser(userObj.getUserName(), userObj.getPassword());
 			request.getSession().setAttribute("currentUser", user);
 			logger.info("Login successful");

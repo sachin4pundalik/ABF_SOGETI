@@ -14,12 +14,12 @@
 package com.sogeti.dao;
 
 import com.sogeti.GenericExceptions.TechnicalException;
-import com.sogeti.model.User;
+import com.sogeti.db.models.Login;
 
 public interface  EmployeeSearchDao
 {
 
-    User getEmployee(String email, String password) throws TechnicalException;
+    Login getEmployee(String email, String password) throws TechnicalException;
     
-    User getEmployeeByUserName(String email) throws TechnicalException;
+    Login getEmployeeByUserName(String email) throws TechnicalException;
 }

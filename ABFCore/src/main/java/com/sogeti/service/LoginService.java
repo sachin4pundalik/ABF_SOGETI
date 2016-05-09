@@ -14,12 +14,12 @@
 package com.sogeti.service;
 
 import com.sogeti.GenericExceptions.TechnicalException;
-import com.sogeti.model.User;
+import com.sogeti.db.models.Login;
 
 public interface LoginService
 {
 
-    User getEmployee(String email, String password) throws TechnicalException;
+    Login getEmployee(String email, String password) throws TechnicalException;
     
-    User authenticateUser(String email, String password) throws TechnicalException;
+    Login authenticateUser(String email, String password) throws TechnicalException;
 }

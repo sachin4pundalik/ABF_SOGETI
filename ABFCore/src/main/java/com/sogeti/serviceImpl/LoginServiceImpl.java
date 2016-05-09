@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.dao.EmployeeSearchDao;
+import com.sogeti.db.models.Login;
 import com.sogeti.model.User;
 import com.sogeti.service.LoginService;
 
@@ -35,12 +36,12 @@ public class LoginServiceImpl implements LoginService
    @Autowired
    EmployeeSearchDao employeeDao;
 
-   public User getEmployee(String email, String password) throws TechnicalException{
+   public Login getEmployee(String email, String password) throws TechnicalException{
       return employeeDao.getEmployee(email, password);
    }
 
-	public User authenticateUser(String email, String password) throws TechnicalException {
-		 User user = employeeDao.getEmployeeByUserName(email);
+	public Login authenticateUser(String email, String password) throws TechnicalException {
+		 Login user = employeeDao.getEmployeeByUserName(email);
 		 try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			byte[] hashPassword = md.digest(password.getBytes());
