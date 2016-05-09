@@ -2,6 +2,7 @@ package com.sogeti.controller;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -111,10 +112,7 @@ public class OffshorePriceController {
 		
 		OffshorePrice offshorePriceEntity = new OffshorePrice();
 		BeanUtils.copyProperties(offshorePriceDT, offshorePriceEntity);
-		java.util.Date lastUpdatedDate = DateUtils.parseDateStrictly(offshorePriceDT.getLastUpdatedDatetime(), 
-	            new String[] {"yyyy/MM/dd",
-	                "dd/MM/yyyy"});
-		offshorePriceEntity.setLastUpdatedDatetime(lastUpdatedDate);
+		offshorePriceEntity.setLastUpdatedDatetime(new Date());
 		offshorePriceEntity.setBusinessLine(businessLineService.find(offshorePriceDT.getBusinessLineId()));
 		offshorePriceEntity.setBand(bandService.find(offshorePriceDT.getBandId()));
 		offshorePriceEntity.setStayType(stayTypeService.find(offshorePriceDT.getStayTypeId()));
@@ -125,11 +123,7 @@ public class OffshorePriceController {
 		
 		offshorePriceService.create(offshorePriceEntity);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
-		} catch (ParseException e) {
-			   response.setFailureResponse(e.getMessage());
-			   response.setStatus(ABFConstants.STATUS_FAILURE);
-		     }
-		catch (PersistenceException e) {
+		} catch (PersistenceException e) {
 			response.setStatus(ABFConstants.STATUS_FAILURE);
 			response.setFailureResponse(e.getMessage());
 		}
@@ -145,24 +139,16 @@ public class OffshorePriceController {
 		try {
 			OffshorePrice offshorePriceEntity = new OffshorePrice();
 			BeanUtils.copyProperties(offshorePriceDT, offshorePriceEntity);
-			java.util.Date lastUpdatedDate = DateUtils.parseDateStrictly(offshorePriceDT.getLastUpdatedDatetime(), 
-		            new String[] {"yyyy/MM/dd",
-		                "dd/MM/yyyy"});
-			offshorePriceEntity.setLastUpdatedDatetime(lastUpdatedDate);
+			offshorePriceEntity.setLastUpdatedDatetime(new Date());
 			offshorePriceEntity.setBusinessLine(businessLineService.find(offshorePriceDT.getBusinessLineId()));
 			offshorePriceEntity.setBand(bandService.find(offshorePriceDT.getBandId()));
 			offshorePriceEntity.setStayType(stayTypeService.find(offshorePriceDT.getStayTypeId()));
 			offshorePriceService.update(offshorePriceEntity);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
-		} catch (ParseException e) {
-			   response.setFailureResponse(e.getMessage());
-			   response.setStatus(ABFConstants.STATUS_FAILURE);
-		     }
-		 catch (TechnicalException e) {
+		} catch (TechnicalException e) {
 			response.setFailureResponse(e.getMessage());
 			response.setStatus(ABFConstants.STATUS_FAILURE);
 		}
-	    
 
 		return response;
 	}

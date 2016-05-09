@@ -1,12 +1,11 @@
 package com.sogeti.controller;
 
-import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,28 +108,19 @@ public class OnshorePriceController {
 	public ABFResponse create(@RequestBody OnshorePriceDT onshorePriceDT) {
 		ABFResponse response = new ABFResponse();
 		try {
-		
-		OnshorePrice onshorePriceEntity = new OnshorePrice();
-		BeanUtils.copyProperties(onshorePriceDT, onshorePriceEntity);
-		java.util.Date lastUpdatedDate = DateUtils.parseDateStrictly(onshorePriceDT.getLastUpdatedDatetime(), 
-	            new String[] {"yyyy/MM/dd",
-	                "dd/MM/yyyy"});
-		onshorePriceEntity.setLastUpdatedDatetime(lastUpdatedDate);
-		onshorePriceEntity.setBusinessLine(businessLineService.find(onshorePriceDT.getBusinessLineId()));
-		onshorePriceEntity.setGrade(gradeService.find(onshorePriceDT.getGradeId()));
-		onshorePriceEntity.setRole(roleService.find(onshorePriceDT.getRoleId()));
-		
-		
-		logger.info("onshorePriceData:" + onshorePriceDT);
 
-		
+			OnshorePrice onshorePriceEntity = new OnshorePrice();
+			BeanUtils.copyProperties(onshorePriceDT, onshorePriceEntity);
+			onshorePriceEntity.setLastUpdatedDatetime(new Date());
+			onshorePriceEntity.setBusinessLine(businessLineService.find(onshorePriceDT.getBusinessLineId()));
+			onshorePriceEntity.setGrade(gradeService.find(onshorePriceDT.getGradeId()));
+			onshorePriceEntity.setRole(roleService.find(onshorePriceDT.getRoleId()));
+
+			logger.info("onshorePriceData:" + onshorePriceDT);
+
 			onshorePriceService.create(onshorePriceEntity);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
-		} catch (ParseException e) {
-			   response.setFailureResponse(e.getMessage());
-			   response.setStatus(ABFConstants.STATUS_FAILURE);
-		     }
-		catch (PersistenceException e) {
+		} catch (PersistenceException e) {
 			response.setStatus(ABFConstants.STATUS_FAILURE);
 			response.setFailureResponse(e.getMessage());
 		}
@@ -146,19 +136,13 @@ public class OnshorePriceController {
 		try {
 			OnshorePrice onshorePriceEntity = new OnshorePrice();
 			BeanUtils.copyProperties(onshorePriceDT, onshorePriceEntity);
-			java.util.Date lastUpdatedDate = DateUtils.parseDateStrictly(onshorePriceDT.getLastUpdatedDatetime(), 
-		            new String[] {"yyyy/MM/dd",
-		                "dd/MM/yyyy"});
-			onshorePriceEntity.setLastUpdatedDatetime(lastUpdatedDate);
+			onshorePriceEntity.setLastUpdatedDatetime(new Date());
 			onshorePriceEntity.setBusinessLine(businessLineService.find(onshorePriceDT.getBusinessLineId()));
 			onshorePriceEntity.setGrade(gradeService.find(onshorePriceDT.getGradeId()));
 			onshorePriceEntity.setRole(roleService.find(onshorePriceDT.getRoleId()));
 			onshorePriceService.update(onshorePriceEntity);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
-		} catch (ParseException e) {
-			   response.setFailureResponse(e.getMessage());
-			   response.setStatus(ABFConstants.STATUS_FAILURE);
-		     }
+		} 
 		 catch (TechnicalException e) {
 			response.setFailureResponse(e.getMessage());
 			response.setStatus(ABFConstants.STATUS_FAILURE);
