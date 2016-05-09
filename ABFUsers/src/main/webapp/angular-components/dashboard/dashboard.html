@@ -27,10 +27,10 @@
 					<tr>
 						<td>{{contract.contractName}}</td>
 						<td>{{contract.customerName}}</td>
-						<td>{{contract.contractStartDate | date:'MM/dd/yyyy'}}</td>
-						<td>{{contract.contractStartDate | date:'MM/dd/yyyy'}}</td>
+						<td>{{contract.contractStartDate | date:'dd MMM yyyy'}}</td>
+						<td>{{contract.contractEndDate | date:'dd MMM yyyy'}}</td>
 						<td>{{contract.status}}</td>
-						<td><a href>View</a></td>
+						<td><button data-ng-click="showContract(contract)" class="btn btn-warning btn-xs"> <span class="glyphicon glyphicon-eye-open"></span> </button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -58,7 +58,7 @@
 						<td>{{contract.contractName}}</td>
 						<td>{{contract.customerName}}</td>
 						<td>{{contract.contractStartDate | date:'MM/dd/yyyy'}}</td>
-						<td>{{contract.contractStartDate | date:'MM/dd/yyyy'}}</td>
+						<td>{{contract.contractEndDate | date:'MM/dd/yyyy'}}</td>
 						<td>{{contract.status}}</td>
 						<td><a href>View</a></td>
 					</tr>

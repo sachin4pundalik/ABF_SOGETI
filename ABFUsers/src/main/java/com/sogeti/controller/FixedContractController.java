@@ -20,9 +20,11 @@ import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
 import com.sogeti.db.models.Contract;
 import com.sogeti.db.models.FixedContract;
+import com.sogeti.db.models.FixedCost;
 import com.sogeti.model.ABFResponse;
 import com.sogeti.model.FixedContractDT;
 import com.sogeti.service.ContractManager;
+import com.sogeti.service.FixedCostService;
 import com.sogeti.service.FixedService;
 /**
  * FixedContractController class  provides implementations for the contract. 
@@ -61,6 +63,9 @@ public class FixedContractController {
 	
 	@Autowired
 	ContractManager contractManager;
+	
+	@Autowired
+	FixedCostService fixedCostService;
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ABFResponse getAllFixedContracts() {
@@ -115,6 +120,10 @@ public class FixedContractController {
 
 						Contract contractObj = contractManager.getContract(fixedContractDT.getContractId());
 						fixedContract.setContract(contractObj);
+						
+						FixedCost fixedCostObj = fixedCostService.find(fixedContractDT.getFixedcostId());
+						fixedContract.setFixedCost(fixedCostObj);
+						
 						fixedService.create(fixedContract);
 					}
 					response.setStatus(ABFConstants.STATUS_SUCCESS);
@@ -199,11 +208,30 @@ public class FixedContractController {
 
 	{
 		ABFResponse response = new ABFResponse();
-
+		FixedContractDT contractDT = null;
+		List<FixedContractDT> fixedContracts = new ArrayList<>();
 		try {
-			List<FixedContract> fcsAlreadyPresentForContracts =  fixedService.getFixedContractsForAContract(contractId);
-			response.setSuccessResponse(fcsAlreadyPresentForContracts);
-			response.setStatus(ABFConstants.STATUS_SUCCESS);
+			List<FixedContract> contracts =  fixedService.getFixedContractsForAContract(contractId);
+			if(!CollectionUtils.isEmpty(contracts)){
+				for (FixedContract contract : contracts) {
+					contractDT = new FixedContractDT();
+					
+					BeanUtils.copyProperties(contract, contractDT);
+					contractDT.setContractId(contract.getContract().getContractId());
+					contractDT.setFixedcostId(contract.getFixedcontractId());
+					if(contract.getFixedCost()!=null){
+						contractDT.setFixedcostId(contract.getFixedCost().getFixedcostId());
+						contractDT.setFixedcostName(contract.getFixedCost().getFixedcostName());
+						
+						fixedContracts.add(contractDT);
+					}
+				}
+				response.setSuccessResponse(fixedContracts);
+				response.setStatus(ABFConstants.STATUS_SUCCESS);
+			}else{
+				response.setStatus(ABFConstants.STATUS_SUCCESS);
+			}
+			
 		} catch (TechnicalException e) {
 			logger.error("Exception in method ... ABFController.deleteContract" + e);
 			response.setFailureResponse(e.getMessage());

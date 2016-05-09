@@ -20,14 +20,14 @@ function LoginCtrl_Fn($scope, $location, $rootScope, $cookieStore, LoginService,
 
 		LoginService.validateUser($scope.user).then(function(response){
 			toastr.options=dataSetService.errorAlertOptions;
-			
+			dataSetService.loggedInUser={};
 			if(response.data.status === 'success'){
 				let user = response.data.successResponse.userName;
-				
+				$scope.user = dataSetService.loggedInUser = response.data.successResponse;
 				
 				toastr.options=dataSetService.successAlertOptions;
 				toastr.success('Welcome to ABF !!','Welcome Message');
-				$rootScope.currentUser = user;
+				$rootScope.currentUser = dataSetService.loggedInUser;
 				$rootScope.isVisible = true;
 				$cookieStore.put('loggedin', 'true');
 				$location.path('/landing');

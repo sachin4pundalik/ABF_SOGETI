@@ -10,6 +10,21 @@ public class FixedContractDT {
 	private Integer contractId;
 	private int fixedId;
 	private int fixedcostId;
+	private String fixedcostName;
+	
+	
+	/**
+	 * @return the fixedcostName
+	 */
+	public String getFixedcostName() {
+		return fixedcostName;
+	}
+	/**
+	 * @param fixedcostName the fixedcostName to set
+	 */
+	public void setFixedcostName(String fixedcostName) {
+		this.fixedcostName = fixedcostName;
+	}
 	public Integer getContractId() {
 		return contractId;
 	}

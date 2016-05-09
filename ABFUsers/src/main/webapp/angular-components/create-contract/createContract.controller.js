@@ -12,11 +12,22 @@ function createContractCtrl_Fn($scope, createContractService, $location, dataSet
 			customerName:'',
 			companyName:'',
 			comments:'',
-			contractCreatedBy:'venkata.kalyanam@gmail.com',
+			contractCreatedBy:dataSetService.loggedInUser.userName,
 			contractStartDate:'',
 			contractEndDate:'',
-			loginId:'2'
+			loginId:dataSetService.loggedInUser.loginId
 		};
+	
+	$scope.fromDt = {
+			minDate:moment().add(-7, 'day').format("YYYY-MM-DD"),
+			maxDate:moment().add(1, 'year').format("YYYY-MM-DD")
+	};
+	
+	$scope.toDt = {
+			minDate:moment().add(2, 'day').format("YYYY-MM-DD"),
+			maxDate:moment().add(1, 'year').format("YYYY-MM-DD")
+	};
+	
 	$scope.contractList = [];
 	
 	function resetContract(){

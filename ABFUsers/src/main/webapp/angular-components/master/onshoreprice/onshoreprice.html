@@ -1,26 +1,99 @@
 <blockquote>
 	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
 		posuere erat a ante.</p>
-	<small>Someone famous in <cite title="Source Title">Source
-			Title</cite></small>
+	<small> <cite title="Source Title">ABF Admin</cite></small>
 </blockquote>
 
 <div class="well well-sm">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<h3 class="panel-title">Master data - Band</h3>
+			<h3 class="panel-title">Master data - Onshore Price</h3>
 		</div>
 		<div class="panel-body">
-			<div ng-switch="currentView">
-				<div data-ng-switch-when="edit">
-					<form name="bandForm" >
+			<div data-ng-switch="currentView">
+			<div data-ng-switch-when="new">
+					<form name="onshoreNewForm" >
 						<div class="form-group">
-						  <label class="control-label" for="focusedInput">Focused input</label>
-						  <input class="form-control" id="focusedInput" type="text" value="This is focused...">
+							<label for="select" class="col-lg-2 control-label">Business Line</label>
+							<div class="col-lg-10">
+								<select class="form-control"  data-ng-model="price.businessLineId" required="required">
+							      <option data-ng-repeat="option in blines" value="{{option.businesslineId}}">{{option.businesslineName}}</option>
+							    </select>
+							</div>
 						</div>
 						<div class="form-group">
-						  <a href="#" data-ng-click="goBack()" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
-									<a href="#" data-ng-click="save()" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> Save</a>
+							<label for="select" class="col-lg-2 control-label">Role</label>
+							<div class="col-lg-10">
+								<select class="form-control"  data-ng-model="price.roleId" required="required">
+							      <option data-ng-repeat="option in roles" value="{{option.roleId}}">{{option.roleType}}</option>
+							    </select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="select" class="col-lg-2 control-label">Grade</label>
+							<div class="col-lg-10">
+								<select class="form-control"  data-ng-model="price.gradeId" required="required">
+							      <option data-ng-repeat="option in grades" value="{{option.gradeId}}">{{option.gradeType}}</option>
+							    </select>
+							</div>
+						</div>
+						<div class="form-group">
+						  <label class="control-label" for="focusedInput">Price</label>
+						  <input class="form-control" id="focusedInput" type="text" maxlength="4" pattern="\d{0,4}" data-ng-model="price.price" required="required" placeholder="onshore">
+						</div>
+						<div class="form-group">
+					      <label for="textArea" class="col-lg-2 control-label">Description</label>
+					      <div class="col-lg-10">
+					        <textarea class="form-control" rows="3" id="textArea" required="required" data-ng-model="price.description"></textarea>
+					        <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+					      </div>
+					    </div>
+						<div class="form-group">
+						  <button data-ng-click="goBack()" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+						  <button data-ng-click="save()" data-ng-disabled="!onshoreNewForm.$valid" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-save"></span> Save</button>
+						</div>
+					</form>
+				</div>
+				<div data-ng-switch-when="edit">
+					<form name="onshoreEditForm" >
+						<div class="form-group">
+							<label for="select" class="col-lg-2 control-label">Business Line</label>
+							<div class="col-lg-10">
+								<select class="form-control"  data-ng-model="price.businessLineId" required="required">
+							      <option data-ng-repeat="option in blines" value="{{option.businesslineId}}">{{option.businesslineName}}</option>
+							    </select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="select" class="col-lg-2 control-label">Role</label>
+							<div class="col-lg-10">
+								<select class="form-control"  data-ng-model="price.roleId" required="required">
+							      <option data-ng-repeat="option in bands" value="{{option.roleId}}">{{option.roleType}}</option>
+							    </select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="select" class="col-lg-2 control-label">Grade</label>
+							<div class="col-lg-10">
+								<select class="form-control"  data-ng-model="price.gradeId" required="required">
+							      <option data-ng-repeat="option in grades" value="{{option.gradeId}}">{{option.gradeType}}</option>
+							    </select>
+							</div>
+						</div>
+						<div class="form-group">
+						  <label class="col-lg-2 control-label" for="focusedInput">Price</label>
+						  <input class="form-control" id="focusedInput" type="text" maxlength="4" pattern="\d{0,4}" data-ng-model="price.price" required="required" placeholder="Price">
+						</div>
+						<div class="form-group">
+					      <label for="textArea" class="col-lg-2 control-label">Description</label>
+					      <div class="col-lg-10">
+					        <textarea class="form-control" rows="3" id="textArea" required="required" data-ng-model="price.description"></textarea>
+					        <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+					      </div>
+					    </div>
+						<div class="form-group">
+						  <button data-ng-click="goBack()" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+						  <button data-ng-click="update()" data-ng-disabled="!onshoreEditForm.$valid" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-save"></span> Save</button>
 						</div>
 					</form>
 				</div>
@@ -28,18 +101,32 @@
 					<table class="table table-striped table-hover ">
 						<thead>
 							<tr>
+								<th colspan="7">
+									<input type="text" data-ng-model="onshoreFilter"  placeholder="Search...">
+									<button class="btn btn-warning btn-sm pull-right" data-ng-click="newprice()"><span class="glyphicon glyphicon-plus"></span> New</button>
+								</th>
+							</tr>
+							<tr>
 								<th>ID#</th>
-								<th>Band</th>
+								<th>Business Line</th>
+								<th>Role</th>
+								<th>Grade</th>
+								<th>Price</th>
+								<th>Description</th>
 								<th>Edit/Del</th>
 							</tr>
 						</thead>
-						<tbody data-ng-repeat="band in bands">
+						<tbody data-ng-repeat="price in onshoreprices | filter:onshoreFilter">
 							<tr>
-								<td>{{band.bandId}}</td>
-								<td>{{band.bandName}}</td>
+								<td>{{price.onshorepriceId}}</td>
+								<td>{{price.businessLineName}}</td>
+								<td>{{price.roleType}}</td>
+								<td>{{price.gradeType}}</td>
+								<td>{{price.price}}</td>
+								<td class="wrap">{{price.description}}</td>
 								<td>
-									<a href="#" data-ng-click="edit(band.bandId)" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a>
-									<a href="#" data-ng-click="remove(band.bandId)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+									<button data-ng-click="edit(price.onshorepriceId)" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
+									<button data-ng-click="remove(price.onshorepriceId)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
 								</td>
 							</tr>
 						</tbody>

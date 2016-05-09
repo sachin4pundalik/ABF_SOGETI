@@ -1,6 +1,6 @@
-webappApp.controller('dashboardCtrl', ['$scope', 'dashboardService', 'toastr', 'ABF_CONSTANTS', 'dataSetService', dashboardCtrl_fn]);
+webappApp.controller('dashboardCtrl', ['$scope', 'dashboardService', 'toastr', 'ABF_CONSTANTS', 'dataSetService', '$location', dashboardCtrl_fn]);
 
-function dashboardCtrl_fn($scope, dashboardService, toastr, ABF_CONSTANTS, dataSetService){
+function dashboardCtrl_fn($scope, dashboardService, toastr, ABF_CONSTANTS, dataSetService, $location){
 	
 	$scope.contractsbyMe = [];
 	$scope.contractNeedApproval = [];
@@ -27,6 +27,11 @@ function dashboardCtrl_fn($scope, dashboardService, toastr, ABF_CONSTANTS, dataS
 				});
 		
 	};
+	
+	$scope.showContract = function(contract){
+		dataSetService.currContract = contract;
+		$location.path('/fixed');
+	}
 	
 	$scope.getAllContracts();
 }

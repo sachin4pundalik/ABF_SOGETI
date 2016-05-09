@@ -1,58 +1,179 @@
 webappApp.controller('MasterOnshorePriceCtrl', [ '$scope', '$location',
                                          'toastr','dataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterOnshorePriceCtrl_Fn ]);
 
-function MasterOnshorePriceCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
+ function MasterOnshorePriceCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
+ 	
+ 	$scope.onshoreprices = dataSetService.onshoreprices;
+ 	$scope.blines = dataSetService.blines;
+ 	$scope.grades = dataSetService.grades;
+ 	$scope.roles = dataSetService.roles;
 	
-	$scope.bands = dataSetService.bands;
-	
-	$scope.band= null;
-	$scope.currentView='';
-	
-	$scope.getBands = function (){
-		masterDataService.fetchAll('./masterdata/bands')
-		.then(function(response){
-			console.log("Success : " + JSON.stringify(response));
-			dataSetService.bands = response;
-			toastr.info("Bands updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BANDS);
-		}, function(error){
-			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
-			console.log(JSON.stringify(error));
-		});
-	};
-	
-	$scope.save= function(){
-		
-		masterDataService.save('./masterdata/band/save', $scope.band)
-		.then(function(response){
-			console.log("Success : " + JSON.stringify(response));
-			dataSetService.bands = response;
-			toastr.info("Bands updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BANDS);
-		}, function(error){
-			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
-			console.log(JSON.stringify(error));
-		});
-	};
-	
-	$scope.edit= function(bandId){
-		$scope.currentView = 'edit';
-		$scope.getBand(bandId);
-	};
-	
-	$scope.getBand = function ( bandId ){
-		masterDataService.fetch('./masterdata/band/', bandId)
-		.then(function(response){
-			console.log("Success : " + JSON.stringify(response));
-			$scope.band=response;
-			toastr.info("Band is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BANDS);
-		}, function(error){
-			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
-			console.log(JSON.stringify(error));
-		});
-	}
-	
-	$scope.goBack = function(){
-		
-		$scope.currentView ='';
-		$scope.band= null;
-	}
-}
+ 	$scope.price= {
+ 			onshorepriceId:'0',
+ 			description:'',
+ 			price:'',
+ 			businessLineId:'-1',
+ 			businessLineName:'',
+ 			gradeId:'-1',
+ 			gradeType:'',
+ 			roleId:'-1',
+ 			roleType:'',
+ 			lastUpdatedBy:dataSetService.loggedInUser.loginId
+ 	};
+ 	
+ 	$scope.currentView='';
+ 	
+ 	$scope.getonshoreprices = function (){
+ 		var url = './onshorePrice/all'; //'./json/roles.json';
+ 		
+ 		masterDataService.fetchAll(url)
+ 		.then(function(response){
+ 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
+ 				console.log("Success : " + JSON.stringify(response));
+ 				$scope.onshoreprices = dataSetService.onshoreprices = response.data.successResponse;
+ 				$scope.goBack();
+ 				toastr.info("Onshore price updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.ONSHORE_PRICES);
+ 			}else{
+ 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
+ 			}
+ 		}, function(error){
+ 			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
+ 			console.log(JSON.stringify(error));
+ 		});
+ 	};
+ 	
+ 	$scope.newprice = function(){
+ 		$scope.currentView ="new";
+ 		$scope.reset();
+ 	}
+ 	
+ 	$scope.update=function(){
+ 		masterDataService.update('./onshorePrice/update', $scope.price)
+ 		.then(function(response){
+ 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
+ 				
+ 				$scope.goBack();
+ 				$scope.getonshoreprices();
+ 				toastr.info("Onshore price updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.ONSHORE_PRICES);
+ 			}else{
+ 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
+ 			}
+ 		}, function(error){
+ 			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
+ 			console.log(JSON.stringify(error));
+ 		});
+ 	}
+ 	
+ 	$scope.save= function(){
+ 		
+ 		masterDataService.save('./onshorePrice/create', $scope.price)
+ 		.then(function(response){
+ 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
+ 				
+ 				$scope.goBack();
+ 				$scope.getonshoreprices();
+ 				toastr.info("Onshore price updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.ONSHORE_PRICES);
+ 			}else{
+ 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
+ 			}
+ 		}, function(error){
+ 			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
+ 			console.log(JSON.stringify(error));
+ 		});
+ 	};
+ 	
+ 	$scope.edit= function(priceId){
+ 		$scope.currentView = 'edit';
+ 		$scope.getprice(priceId);
+ 	};
+ 	
+ 	$scope.getprice = function ( priceId ){
+ 		masterDataService.fetch('./onshorePrice/find/', priceId)
+ 		.then(function(response){
+ 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
+ 				console.log("Success : " + JSON.stringify(response));
+ 				$scope.price=response.data.successResponse;
+ 				toastr.info("Onshore price is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.ONSHORE_PRICES);
+ 				
+ 			}else{
+ 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
+ 			}
+ 		}, function(error){
+ 			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
+ 			console.log(JSON.stringify(error));
+ 		});
+ 	}
+ 	
+ 	$scope.remove=function(priceId){
+ 		masterDataService.remove('./onshorePrice/delete/', priceId)
+ 		.then(function(response){
+ 			$scope.getonshoreprices();
+ 			toastr.success("Onshore price is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.ONSHORE_PRICES);
+ 		}, function(error){
+ 			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
+ 			console.log(JSON.stringify(error));
+ 		});
+ 	};
+ 	
+ 	$scope.reset= function(){
+ 		
+ 		$scope.price= {
+ 	 			onshorepriceId:'0',
+ 	 			description:'',
+ 	 			price:'',
+ 	 			businessLineId:'-1',
+ 	 			businessLineName:'',
+ 	 			gradeId:'-1',
+ 	 			gradeType:'',
+ 	 			roleId:'-1',
+ 	 			roleType:'',
+ 	 	 		lastUpdatedBy:dataSetService.loggedInUser.loginId
+ 	 	};
+ 	};
+ 	
+ 	$scope.goBack = function(){
+ 		
+ 		$scope.currentView ='';
+ 		$scope.reset();
+ 	}
+ 	
+ 	$scope.getonshoreprices();
+ 	
+ 	masterDataService.fetchAll('./businessline/all')
+ 	.then(function(response){
+ 		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
+ 			$scope.blines = dataSetService.blines = response.data.successResponse;
+ 		}else{
+ 			toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
+ 		}
+ 	}, function(error){
+ 		toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
+ 		console.log(JSON.stringify(error));
+ 	});
+ 	
+ 	masterDataService.fetchAll('./role/all')
+ 	.then(function(response){
+ 		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
+ 			$scope.roles = dataSetService.roles = response.data.successResponse;
+ 		}else{
+ 			toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
+ 		}
+ 	}, function(error){
+ 		toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
+ 		console.log(JSON.stringify(error));
+ 	});
+ 	
+ 	masterDataService.fetchAll('./grade/all')
+ 	.then(function(response){
+ 		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
+ 			console.log("Success : " + JSON.stringify(response));
+ 			$scope.grades = dataSetService.grades = response.data.successResponse;
+ 		}else{
+ 			toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
+ 		}
+ 	}, function(error){
+ 		toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
+ 		console.log(JSON.stringify(error));
+ 	});
+ 	
+ }

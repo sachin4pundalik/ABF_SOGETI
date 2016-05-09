@@ -3,6 +3,7 @@ webappApp.service('dataSetService', dataSetService_Fn);
 function dataSetService_Fn(){
 	
 	this.currContract = {};
+	this.loggedInUser = {};
 	this.startContract = moment();
 	this.endContract = moment().add(24, 'month');
 	
@@ -17,8 +18,8 @@ function dataSetService_Fn(){
 	this.userRoles=[];
 	this.fixedHours=[];
 	this.statuses=[];
-	this.onshorepice=[];
-	this.offshoreprice=[];
+	this.onshoreprices=[];
+	this.offshoreprices=[];
 	
 	//Toaster alerts
 	this.errorAlertOptions= {title: "title", body:"Error Text",positionClass:'toast-top-full-width',progressBar: true};
