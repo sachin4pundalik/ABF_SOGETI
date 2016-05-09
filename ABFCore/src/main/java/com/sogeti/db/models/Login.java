@@ -29,6 +29,7 @@ public class Login implements Serializable {
 	private Date lastLoginDatetime;
 
 	@Column(length=100)
+	@JsonIgnore
 	private String password;
 
 	@Column(name="user_name", length=100)
