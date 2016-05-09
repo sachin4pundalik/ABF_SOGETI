@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
+import com.sogeti.db.models.Status;
 import com.sogeti.model.ABFResponse;
 import com.sogeti.model.Contract;
 import com.sogeti.service.ContractManager;
+import com.sogeti.service.StatusService;
 /**
  * ABF controller class  provides implementations for the contract. 
  * <P>
@@ -54,6 +56,9 @@ public class ABFController {
 
 	@Autowired
 	ContractManager contractManager;
+	
+	@Autowired
+	StatusService statusService;
 
 	@RequestMapping( value = "/create", method = RequestMethod.POST)
 	public ABFResponse createContract(@RequestBody Contract contract) {
@@ -61,8 +66,10 @@ public class ABFController {
 		ABFResponse response = new ABFResponse();	
 		com.sogeti.db.models.Contract dbContract = new com.sogeti.db.models.Contract();
 		BeanUtils.copyProperties(contract, dbContract);
-		logger.info("ContractData:"+contract);
-		
+		// Set the default status to 1. later change the logic
+		Status initialStatus = statusService.find(1);
+		dbContract.setStatus(initialStatus);
+		logger.info("ContractData:"+contract);	
 
 		try {
 			contractManager.createContract(dbContract);
@@ -88,6 +95,8 @@ public class ABFController {
 			for (com.sogeti.db.models.Contract contract : contracts) {
 				locContract = new Contract();
 				BeanUtils.copyProperties(contract, locContract);
+				locContract.setStatusId(contract.getStatus().getStatusId());
+				locContract.setStatus(contract.getStatus().getStatusName());
 				finalContracts.add(locContract);
 			}
 			response.setSuccessResponse(finalContracts);

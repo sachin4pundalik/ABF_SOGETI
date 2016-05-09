@@ -22,6 +22,8 @@ public class Contract {
 	private Date contractModifiedDateTime;
 	private String customerName;
 	private int loginId;
+	private int statusId;
+	private String status;
 	
 	/**
 	 * @return the contractId
@@ -172,6 +174,19 @@ public class Contract {
 		builder.append("]");
 		return builder.toString();
 	}
+	public int getStatusId() {
+		return statusId;
+	}
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	
 	
 }
