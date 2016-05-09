@@ -94,39 +94,43 @@ public class FixedContractController {
 	public ABFResponse create(@RequestBody List<FixedContractDT> contracts) {
 
 		ABFResponse response = new ABFResponse();
-
-		List<FixedContract> fcsAlreadyPresentForContract = fixedService.findAll();
-
 		
-		
-		if (!CollectionUtils.isEmpty(contracts)) {
-			List<FixedContract> fcsAlreadyPresentForContracts =  fixedService.getFixedContractsForAContract(contracts.get(0).getContractId());
-			if (!CollectionUtils.isEmpty(fcsAlreadyPresentForContracts)) {
-				for (FixedContract fc : fcsAlreadyPresentForContract) {
-					fixedService.delete(fc.getFixedcontractId());
+		try {
+			if (!CollectionUtils.isEmpty(contracts)) {
+				int contractId = contracts.get(0).getContractId();
+				if(contractId > 0){
+					List<FixedContract> fcsAlreadyPresentForContracts =  fixedService.getFixedContractsForAContract(contracts.get(0).getContractId());
+					if (!CollectionUtils.isEmpty(fcsAlreadyPresentForContracts)) {
+						//Delete the existing contract data
+						for (FixedContract fc : fcsAlreadyPresentForContracts) {
+							fixedService.delete(fc.getFixedcontractId());
+						}
+					}
+					
+					//insert fresh set of data.
+					for (FixedContractDT fixedContractDT : contracts) {
+						FixedContract fixedContract = new FixedContract();
+						BeanUtils.copyProperties(fixedContractDT, fixedContract);
+						logger.info("ContractData:" + fixedContractDT);
+
+						Contract contractObj = contractManager.getContract(fixedContractDT.getContractId());
+						fixedContract.setContract(contractObj);
+						fixedService.create(fixedContract);
+					}
+					response.setStatus(ABFConstants.STATUS_SUCCESS);
+				}else{
+					response.setStatus(ABFConstants.STATUS_FAILURE);
+					response.setFailureResponse("There is not valid contract avalable.");
 				}
-			}
-		}
-	
-		
-		
-		for (FixedContractDT fixedContractDT : contracts) {
-			FixedContract fixedContract = new FixedContract();
-			BeanUtils.copyProperties(fixedContractDT, fixedContract);
-			logger.info("ContractData:" + fixedContractDT);
-
-			try {
-
-				Contract contractObj = contractManager.getContract(fixedContractDT.getContractId());
-				fixedContract.setContract(contractObj);
-				fixedService.create(fixedContract);
-				response.setStatus(ABFConstants.STATUS_SUCCESS);
-
-			} catch (PersistenceException e) {
+			}else{
 				response.setStatus(ABFConstants.STATUS_FAILURE);
-				response.setFailureResponse(e.getMessage());
+				response.setFailureResponse("No data to submit..!! or please provide valid data");
 			}
+		} catch (PersistenceException e) {
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+			response.setFailureResponse(e.getMessage());
 		}
+		
 		return response;
 	}
 
