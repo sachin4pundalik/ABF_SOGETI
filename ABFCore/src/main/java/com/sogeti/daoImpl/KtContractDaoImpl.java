@@ -76,6 +76,18 @@ public class KtContractDaoImpl implements KtContractDAO {
 	      }
 	}
 	
+	public boolean deleteKtContract(KtContract KtContract) throws TechnicalException{
+		try
+	      {
+	         this.entityManager.remove(KtContract);
+	         return true;
+	      }
+	      catch (PersistenceException e)
+	      {
+	         throw new TechnicalException("Technical Exception in KtContractDaoImpl.deleteKtContract()", e);
+	      }
+	}
+	
 	private void flushAndClear() {
         entityManager.flush();
         entityManager.clear();

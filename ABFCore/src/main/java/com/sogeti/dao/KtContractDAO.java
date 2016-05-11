@@ -3,6 +3,7 @@ package com.sogeti.dao;
 import java.util.List;
 
 import com.sogeti.GenericExceptions.TechnicalException;
+import com.sogeti.db.models.AmContract;
 import com.sogeti.db.models.Contract;
 import com.sogeti.db.models.KtContract;
 
@@ -17,5 +18,7 @@ public List<KtContract> getKtContractsByContractId(Contract contractId) throws T
 	public boolean saveKtContractBatch(List<KtContract> ktContracts) throws TechnicalException;
 	
 	public Contract getContractById(int contractId);
+	
+	public boolean deleteKtContract(KtContract KtContract) throws TechnicalException;
 
 }

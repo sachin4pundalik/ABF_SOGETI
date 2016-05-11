@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
+import com.sogeti.db.models.AmContract;
 import com.sogeti.db.models.KtContract;
 import com.sogeti.model.ABFResponse;
 import com.sogeti.model.KTContractResourceBean;
@@ -61,6 +62,24 @@ public class KTContractController {
 			response.setFailureResponse(e.getMessage());			
 		}		
 		return response;		
+	}
+	
+	@RequestMapping( value = "/removektresource/{ktContractId}", method = RequestMethod.GET)
+	public ABFResponse deleteAmContractResource(@PathVariable("ktContractId") String ktContractId){
+		ABFResponse response = new ABFResponse();
+		try{
+			KtContract ktContract = ktContractService.getKtContractById(Integer.parseInt(ktContractId));
+			boolean deleteFlag = ktContractService.deleteKtContract(ktContract);
+			response.setStatus(ABFConstants.STATUS_SUCCESS);
+			response.setSuccessResponse(ktContract);
+		}catch(TechnicalException e){
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+			response.setFailureResponse(e.getMessage());
+		}catch (NumberFormatException e) {
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+			response.setFailureResponse(e.getMessage());			
+		}
+		return response;
 	}
 	
 	private KTContractResourceBean fillResourceData(KtContract resource){
