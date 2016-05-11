@@ -129,7 +129,7 @@ public class LoginController {
 		return response;
 	}
 	
-	@RequestMapping(value = "/getNonAdminUsers", method = RequestMethod.GET)
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public ABFResponse getNonAdminUsers(){
 		ABFResponse response = new ABFResponse();
 		try{
@@ -141,7 +141,7 @@ public class LoginController {
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 			response.setSuccessResponse(nonAdminUserList);
 		}catch(TechnicalException e){
-			logger.error("Login error",e);
+			logger.error("Exception fetching users",e);
 			response.setFailureResponse(e.getMessage());
 			response.setStatus(ABFConstants.STATUS_FAILURE);
 		}		
