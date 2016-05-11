@@ -29,8 +29,7 @@ public class AmContractServiceImpl implements AmContractService {
 	}
 
 	public AmContract getAmContractById(int amId) throws TechnicalException {
-		// TODO Auto-generated method stub
-		return null;
+		return amContractDao.getAmContractById(amId);
 	}
 
 	public boolean saveAmContract(AmContract AmContract) throws TechnicalException {

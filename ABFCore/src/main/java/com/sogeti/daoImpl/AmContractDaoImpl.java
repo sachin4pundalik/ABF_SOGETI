@@ -55,8 +55,14 @@ public class AmContractDaoImpl implements AmContractDao {
 	}
 
 	public AmContract getAmContractById(int amId) {
-		// TODO Auto-generated method stub
-		return null;
+		try
+	      {
+	         return this.entityManager.find(AmContract.class, amId);
+	      }
+	      catch (PersistenceException e)
+	      {
+	         throw new TechnicalException("Technical Exception in AmContractDaoImpl.getAmContractById()", e);
+	      }
 	}
 
 	public boolean saveAmContract(AmContract AmContract) throws TechnicalException{

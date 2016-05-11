@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.dao.KtContractDAO;
+import com.sogeti.db.models.AmContract;
 import com.sogeti.db.models.Contract;
 import com.sogeti.db.models.KtContract;
 
@@ -42,9 +43,15 @@ public class KtContractDaoImpl implements KtContractDAO {
 	      }
 	}
 
-	public KtContract getKtContractById(int amId) throws TechnicalException {
-		// TODO Auto-generated method stub
-		return null;
+	public KtContract getKtContractById(int ktId) throws TechnicalException {
+		try
+	      {
+	         return this.entityManager.find(KtContract.class, ktId);
+	      }
+	      catch (PersistenceException e)
+	      {
+	         throw new TechnicalException("Technical Exception in KtContractDaoImpl.getKtContractById()", e);
+	      }
 	}
 
 	public boolean saveKtContract(KtContract ktContract) throws TechnicalException {
