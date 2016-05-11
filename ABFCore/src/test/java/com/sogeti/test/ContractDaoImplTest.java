@@ -2,14 +2,21 @@ package com.sogeti.test;
 
 import javax.persistence.EntityManager;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Logger;
-import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.sogeti.dao.ContractDao;
 import com.sogeti.daoImpl.ContractDaoImpl;
 import com.sogeti.db.models.Contract;
+
+import junit.framework.TestCase;
 /**
  * JUnit tests for the ContractDaoImpl class.
  * <p><b>
@@ -44,25 +51,31 @@ import com.sogeti.db.models.Contract;
  * =============================================================================
  * </pre>
  */
-
+@ContextConfiguration(locations = "classpath:jpaConext.xml")
+@RunWith(SpringJUnit4ClassRunner.class)
 public class ContractDaoImplTest extends TestCase {
 
 	private static final Logger logger = Logger.getLogger(ContractDaoImplTest.class);	
 	ContractDaoImpl contractDaoImpl = new ContractDaoImpl();
-	@Mock
+	   @Mock
 	   private EntityManager entityManager;
+	   
+	   @Autowired
+	   private ContractDao contractDAO;
 
-	   @Before
+	   /*@Before
 	   public void setup()
 	   {
 	      this.contractDaoImpl = new ContractDaoImpl();
 	      this.contractDaoImpl.setEntityManager(this.entityManager);
-	   }
+	   }*/
 
-	
+	@Test
+	@Transactional
+	@Rollback(true)
 	public void testcreateContract() throws Exception{
 		logger.debug("ContractDaoImplTest ::testcreateContract -START");
-		contractDaoImpl = new ContractDaoImpl();
+		//contractDaoImpl = new ContractDaoImpl();
 		try
 		{
 		Contract contractEntity = new Contract();
@@ -71,7 +84,7 @@ public class ContractDaoImplTest extends TestCase {
 		contractEntity.setCompanyName("ABC");
 		contractEntity.setCustomerName("Test");
 		contractEntity.setContractId(1);		
-		//contractDaoImpl.createContract(contractEntity);;
+		contractDAO.createContract(contractEntity);;
 
 		assertTrue("added",true);
 		logger.debug("ContractDaoImplTest ::testcreateContract -END");

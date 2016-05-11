@@ -69,6 +69,8 @@ public class LoginController {
  */
 package com.sogeti.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -127,5 +129,22 @@ public class LoginController {
 		return response;
 	}
 	
-	
+	@RequestMapping(value = "/getNonAdminUsers", method = RequestMethod.GET)
+	public ABFResponse getNonAdminUsers(){
+		ABFResponse response = new ABFResponse();
+		try{
+			List<Login> nonAdminUserList = loginService.getAllNonAdminUsers();
+			for(Login login : nonAdminUserList){
+				login.setRoleId(login.getUserRole().getUserRoleId());
+				login.setRole(login.getUserRole().getUserRole());
+			}
+			response.setStatus(ABFConstants.STATUS_SUCCESS);
+			response.setSuccessResponse(nonAdminUserList);
+		}catch(TechnicalException e){
+			logger.error("Login error",e);
+			response.setFailureResponse(e.getMessage());
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+		}		
+		return response;
+	}	
 }

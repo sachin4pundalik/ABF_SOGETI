@@ -1,9 +1,11 @@
 package com.sogeti.daoImpl;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.dao.EmployeeSearchDao;
 import com.sogeti.db.models.Login;
-import com.sogeti.model.User;
+import com.sogeti.db.models.UserRole;
 
 @Repository("employeeDao")
 public class EmployeeSearchDaoImpl implements EmployeeSearchDao {
@@ -53,6 +55,22 @@ public class EmployeeSearchDaoImpl implements EmployeeSearchDao {
 		Login user = (Login) query.getSingleResult();
 		LOGGER.info(" EmployeeSearchDaoImpl getEmployee:: " + user);
 		return user;
+	}
+	
+	public List<Login> getAllNonAdminUsers(UserRole adminRole) throws TechnicalException {
+		
+		try
+	      {
+			 Query query = this.em.createQuery("select l from Login l where l.userRole != :adminRole");
+	         query.setParameter("adminRole", adminRole);
+	         LOGGER.info(" EmployeeSearchDaoImpl getAllNonAdminUsers:: ");
+	         return query.getResultList();
+	      }
+	      catch (PersistenceException e)
+	      {
+	         throw new TechnicalException("Technical Exception in EmployeeSearchDaoImpl.getAllNonAdminUsers()", e);
+	      }
+		
 	}
 
 }

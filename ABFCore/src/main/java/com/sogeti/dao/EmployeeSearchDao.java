@@ -13,8 +13,11 @@
 
 package com.sogeti.dao;
 
+import java.util.List;
+
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.db.models.Login;
+import com.sogeti.db.models.UserRole;
 
 public interface  EmployeeSearchDao
 {
@@ -22,4 +25,6 @@ public interface  EmployeeSearchDao
     Login getEmployee(String email, String password) throws TechnicalException;
     
     Login getEmployeeByUserName(String email) throws TechnicalException;
+    
+    List<Login> getAllNonAdminUsers(UserRole adminRole) throws TechnicalException;
 }

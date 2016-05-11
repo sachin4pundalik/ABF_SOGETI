@@ -49,9 +49,17 @@ public class Login implements Serializable {
 	@JsonIgnore
 	private UserRole userRole;
 	
+	@Transient
 	private int roleId;
 	
+	@Transient
 	private String role;
+	
+	@Column(name="first_name", length=100)
+	private String firstName;
+	
+	@Column(name="last_name", length=100)
+	private String lastName;
 
 	public Login() {
 	}
@@ -154,6 +162,22 @@ public class Login implements Serializable {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 }

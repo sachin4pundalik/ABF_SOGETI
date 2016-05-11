@@ -16,14 +16,16 @@ package com.sogeti.serviceImpl;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.dao.EmployeeSearchDao;
+import com.sogeti.dao.UserRoleDAO;
 import com.sogeti.db.models.Login;
-import com.sogeti.model.User;
+import com.sogeti.db.models.UserRole;
 import com.sogeti.service.LoginService;
 
 @Service("loginService")
@@ -35,6 +37,9 @@ public class LoginServiceImpl implements LoginService
     */
    @Autowired
    EmployeeSearchDao employeeDao;
+   
+   @Autowired
+   UserRoleDAO userRoleDao;
 
    public Login getEmployee(String email, String password) throws TechnicalException{
       return employeeDao.getEmployee(email, password);
@@ -67,6 +72,11 @@ public class LoginServiceImpl implements LoginService
 	                .substring(1));
 	    }
 	    return stringBuffer.toString();
+	}
+	
+	public List<Login> getAllNonAdminUsers() throws TechnicalException {
+		UserRole adminUserRole = userRoleDao.getAdminRole("Admin");
+		return employeeDao.getAllNonAdminUsers(adminUserRole);
 	}
 
 }
