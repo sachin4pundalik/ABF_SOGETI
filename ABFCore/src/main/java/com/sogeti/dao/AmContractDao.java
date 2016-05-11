@@ -17,5 +17,7 @@ public interface AmContractDao {
 	public boolean saveAmContractBatch(List<AmContract> AmContracts) throws TechnicalException;
 	
 	public Contract getContractById(int contractId);
+	
+	public boolean deleteAmContract(AmContract amContract) throws TechnicalException;
 
 }

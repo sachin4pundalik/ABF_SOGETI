@@ -42,6 +42,10 @@ public class AmContractServiceImpl implements AmContractService {
 		return false;
 	}
 	
+	public boolean deleteAmContract(AmContract amContract) throws TechnicalException {
+		return amContractDao.deleteAmContract(amContract);
+	}
+	
 	private void setDataFields(AmContract AmContract){		
 		AmContract.setId(Integer.toString(AmContract.getAmContractId()));		
 		if(AmContract.getOnshorePrice() != null && AmContract.getOnshorePrice().getOnshorepriceId() != 0){

@@ -62,6 +62,24 @@ public class AMContractController {
 		return response;		
 	}
 	
+	@RequestMapping( value = "/removeamresource/{amContractId}", method = RequestMethod.GET)
+	public ABFResponse deleteAmContractResource(@PathVariable("amContractId") String amContractId){
+		ABFResponse response = new ABFResponse();
+		try{
+			AmContract amContract = amContractService.getAmContractById(Integer.parseInt(amContractId));
+			boolean deleteFlag = amContractService.deleteAmContract(amContract);
+			response.setStatus(ABFConstants.STATUS_SUCCESS);
+			response.setSuccessResponse(amContract);
+		}catch(TechnicalException e){
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+			response.setFailureResponse(e.getMessage());
+		}catch (NumberFormatException e) {
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+			response.setFailureResponse(e.getMessage());			
+		}
+		return response;
+	}
+	
 	private AMContractResourceBean fillResourceData(AmContract resource){
 		AMContractResourceBean resourceBean = new AMContractResourceBean();
 		resourceBean.setId(resource.getId());

@@ -79,6 +79,18 @@ public class AmContractDaoImpl implements AmContractDao {
 
 	}
 	
+	public boolean deleteAmContract(AmContract amContract) throws TechnicalException{
+		try
+	      {
+	         this.entityManager.remove(amContract);
+	         return true;
+	      }
+	      catch (PersistenceException e)
+	      {
+	         throw new TechnicalException("Technical Exception in KnowLedgeBaseServiceDaoImpl.removeknowledgeBaseForUser()", e);
+	      }
+	}
+	
 	private void flushAndClear() {
         entityManager.flush();
         entityManager.clear();
