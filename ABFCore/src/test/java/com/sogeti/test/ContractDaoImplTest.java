@@ -1,5 +1,7 @@
 package com.sogeti.test;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.apache.log4j.Logger;
@@ -51,7 +53,7 @@ import junit.framework.TestCase;
  * =============================================================================
  * </pre>
  */
-@ContextConfiguration(locations = "classpath:jpaConext.xml")
+@ContextConfiguration(locations = "classpath:jpaConext_test.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ContractDaoImplTest extends TestCase {
 
@@ -78,21 +80,39 @@ public class ContractDaoImplTest extends TestCase {
 		//contractDaoImpl = new ContractDaoImpl();
 		try
 		{
-		Contract contractEntity = new Contract();
-		//contractEntity.setBisCode("123");
-		contractEntity.setComments("Success");
-		contractEntity.setCompanyName("ABC");
-		contractEntity.setCustomerName("Test");
-		contractEntity.setContractId(1);		
-		contractDAO.createContract(contractEntity);;
-
-		assertTrue("added",true);
-		logger.debug("ContractDaoImplTest ::testcreateContract -END");
+			Contract contractEntity = new Contract();
+			contractEntity.setCustomerName("ABN AMRO");
+			contractEntity.setCompanyName("ABN NL");
+			contractEntity.setContractName("PAYMENTS");			
+			contractDAO.createContract(contractEntity);			
+			List<Contract> contractList = contractDAO.allContracts();
+			assertEquals(contractEntity.getContractName(), contractList.get(0).getContractName());			
+			//assertTrue("added",true);
+			logger.debug("ContractDaoImplTest ::testcreateContract -END");
 		}
 		catch (Exception e){
 		e.printStackTrace();
 		}
 
+	}
+	
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testallContracts() throws Exception{
+		testcreateContract();
+		List<Contract> contractList = contractDAO.allContracts();
+		assertNotNull(contractList);
+		assertTrue(contractList.size() == 1);
+	}
+	
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testgetContract() throws Exception{		
+		testcreateContract();
+		Contract contract = contractDAO.getContract(3);
+		assertEquals("ABN NL", contract.getCompanyName());
 	}
 
 }
