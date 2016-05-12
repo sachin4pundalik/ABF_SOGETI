@@ -4,116 +4,116 @@ import com.sogeti.xmlbeans.Months;
 
 public class KTContractResourceBean {
 	
-	private String id;	
+private int amContractResourceId;
 	
-	private String type;	
+	private ResourceTypeDT resourceType;
 	
-	private String bline;	
+	private BusinessLineDT businessLine;
 	
-	private String Skill;	
+	private SkillDT skill;
 	
-	private String band;	
+	private BandDT band;
 	
-	private String role;	
+	private GradeDT grade;
 	
-	private String grade;	
+	private RoleDT role;
 	
-	private String stay;	
+	private StayTypeDT stayType;
+			
+	private float price;		
+			
+	private float onShorePrice;
 	
-	private String price;		
-	
-	private String onShorePriceId;
-	
-	private String offShorePriceId;
+	private float offShorePrice;
 	
 	private Months months;
 
-	public String getId() {
-		return id;
+	public int getAmContractResourceId() {
+		return amContractResourceId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setAmContractResourceId(int amContractResourceId) {
+		this.amContractResourceId = amContractResourceId;
 	}
 
-	public String getType() {
-		return type;
+	public ResourceTypeDT getResourceType() {
+		return resourceType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setResourceType(ResourceTypeDT resourceType) {
+		this.resourceType = resourceType;
 	}
 
-	public String getBline() {
-		return bline;
+	public BusinessLineDT getBusinessLine() {
+		return businessLine;
 	}
 
-	public void setBline(String bline) {
-		this.bline = bline;
+	public void setBusinessLine(BusinessLineDT businessLine) {
+		this.businessLine = businessLine;
 	}
 
-	public String getSkill() {
-		return Skill;
+	public SkillDT getSkill() {
+		return skill;
 	}
 
-	public void setSkill(String skill) {
-		Skill = skill;
+	public void setSkill(SkillDT skill) {
+		this.skill = skill;
 	}
 
-	public String getBand() {
+	public BandDT getBand() {
 		return band;
 	}
 
-	public void setBand(String band) {
+	public void setBand(BandDT band) {
 		this.band = band;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public String getGrade() {
+	public GradeDT getGrade() {
 		return grade;
 	}
 
-	public void setGrade(String grade) {
+	public void setGrade(GradeDT grade) {
 		this.grade = grade;
 	}
 
-	public String getStay() {
-		return stay;
+	public RoleDT getRole() {
+		return role;
 	}
 
-	public void setStay(String stay) {
-		this.stay = stay;
+	public void setRole(RoleDT role) {
+		this.role = role;
 	}
 
-	public String getPrice() {
+	public StayTypeDT getStayType() {
+		return stayType;
+	}
+
+	public void setStayType(StayTypeDT stayType) {
+		this.stayType = stayType;
+	}
+
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 
-	public String getOnShorePriceId() {
-		return onShorePriceId;
+	public float getOnShorePrice() {
+		return onShorePrice;
 	}
 
-	public void setOnShorePriceId(String onShorePriceId) {
-		this.onShorePriceId = onShorePriceId;
+	public void setOnShorePrice(float onShorePrice) {
+		this.onShorePrice = onShorePrice;
 	}
 
-	public String getOffShorePriceId() {
-		return offShorePriceId;
+	public float getOffShorePrice() {
+		return offShorePrice;
 	}
 
-	public void setOffShorePriceId(String offShorePriceId) {
-		this.offShorePriceId = offShorePriceId;
+	public void setOffShorePrice(float offShorePrice) {
+		this.offShorePrice = offShorePrice;
 	}
 
 	public Months getMonths() {

@@ -6,7 +6,7 @@ public class Month {
 
     private Weeks weeks;
     
-    private String total;
+    private float total;
     
     public Month(){
     	//this.weeks = new Weeks();
@@ -32,18 +32,12 @@ public class Month {
         this.weeks = weeks;
     }
 
-	public String getTotal() {
+	public float getTotal() {
 		return total;
 	}
 
-	public void setTotal(String total) {
-		this.total = total;	
-	}
-	
-	public void calculateTotal(){
-		int tot = 0;
-		tot = Integer.parseInt(this.weeks.getW1())+Integer.parseInt(this.weeks.getW2())+Integer.parseInt(this.weeks.getW3())+Integer.parseInt(this.weeks.getW4());
-		this.total = Integer.toString(tot);
+	public void setTotal(float total) {
+		this.total = total;
 	}
 
 }

@@ -47,22 +47,12 @@ public class AmContractServiceImpl implements AmContractService {
 	
 	private void setDataFields(AmContract AmContract){		
 		AmContract.setId(Integer.toString(AmContract.getAmContractId()));		
-		if(AmContract.getOnshorePrice() != null && AmContract.getOnshorePrice().getOnshorepriceId() != 0){
-			/*System.out.println("AM ID===>"+AmContract.getAmId());
-			System.out.println("BUSINESS LINE ID ONSHORE===>"+AmContract.getOnShorePriceId().getBusinesslineId().getBusinesslineId());
-			System.out.println("TYPE ID====>"+AmContract.getOnShorePriceId().getBusinesslineId().getResourceType().getResourcetypeId());
-			System.out.println("ROLE ID====>"+AmContract.getOnShorePriceId().getRoleId().getRoleId());
-			System.out.println("GRADE ID===>"+AmContract.getOnShorePriceId().getGradeId().getGradeId());	*/		
+		if(AmContract.getOnshorePrice() != null && AmContract.getOnshorePrice().getOnshorepriceId() != 0){			
 			AmContract.setType(AmContract.getOnshorePrice().getBusinessLine().getResourceType().getResourceType());
 			AmContract.setBline(AmContract.getOnshorePrice().getBusinessLine().getBusinesslineName());
 			AmContract.setRole(AmContract.getOnshorePrice().getRole().getRoleType());
-			AmContract.setGrade(AmContract.getOnshorePrice().getGrade().getGradeType());
-			//AmContract.setSkill(AmContract.getOnshorePrice().getBusinessLine().getSkill().getSkillName());
-		} else{
-			/*System.out.println("BUSINESS LINE ID OFFSHORE===>"+AmContract.getOffShorePriceId().getBusinesslineId().getBusinesslineId());
-			System.out.println("TYPE ID====>"+AmContract.getOffShorePriceId().getBusinesslineId().getResourceType().getResourcetypeId());
-			System.out.println("SKILL DETAILS===>"+AmContract.getOffShorePriceId().getBusinesslineId().getSkill().getSkillId());
-			System.out.println("STAY TYPE DETAIL=>"+AmContract.getOffShorePriceId().getStayTypeId().getStayTypeId());*/
+			AmContract.setGrade(AmContract.getOnshorePrice().getGrade().getGradeType());			
+		} else{			
 			AmContract.setType(AmContract.getOffshorePrice().getBusinessLine().getResourceType().getResourceType());			
 			AmContract.setBline(AmContract.getOffshorePrice().getBusinessLine().getBusinesslineName());
 			AmContract.setSkill(AmContract.getOffshorePrice().getBusinessLine().getSkill().getSkillName());
@@ -73,22 +63,12 @@ public class AmContractServiceImpl implements AmContractService {
 	
 	private void setDataFieldsId(AmContract AmContract){		
 		AmContract.setId(Integer.toString(AmContract.getAmContractId()));		
-		if(AmContract.getOnshorePrice() != null && AmContract.getOnshorePrice().getOnshorepriceId() != 0){
-			/*System.out.println("AM ID===>"+AmContract.getAmId());
-			System.out.println("BUSINESS LINE ID ONSHORE===>"+AmContract.getOnShorePriceId().getBusinesslineId().getBusinesslineId());
-			System.out.println("TYPE ID====>"+AmContract.getOnShorePriceId().getBusinesslineId().getResourceType().getResourcetypeId());
-			System.out.println("ROLE ID====>"+AmContract.getOnShorePriceId().getRoleId().getRoleId());
-			System.out.println("GRADE ID===>"+AmContract.getOnShorePriceId().getGradeId().getGradeId());	*/		
+		if(AmContract.getOnshorePrice() != null && AmContract.getOnshorePrice().getOnshorepriceId() != 0){			
 			AmContract.setType(Integer.toString(AmContract.getOnshorePrice().getBusinessLine().getResourceType().getResourcetypeId()));
 			AmContract.setBline(Integer.toString(AmContract.getOnshorePrice().getBusinessLine().getBusinesslineId()));
 			AmContract.setRole(Integer.toString(AmContract.getOnshorePrice().getRole().getRoleId()));
-			AmContract.setGrade(Integer.toString(AmContract.getOnshorePrice().getGrade().getGradeId()));
-			//AmContract.setSkill(Integer.toString(AmContract.getOnshorePrice().getBusinessLine().getSkill().getSkillId()));
-		} else{
-			/*System.out.println("BUSINESS LINE ID OFFSHORE===>"+AmContract.getOffShorePriceId().getBusinesslineId().getBusinesslineId());
-			System.out.println("TYPE ID====>"+AmContract.getOffShorePriceId().getBusinesslineId().getResourceType().getResourcetypeId());
-			System.out.println("SKILL DETAILS===>"+AmContract.getOffShorePriceId().getBusinesslineId().getSkill().getSkillId());
-			System.out.println("STAY TYPE DETAIL=>"+AmContract.getOffShorePriceId().getStayTypeId().getStayTypeId());*/
+			AmContract.setGrade(Integer.toString(AmContract.getOnshorePrice().getGrade().getGradeId()));			
+		} else{			
 			AmContract.setType(Integer.toString(AmContract.getOffshorePrice().getBusinessLine().getResourceType().getResourcetypeId()));			
 			AmContract.setBline(Integer.toString(AmContract.getOffshorePrice().getBusinessLine().getBusinesslineId()));
 			AmContract.setSkill(Integer.toString(AmContract.getOffshorePrice().getBusinessLine().getSkill().getSkillId()));

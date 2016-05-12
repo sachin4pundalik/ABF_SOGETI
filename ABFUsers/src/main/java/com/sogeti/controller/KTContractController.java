@@ -18,12 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
-import com.sogeti.db.models.AmContract;
 import com.sogeti.db.models.KtContract;
 import com.sogeti.model.ABFResponse;
+import com.sogeti.model.BandDT;
+import com.sogeti.model.BusinessLineDT;
+import com.sogeti.model.GradeDT;
 import com.sogeti.model.KTContractResourceBean;
+import com.sogeti.model.ResourceTypeDT;
+import com.sogeti.model.RoleDT;
+import com.sogeti.model.SkillDT;
+import com.sogeti.model.StayTypeDT;
 import com.sogeti.service.KtContractService;
-import com.sogeti.xmlbeans.Month;
 import com.sogeti.xmlbeans.Resource;
 
 @RestController
@@ -84,23 +89,63 @@ public class KTContractController {
 	
 	private KTContractResourceBean fillResourceData(KtContract resource){
 		KTContractResourceBean resourceBean = new KTContractResourceBean();
-		resourceBean.setId(resource.getId());
-		resourceBean.setType(resource.getType());
-		resourceBean.setBline(resource.getBline());
-		resourceBean.setSkill(resource.getSkill());
-		resourceBean.setBand(resource.getBand());
-		resourceBean.setRole(resource.getRole());
-		resourceBean.setGrade(resource.getGrade());
-		resourceBean.setStay(resource.getStay());		
+		
+		if(resource.getOnshorePrice() != null && resource.getOnshorePrice().getOnshorepriceId() != 0){		
+			ResourceTypeDT resourceType = new ResourceTypeDT();
+			resourceType.setResourcetypeId(resource.getOnshorePrice().getBusinessLine().getResourceType().getResourcetypeId());
+			resourceType.setResourceType(resource.getOnshorePrice().getBusinessLine().getResourceType().getResourceType());
+			
+			BusinessLineDT businessLine = new BusinessLineDT();
+			businessLine.setBusinesslineId(resource.getOnshorePrice().getBusinessLine().getBusinesslineId());
+			businessLine.setBusinesslineName(resource.getOnshorePrice().getBusinessLine().getBusinesslineName());
+			
+			RoleDT role = new RoleDT();
+			role.setRoleId(resource.getOnshorePrice().getRole().getRoleId());
+			role.setRoleType(resource.getOnshorePrice().getRole().getRoleType());
+			
+			GradeDT grade = new GradeDT();
+			grade.setGradeId(resource.getOnshorePrice().getGrade().getGradeId());
+			grade.setGradeType(resource.getOnshorePrice().getGrade().getGradeType());
+			
+			resourceBean.setResourceType(resourceType);
+			resourceBean.setBusinessLine(businessLine);
+			resourceBean.setRole(role);
+			resourceBean.setGrade(grade);
+			
+		}else{
+			ResourceTypeDT resourceType = new ResourceTypeDT();
+			resourceType.setResourcetypeId(resource.getOffshorePrice().getBusinessLine().getResourceType().getResourcetypeId());
+			resourceType.setResourceType(resource.getOffshorePrice().getBusinessLine().getResourceType().getResourceType());
+			
+			BusinessLineDT businessLine = new BusinessLineDT();
+			businessLine.setBusinesslineId(resource.getOffshorePrice().getBusinessLine().getBusinesslineId());
+			businessLine.setBusinesslineName(resource.getOffshorePrice().getBusinessLine().getBusinesslineName());
+			
+			SkillDT skill = new SkillDT();
+			skill.setSkillId(resource.getOffshorePrice().getBusinessLine().getSkill().getSkillId());
+			skill.setSkillName(resource.getOffshorePrice().getBusinessLine().getSkill().getSkillName());
+			
+			BandDT band = new BandDT();
+			band.setBandId(resource.getOffshorePrice().getBand().getBandId());
+			band.setBandName(resource.getOffshorePrice().getBand().getBandName());
+			
+			StayTypeDT stayType = new StayTypeDT();
+			stayType.setStayTypeId(resource.getOffshorePrice().getStayType().getStayTypeId());
+			stayType.setStayType(resource.getOffshorePrice().getStayType().getStayType());
+			
+			resourceBean.setResourceType(resourceType);
+			resourceBean.setBusinessLine(businessLine);
+			resourceBean.setSkill(skill);
+			resourceBean.setBand(band);
+			resourceBean.setStayType(stayType);
+		}
+		
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(Resource.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();	
 			StringReader reader = new StringReader(resource.getDetailsXml());
 			Resource resourceObj = (Resource) unmarshaller.unmarshal(reader);
-			// Set Month Totals
-			for(Month month : resourceObj.getMonths().getMonth()){
-				month.calculateTotal();
-			}			
+			
 			resourceBean.setMonths(resourceObj.getMonths());			
 		}catch(JAXBException e){
 			e.printStackTrace();
