@@ -36,6 +36,14 @@ public class BusinessLineServiceImpl implements BusinessLineService{
 		return businessLineDAO.update(businessLine);
 	}
 
+	public List<BusinessLine> getBusinessLinesForResource(Integer resourcetypeId) {
+		return businessLineDAO.getBusinessLinesForResource(resourcetypeId);
+	}
+
+	public List<BusinessLine> getBusinessLinesForResourceAndSkill(Integer resourceTypeId, Integer skillId) {
+		return businessLineDAO.getBusinessLinesForResourceAndSkill(resourceTypeId, skillId);
+	}
+
 
 
 

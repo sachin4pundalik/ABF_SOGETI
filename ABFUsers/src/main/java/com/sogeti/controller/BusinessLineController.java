@@ -202,5 +202,81 @@ public class BusinessLineController {
 
 		return response;
 	}
+	
+	
+	@RequestMapping(value = "/resourceType/{id}", method = RequestMethod.GET)
+	public ABFResponse findBusinessLineForResourceType(@PathVariable("id") int resourceTypeId)
+
+	{
+		ABFResponse response = new ABFResponse();
+		List<BusinessLine> businessLines = new ArrayList<BusinessLine>();
+		List<BusinessLineDT> finalList = new ArrayList<>();
+		BusinessLineDT businessLineDT = null;
+		try {
+			businessLines = businessLineService.getBusinessLinesForResource(resourceTypeId);
+			for (BusinessLine businessLine : businessLines) {
+
+				businessLineDT = new BusinessLineDT();
+				businessLineDT.setBusinesslineId(businessLine.getBusinesslineId());
+				businessLineDT.setBusinesslineName(businessLine.getBusinesslineName());
+				businessLineDT.setResourceTypeId(businessLine.getResourceType().getResourcetypeId());
+				businessLineDT.setResourceType(businessLine.getResourceType().getResourceType());
+				if (businessLine.getSkill() != null) {
+					businessLineDT.setSkillId(businessLine.getSkill().getSkillId());
+					businessLineDT.setSkillName(businessLine.getSkill().getSkillName());
+				}
+
+				finalList.add(businessLineDT);
+			}
+
+			response.setSuccessResponse(finalList);
+			response.setStatus(ABFConstants.STATUS_SUCCESS);
+		} catch (Exception e) {
+			logger.error("Exception :: ", e);
+			response.setSuccessResponse("No Business Lines, please ask Admin to setup data.");
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+		}
+
+		return response;
+
+	}
+	
+	
+	@RequestMapping(value = "/resourceType/{resourceTypeId}/skill/{skillId}", method = RequestMethod.GET)
+	public ABFResponse findBusinessLineForResourceTypeAndSkill(@PathVariable("resourceTypeId") int resourceTypeId,@PathVariable("skillId") int skillId)
+
+	{
+		ABFResponse response = new ABFResponse();
+		List<BusinessLine> businessLines = new ArrayList<BusinessLine>();
+		List<BusinessLineDT> finalList = new ArrayList<>();
+		BusinessLineDT businessLineDT = null;
+		try {
+			businessLines = businessLineService.getBusinessLinesForResourceAndSkill(resourceTypeId, skillId);
+			for (BusinessLine businessLine : businessLines) {
+
+				businessLineDT = new BusinessLineDT();
+				businessLineDT.setBusinesslineId(businessLine.getBusinesslineId());
+				businessLineDT.setBusinesslineName(businessLine.getBusinesslineName());
+				businessLineDT.setResourceTypeId(businessLine.getResourceType().getResourcetypeId());
+				businessLineDT.setResourceType(businessLine.getResourceType().getResourceType());
+				if (businessLine.getSkill() != null) {
+					businessLineDT.setSkillId(businessLine.getSkill().getSkillId());
+					businessLineDT.setSkillName(businessLine.getSkill().getSkillName());
+				}
+
+				finalList.add(businessLineDT);
+			}
+
+			response.setSuccessResponse(finalList);
+			response.setStatus(ABFConstants.STATUS_SUCCESS);
+		} catch (Exception e) {
+			logger.error("Exception :: ", e);
+			response.setSuccessResponse("No Business Lines, please ask Admin to setup data.");
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+		}
+
+		return response;
+
+	} 
 
 }
