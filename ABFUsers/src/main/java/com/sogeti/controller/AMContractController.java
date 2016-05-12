@@ -88,6 +88,7 @@ public class AMContractController {
 	
 	private AMContractResourceBean fillResourceData(AmContract resource){
 		AMContractResourceBean resourceBean = new AMContractResourceBean();
+		resourceBean.setAmContractResourceId(resource.getAmContractId());
 		
 		if(resource.getOnshorePrice() != null && resource.getOnshorePrice().getOnshorepriceId() != 0){		
 			ResourceTypeDT resourceType = new ResourceTypeDT();

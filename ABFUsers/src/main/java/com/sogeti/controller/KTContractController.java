@@ -89,6 +89,7 @@ public class KTContractController {
 	
 	private KTContractResourceBean fillResourceData(KtContract resource){
 		KTContractResourceBean resourceBean = new KTContractResourceBean();
+		resourceBean.setAmContractResourceId(resource.getKtContractId());
 		
 		if(resource.getOnshorePrice() != null && resource.getOnshorePrice().getOnshorepriceId() != 0){		
 			ResourceTypeDT resourceType = new ResourceTypeDT();
