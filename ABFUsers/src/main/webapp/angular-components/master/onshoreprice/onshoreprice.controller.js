@@ -1,12 +1,12 @@
 webappApp.controller('MasterOnshorePriceCtrl', [ '$scope', '$location',
-                                         'toastr','DataSetService', 'Session', 'masterDataService', 'ABF_CONSTANTS', 'Session', MasterOnshorePriceCtrl_Fn ]);
+                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', 'Session', MasterOnshorePriceCtrl_Fn ]);
 
  function MasterOnshorePriceCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS, Session){
  	
- 	$scope.onshoreprices = DataSetService.onshoreprices;
- 	$scope.blines = DataSetService.blines;
- 	$scope.grades = DataSetService.grades;
- 	$scope.roles = DataSetService.roles;
+ 	$scope.onshoreprices = DataSetService.getOnshorePrices();
+ 	$scope.blines = DataSetService.getBusinessLines;
+ 	$scope.grades = DataSetService.getGrades();
+ 	$scope.roles = DataSetService.getRoles();
 	
  	$scope.price= {
  			onshorepriceId:'0',
@@ -126,7 +126,7 @@ webappApp.controller('MasterOnshorePriceCtrl', [ '$scope', '$location',
  	 			gradeType:'',
  	 			roleId:'-1',
  	 			roleType:'',
- 	 	 		lastUpdatedBy:DataSetService.loggedInUser.loginId
+ 	 	 		lastUpdatedBy:Session.sessionUser.loginId
  	 	};
  	};
  	

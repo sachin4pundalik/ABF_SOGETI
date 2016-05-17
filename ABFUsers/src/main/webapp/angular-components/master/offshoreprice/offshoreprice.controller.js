@@ -124,7 +124,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  	 			bandName:'',
  	 			stayTypeId:'-1',
  	 			stayTypeName:'',
- 	 			lastUpdatedBy:DataSetService.loggedInUser.loginId
+ 	 			lastUpdatedBy:Session.sessionUser.loginId
  	 	};
  	};
  	

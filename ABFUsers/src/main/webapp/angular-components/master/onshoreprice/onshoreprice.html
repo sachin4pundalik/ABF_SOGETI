@@ -17,7 +17,7 @@
 							<label for="select" class="col-lg-2 control-label">Business Line</label>
 							<div class="col-lg-10">
 								<select class="form-control"  data-ng-model="price.businessLineId" required="required">
-							      <option data-ng-repeat="option in blines" value="{{option.businesslineId}}">{{option.businesslineName}}</option>
+							      <option data-ng-repeat="option in blines"  value="{{option.businesslineId}}">{{option.businesslineName}}</option>
 							    </select>
 							</div>
 						</div>
@@ -25,7 +25,7 @@
 							<label for="select" class="col-lg-2 control-label">Role</label>
 							<div class="col-lg-10">
 								<select class="form-control"  data-ng-model="price.roleId" required="required">
-							      <option data-ng-repeat="option in roles" value="{{option.roleId}}">{{option.roleType}}</option>
+							      <option data-ng-repeat="option in roles"  value="{{option.roleId}}">{{option.roleType}}</option>
 							    </select>
 							</div>
 						</div>
@@ -33,7 +33,7 @@
 							<label for="select" class="col-lg-2 control-label">Grade</label>
 							<div class="col-lg-10">
 								<select class="form-control"  data-ng-model="price.gradeId" required="required">
-							      <option data-ng-repeat="option in grades" value="{{option.gradeId}}">{{option.gradeType}}</option>
+							      <option data-ng-repeat="option in grades"  value="{{option.gradeId}}">{{option.gradeType}}</option>
 							    </select>
 							</div>
 						</div>
@@ -60,7 +60,7 @@
 							<label for="select" class="col-lg-2 control-label">Business Line</label>
 							<div class="col-lg-10">
 								<select class="form-control"  data-ng-model="price.businessLineId" required="required">
-							      <option data-ng-repeat="option in blines" value="{{option.businesslineId}}">{{option.businesslineName}}</option>
+							      <option data-ng-repeat="option in blines" data-ng-selected="option.businesslineId==price.businessLineId" value="{{option.businesslineId}}">{{option.businesslineName}}</option>
 							    </select>
 							</div>
 						</div>
@@ -68,7 +68,7 @@
 							<label for="select" class="col-lg-2 control-label">Role</label>
 							<div class="col-lg-10">
 								<select class="form-control"  data-ng-model="price.roleId" required="required">
-							      <option data-ng-repeat="option in bands" value="{{option.roleId}}">{{option.roleType}}</option>
+							      <option data-ng-repeat="option in bands" data-ng-selected="option.roleId==price.roleId" value="{{option.roleId}}">{{option.roleType}}</option>
 							    </select>
 							</div>
 						</div>
@@ -76,7 +76,7 @@
 							<label for="select" class="col-lg-2 control-label">Grade</label>
 							<div class="col-lg-10">
 								<select class="form-control"  data-ng-model="price.gradeId" required="required">
-							      <option data-ng-repeat="option in grades" value="{{option.gradeId}}">{{option.gradeType}}</option>
+							      <option data-ng-repeat="option in grades" data-ng-selected="option.gradeId==price.gradeId" value="{{option.gradeId}}">{{option.gradeType}}</option>
 							    </select>
 							</div>
 						</div>

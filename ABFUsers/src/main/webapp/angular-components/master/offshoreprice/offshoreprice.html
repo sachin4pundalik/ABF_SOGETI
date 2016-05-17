@@ -60,7 +60,7 @@
 							<label for="select" class="col-lg-2 control-label">Business Line</label>
 							<div class="col-lg-10">
 								<select class="form-control"  data-ng-model="price.businessLineId" required="required">
-							      <option data-ng-repeat="option in blines" value="{{option.businesslineId}}">{{option.businesslineName}}</option>
+							      <option data-ng-repeat="option in blines" data-ng-selected="option.businesslineId==price.businessLineId" value="{{option.businesslineId}}">{{option.businesslineName}}</option>
 							    </select>
 							</div>
 						</div>
@@ -68,7 +68,7 @@
 							<label for="select" class="col-lg-2 control-label">Band</label>
 							<div class="col-lg-10">
 								<select class="form-control"  data-ng-model="price.bandId" required="required">
-							      <option data-ng-repeat="option in bands" value="{{option.bandId}}">{{option.bandName}}</option>
+							      <option data-ng-repeat="option in bands" data-ng-selected="option.bandId==price.bandId" value="{{option.bandId}}">{{option.bandName}}</option>
 							    </select>
 							</div>
 						</div>
@@ -76,7 +76,7 @@
 							<label for="select" class="col-lg-2 control-label">Stay</label>
 							<div class="col-lg-10">
 								<select class="form-control"  data-ng-model="price.stayTypeId" required="required">
-							      <option data-ng-repeat="option in stayTypes" value="{{option.stayTypeId}}">{{option.stayType}}</option>
+							      <option data-ng-repeat="option in stayTypes" data-ng-selected="option.stayTypeId==price.stayTypeId" value="{{option.stayTypeId}}">{{option.stayType}}</option>
 							    </select>
 							</div>
 						</div>
@@ -121,7 +121,7 @@
 								<td>{{price.offshorepriceId}}</td>
 								<td>{{price.businessLineName}}</td>
 								<td>{{price.bandName}}</td>
-								<td>{{price.stayType}}</td>
+								<td>{{price.stayTypeName}}</td>
 								<td>{{price.price}}</td>
 								<td class="wrap">{{price.description}}</td>
 								<td>
