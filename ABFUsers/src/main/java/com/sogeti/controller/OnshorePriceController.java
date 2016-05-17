@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,29 +78,40 @@ public class OnshorePriceController {
 		ABFResponse response = new ABFResponse();
 		List<OnshorePrice> onshorePrices = new ArrayList<OnshorePrice>();
 		List<OnshorePriceDT> onshorePricesDTList = new ArrayList<OnshorePriceDT>();
-		onshorePrices = onshorePriceService.findAll();
-		
-		for(OnshorePrice onshorePrice:onshorePrices){
+		try {
+			onshorePrices = onshorePriceService.findAll();
 			
-			OnshorePriceDT onshorePriceDT = new OnshorePriceDT();
-			onshorePriceDT.setOnshorepriceId(onshorePrice.getOnshorepriceId());
-			onshorePriceDT.setPrice(onshorePrice.getPrice());
-			onshorePriceDT.setLastUpdatedBy(onshorePrice.getLastUpdatedBy());
-			onshorePriceDT.setLastUpdatedDatetime(onshorePrice.getLastUpdatedDatetime()+"");
-			onshorePriceDT.setDescription(onshorePrice.getDescription());
-			onshorePriceDT.setGradeType(onshorePrice.getGrade().getGradeType());
-			onshorePriceDT.setRoleId(onshorePrice.getRole().getRoleId());
-			onshorePriceDT.setRoleType(onshorePrice.getRole().getRoleType());
-			onshorePriceDT.setGradeId(onshorePrice.getGrade().getGradeId());
-			onshorePriceDT.setBusinessLineId(onshorePrice.getBusinessLine().getBusinesslineId());
-			onshorePriceDT.setBusinessLineName(onshorePrice.getBusinessLine().getBusinesslineName());
-
-			onshorePricesDTList.add(onshorePriceDT)	;
+			for(OnshorePrice onshorePrice:onshorePrices){
+				
+				OnshorePriceDT onshorePriceDT = new OnshorePriceDT();
+				onshorePriceDT.setOnshorepriceId(onshorePrice.getOnshorepriceId());
+				onshorePriceDT.setPrice(onshorePrice.getPrice());
+				onshorePriceDT.setLastUpdatedBy(onshorePrice.getLastUpdatedBy());
+				onshorePriceDT.setLastUpdatedDatetime(onshorePrice.getLastUpdatedDatetime()+"");
+				onshorePriceDT.setDescription(onshorePrice.getDescription());
+				
+				if(ObjectUtils.notEqual(onshorePrice.getGrade(), null)){
+					onshorePriceDT.setGradeType(onshorePrice.getGrade().getGradeType());
+					onshorePriceDT.setGradeId(onshorePrice.getGrade().getGradeId());
+				}
+				if(ObjectUtils.notEqual(onshorePrice.getRole(), null)){
+					onshorePriceDT.setRoleId(onshorePrice.getRole().getRoleId());
+					onshorePriceDT.setRoleType(onshorePrice.getRole().getRoleType());
+				}
+				
+				if(ObjectUtils.notEqual(onshorePrice.getBusinessLine(), null)){
+					onshorePriceDT.setBusinessLineId(onshorePrice.getBusinessLine().getBusinesslineId());
+					onshorePriceDT.setBusinessLineName(onshorePrice.getBusinessLine().getBusinesslineName());
+				}
+				onshorePricesDTList.add(onshorePriceDT)	;
+			}
 			
+			response.setSuccessResponse(onshorePricesDTList);
+			response.setStatus(ABFConstants.STATUS_SUCCESS);
+		} catch (Exception e) {
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+			response.setFailureResponse(ABFConstants.STATUS_DI_EXCEPTION);
 		}
-		
-		response.setSuccessResponse(onshorePricesDTList);
-		response.setStatus(ABFConstants.STATUS_SUCCESS);
 
 		return response;
 	}

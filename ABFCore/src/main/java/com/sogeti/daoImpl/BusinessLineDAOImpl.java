@@ -14,6 +14,7 @@ import com.sogeti.db.models.BusinessLine;
 @Component("businessLineDAO")
 public class BusinessLineDAOImpl extends GenericDaoImpl<BusinessLine> implements BusinessLineDAO {
 
+	@SuppressWarnings("unchecked")
 	public List<BusinessLine> getBusinessLinesForResource(Integer resourcetypeId) {
 		Query q = em.createQuery("from BusinessLine bl where bl.resourceType.resourcetypeId = :resourcetypeId");
 		q.setParameter("resourcetypeId", resourcetypeId);
@@ -21,6 +22,7 @@ public class BusinessLineDAOImpl extends GenericDaoImpl<BusinessLine> implements
 		return fcList;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<BusinessLine> getBusinessLinesForResourceAndSkill(Integer resourceTypeId, Integer skillId) {
 		Query q = em.createQuery("from BusinessLine bl where bl.resourceType.resourcetypeId=  :resourcetypeId and bl.skill.skillId= :skillId");
 		q.setParameter("resourcetypeId", resourceTypeId);

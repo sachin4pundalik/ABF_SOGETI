@@ -1,9 +1,9 @@
 webappApp.controller('MasterApprovalStatusCtrl', [ '$scope', '$location',
-                                         'toastr','dataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterApprovalStatusCtrl_Fn ]);
+                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterApprovalStatusCtrl_Fn ]);
 
-function MasterApprovalStatusCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
+function MasterApprovalStatusCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
 	
-	$scope.statuses = dataSetService.statuses;
+	$scope.statuses = DataSetService.statuses;
 	
 	$scope.statuse= {
 			statusId:'',
@@ -16,8 +16,7 @@ function MasterApprovalStatusCtrl_Fn($scope, $location,toastr, dataSetService, m
 	$scope.getstatuses = function (){
 		masterDataService.fetchAll('./status/all')
 		.then(function(response){
-			console.log("Success : " + JSON.stringify(response));
-			$scope.statuses = dataSetService.statuses = response.data.successResponse;
+			$scope.statuses = DataSetService.statuses = response.data.successResponse;
 			toastr.info("statuses updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.STATUS);
 		}, function(error){
 			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
@@ -67,7 +66,6 @@ function MasterApprovalStatusCtrl_Fn($scope, $location,toastr, dataSetService, m
 	$scope.getstatus = function ( statuseId ){
 		masterDataService.fetch('./status/find/', statuseId)
 		.then(function(response){
-			console.log("Success : " + JSON.stringify(response));
 			$scope.status=response.data.successResponse;
 			toastr.info("statuse is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.STATUS);
 		}, function(error){

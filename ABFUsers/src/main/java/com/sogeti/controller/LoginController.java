@@ -123,9 +123,14 @@ public class LoginController {
 			response.setStatus(ABFConstants.STATUS_SUCCESS);			
 		} catch (TechnicalException e) {
 			logger.error("Login error",e);
-			response.setFailureResponse(e.getMessage());
+			response.setFailureResponse("Unable to validate user.");
 			response.setStatus(ABFConstants.STATUS_FAILURE);
-		}		
+		} catch (Exception e) {
+			logger.error("Login error",e);
+			response.setFailureResponse("Unable to validate user.");
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+		}
+		
 		return response;
 	}
 	

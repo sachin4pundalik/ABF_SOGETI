@@ -1,9 +1,9 @@
 webappApp.controller('MasterGradeCtrl', [ '$scope', '$location',
-                                         'toastr','dataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterGradeCtrl_Fn ]);
+                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterGradeCtrl_Fn ]);
 
-function MasterGradeCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
+function MasterGradeCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
 	
-	$scope.grades = dataSetService.grades;
+	$scope.grades = DataSetService.grades;
 	
 	$scope.grade= {
 			gradeId:'',
@@ -17,8 +17,7 @@ function MasterGradeCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 		masterDataService.fetchAll(url)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response));
-				$scope.grades = dataSetService.grades = response.data.successResponse;
+				$scope.grades = DataSetService.grades = response.data.successResponse;
 				$scope.goBack();
 				toastr.info("Grades updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.GRADES);
 			}else{
@@ -77,7 +76,6 @@ function MasterGradeCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 		masterDataService.fetch('./grade/find/', gradeId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response));
 				$scope.grade = response.data.successResponse;
 				toastr.info("Grade updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.GRADES);
 			}else{

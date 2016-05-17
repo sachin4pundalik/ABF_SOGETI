@@ -1,9 +1,9 @@
 webappApp.controller('MasterUserRoleCtrl', [ '$scope', '$location',
-                                         'toastr','dataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterUserRoleCtrl_Fn ]);
+                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterUserRoleCtrl_Fn ]);
 
-function MasterUserRoleCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
+function MasterUserRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
 	
-	$scope.userRoles = dataSetService.userRoles;
+	$scope.userRoles = DataSetService.userRoles;
 	
 	$scope.userRole= {
 			userRoleId:'',
@@ -14,8 +14,7 @@ function MasterUserRoleCtrl_Fn($scope, $location,toastr, dataSetService, masterD
 	$scope.getuserRoles = function (){
 		masterDataService.fetchAll('./userRole/all')
 		.then(function(response){
-			console.log("Success : " + JSON.stringify(response));
-			$scope.userRoles = dataSetService.userRoles = response.data.successResponse;
+			$scope.userRoles = DataSetService.userRoles = response.data.successResponse;
 			toastr.info("User Role loaded from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.USER_ROLES);
 		}, function(error){
 			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
@@ -64,7 +63,6 @@ function MasterUserRoleCtrl_Fn($scope, $location,toastr, dataSetService, masterD
 	$scope.getuserRole = function ( userRoleId ){
 		masterDataService.fetch('./userRole/find/', userRoleId)
 		.then(function(response){
-			console.log("Success : " + JSON.stringify(response));
 			$scope.userRole=response.data.successResponse;
 			toastr.info("User Role is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.USER_ROLES);
 		}, function(error){

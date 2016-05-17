@@ -1,9 +1,9 @@
 webappApp.controller('MasterStayCtrl', [ '$scope', '$location',
-                                         'toastr','dataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterStayCtrl_Fn ]);
+                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterStayCtrl_Fn ]);
 
-function MasterStayCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
+function MasterStayCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
 	
-	$scope.stayTypes = dataSetService.stayTypes;
+	$scope.stayTypes = DataSetService.stayTypes;
 	
 	$scope.stay= {
 			stayTypeId:'',
@@ -14,8 +14,7 @@ function MasterStayCtrl_Fn($scope, $location,toastr, dataSetService, masterDataS
 	$scope.getstayTypes = function (){
 		masterDataService.fetchAll('./stayType/all')
 		.then(function(response){
-			console.log("Success : " + JSON.stringify(response));
-			$scope.stayTypes = dataSetService.stayTypes = response.data.successResponse;
+			$scope.stayTypes = DataSetService.stayTypes = response.data.successResponse;
 			toastr.info("Stay Types updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.STAY_TYPE);
 		}, function(error){
 			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
@@ -64,7 +63,6 @@ function MasterStayCtrl_Fn($scope, $location,toastr, dataSetService, masterDataS
 	$scope.getstay = function ( stayId ){
 		masterDataService.fetch('./stayType/find/', stayId)
 		.then(function(response){
-			console.log("Success : " + JSON.stringify(response));
 			$scope.stay=response.data.successResponse;
 			toastr.info("Band is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.STAY_TYPE);
 		}, function(error){

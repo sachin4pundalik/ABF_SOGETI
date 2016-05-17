@@ -5,60 +5,44 @@
  * @name webappApp.controller:AboutCtrl
  * @description # AboutCtrl Controller of the webappApp
  */
-webappApp.controller('loginCtrl', [ '$scope', '$location', '$rootScope',
-		'$cookieStore', 'LoginService', 'toastr','dataSetService', LoginCtrl_Fn ]);
+webappApp.controller('loginCtrl',
+		[ '$scope', '$location', '$rootScope', '$cookieStore', 'AuthService', 'DataSetService',
+				'toastr', 'AUTH_EVENTS', 'ABF_CONSTANTS', LoginCtrl_Fn ]);
 
-function LoginCtrl_Fn($scope, $location, $rootScope, $cookieStore, LoginService, toastr, dataSetService) {
+function LoginCtrl_Fn($scope, $location, $rootScope, $cookieStore, AuthService,DataSetService,
+		toastr, AUTH_EVENTS, ABF_CONSTANTS) {
 
-	$scope.user = {
+	$scope.credentials = {
 		userName : '',
 		password : ''
 	};
-	$scope.error = '';
-	
-	$scope.doLogin = function() {
 
-		LoginService.validateUser($scope.user).then(function(response){
-			toastr.options=dataSetService.errorAlertOptions;
-			dataSetService.loggedInUser={};
-			if(response.data.status === 'success'){
-				let user = response.data.successResponse.userName;
-				$scope.user = dataSetService.loggedInUser = response.data.successResponse;
-				
-				toastr.options=dataSetService.successAlertOptions;
-				toastr.success('Welcome to ABF !!','Welcome Message');
-				$rootScope.currentUser = dataSetService.loggedInUser;
-				$rootScope.isVisible = true;
-				$cookieStore.put('loggedin', 'true');
-				$location.path('/landing');
-			}else{
-				toastr.options = {
-		                closeButton: true,
-		                newestOnTop: true,
-		                progressBar: true,
-		                positionClass: 'toast-top-full-width',
-		                preventDuplicates: false,
-		                onclick: null
-		            };
-				
-				toastr.error('Sorry Unable to validate your credentials', 'Authentication Failure');
-				$rootScope.isVisible = false;
-				$scope.error='Sorry Unable to validate your credentials';
-				$cookieStore.put('loggedin', 'false');
-			}
-		}, function(error){
-			toastr.options = {
-	                closeButton: true,
-	                newestOnTop: true,
-	                progressBar: true,
-	                positionClass: 'toast-top-full-width',
-	                preventDuplicates: false,
-	                onclick: null
-	            };
-			toastr.error('Sorry Unable to validate your credentials', 'Authentication Failure');
-			$rootScope.isVisible = false;
-			$scope.error='Sorry Unable to validate your credentials';
-			$cookieStore.put('loggedin', 'false');
-		});
+	$scope.error = '';
+
+	$scope.doLogin = function() {
+		$cookieStore.remove('abfuser');
+		AuthService.login($scope.credentials).then(
+				function(response) {
+					if(angular.equals(response.status, ABF_CONSTANTS.SUCCESS)){
+						var user = response.successResponse;
+						$cookieStore.put('abfuser', JSON.stringify(user));
+						$location.path("/landing");
+						$rootScope.$broadcast(AUTH_EVENTS.loginSuccess, user);
+						
+						let msg = ABF_CONSTANTS.AUTHENTICATE_SUCCESS_MESSAGE.replace("$1", (user.firstName+", "+user.lastName));
+
+						//DataSetService.fetchAllMasterData();
+						toastr.success(msg, ABF_CONSTANTS.INFO_HEADER);
+					}else{
+						$scope.error = ABF_CONSTANTS.AUTHENTICATE_FAILURE_MESSAGE;
+						toastr.error(ABF_CONSTANTS.AUTHENTICATE_FAILURE_MESSAGE, ABF_CONSTANTS.AUTHENTICATE_FAILURE_HEADER);
+						$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+					}
+				},
+				function() {
+					$scope.error = ABF_CONSTANTS.AUTHENTICATE_FAILURE_MESSAGE;
+					toastr.error(ABF_CONSTANTS.AUTHENTICATE_FAILURE_MESSAGE, ABF_CONSTANTS.AUTHENTICATE_FAILURE_HEADER);
+					$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+				});
 	};
 }

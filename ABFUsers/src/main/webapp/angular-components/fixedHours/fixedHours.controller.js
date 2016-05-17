@@ -1,14 +1,14 @@
 
-webappApp.controller('fixedHoursCtrl', ['$scope','$http','fixedHoursService', 'toastr', 'masterDataService', 'ABF_CONSTANTS','dataSetService', fixedHoursCtrl_fn]);
+webappApp.controller('fixedHoursCtrl', ['$scope','$http','fixedHoursService', 'toastr', 'masterDataService', 'ABF_CONSTANTS','DataSetService', fixedHoursCtrl_fn]);
 
-function fixedHoursCtrl_fn($scope,$http, fixedHoursService, toastr, masterDataService, ABF_CONSTANTS, dataSetService) {
+function fixedHoursCtrl_fn($scope,$http, fixedHoursService, toastr, masterDataService, ABF_CONSTANTS, DataSetService) {
 	
 	$scope.fixedProjectHoursList = [];
 	$scope.selectedFixedTypes = [];
 	
-	$scope.contract = dataSetService.currContract;
+	$scope.contract = DataSetService.currContract;
 	
-	$scope.fixedHoursDataSet = dataSetService.fixedHours;
+	$scope.fixedHoursDataSet = DataSetService.fixedHours;
 	
 	$scope.addFixedHourBilling = function (){
 		$scope.resetFixedHours();
@@ -37,14 +37,12 @@ function fixedHoursCtrl_fn($scope,$http, fixedHoursService, toastr, masterDataSe
 			masterDataService.remove('./fixedContract/', fixedHour.fixedId)
 			.then(function(response){
 				if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-					console.log("Success : " + JSON.stringify(response));
 					toastr.success("Option \""+fixedHour.typeName+"\" removed!", "Message");
 				}else{
 					toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
 				}
 			}, function(error){
 				toastr.error("There is problem to delete, please contact Admin.", ABF_CONSTANTS.FAILURE_HEADER);
-				console.error(JSON.stringify(error));
 			});
 		}
 		_.remove($scope.fixedProjectHoursList, function(currentObject) {
@@ -55,7 +53,7 @@ function fixedHoursCtrl_fn($scope,$http, fixedHoursService, toastr, masterDataSe
 	
 	$scope.resetFixedHours= function(){
 		
-		if(angular.isDefined($scope.fixedProjectHoursList) && $scope.fixedProjectHoursList.length > 0){
+		if(angular.isArray($scope.fixedProjectHoursList) && $scope.fixedProjectHoursList.length > 0){
 			$scope.fixedProjectHoursList= [];
 			toastr.info("Reset is done. Please select atleast 1 option to save.", ABF_CONSTANTS.INFO_MESSAGE);
 		}
@@ -67,14 +65,11 @@ function fixedHoursCtrl_fn($scope,$http, fixedHoursService, toastr, masterDataSe
 			fixedHoursService.save( $scope.fixedProjectHoursList )
 			.then(function(response){
 				if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-					console.info(JSON.stringify(response));
 					toastr.success("Successfully saved ..!!", ABF_CONSTANTS.INFO_HEADER);
 				}else{
-					console.error(JSON.stringify(error, null ,2));
 					toastr.error(ABF_CONSTANTS.FAILURE_MESSAGE, ABF_CONSTANTS.FAILURE_HEADER);
 				}
 			}, function(error){
-				console.error(JSON.stringify(error, null ,2));
 				toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
 			});
 			toastr.info("Reset is done. Please select atleast 1 option to save.", "Message");
@@ -84,11 +79,10 @@ function fixedHoursCtrl_fn($scope,$http, fixedHoursService, toastr, masterDataSe
 	
 	$scope.getFixedContracts = function(){
 		
-		if(angular.isDefined(dataSetService.currContract.contractId)){
-			masterDataService.fetch('./fixedContract/contract/find/', dataSetService.currContract.contractId)
+		if(angular.isDefined(DataSetService.currContract.contractId)){
+			masterDataService.fetch('./fixedContract/contract/find/', DataSetService.currContract.contractId)
 			.then(function(response){
 				if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-					console.log("Success : " + JSON.stringify(response));
 					angular.forEach(response.data.successResponse, function(item){
 						$scope.fixedProjectHoursList.push(item);
 					});
@@ -97,7 +91,6 @@ function fixedHoursCtrl_fn($scope,$http, fixedHoursService, toastr, masterDataSe
 				}
 			}, function(error){
 				toastr.error("Unable to fetch contract.", ABF_CONSTANTS.FAILURE_HEADER);
-				console.error(JSON.stringify(error));
 			});
 		}
 		
@@ -108,15 +101,12 @@ function fixedHoursCtrl_fn($scope,$http, fixedHoursService, toastr, masterDataSe
 	masterDataService.fetchAll('./fixedCost/all')
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response));
-				$scope.fixedHoursDataSet = dataSetService.fixedHours = response.data.successResponse;
+				$scope.fixedHoursDataSet = DataSetService.fixedHours = response.data.successResponse;
 			}else{
 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
 			}
 		}, function(error){
 			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
-			console.error(JSON.stringify(error));
 		});
-	
 	
 }

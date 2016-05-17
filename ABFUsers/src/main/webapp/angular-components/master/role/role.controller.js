@@ -1,9 +1,9 @@
 webappApp.controller('MasterRoleCtrl', [ '$scope', '$location',
-                                         'toastr','dataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterRoleCtrl_Fn ]);
+                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterRoleCtrl_Fn ]);
 
-function MasterRoleCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
+function MasterRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
 	
-	$scope.roles = dataSetService.roles;
+	$scope.roles = DataSetService.roles;
 	
 	$scope.role= {
 			roleId:'',
@@ -17,8 +17,7 @@ function MasterRoleCtrl_Fn($scope, $location,toastr, dataSetService, masterDataS
 		masterDataService.fetchAll(url)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response));
-				$scope.roles = dataSetService.roles = response.data.successResponse;
+				$scope.roles = DataSetService.roles = response.data.successResponse;
 				$scope.goBack();
 				toastr.info("Roles updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.ROLES);
 			}else{
@@ -75,7 +74,6 @@ function MasterRoleCtrl_Fn($scope, $location,toastr, dataSetService, masterDataS
 		masterDataService.fetch('./role/find/', roleId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response));
 				$scope.role= response.data.successResponse;
 				toastr.info("role is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.ROLES);
 			}else{

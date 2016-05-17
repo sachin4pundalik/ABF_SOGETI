@@ -1,12 +1,12 @@
 webappApp.controller('MasterOnshorePriceCtrl', [ '$scope', '$location',
-                                         'toastr','dataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterOnshorePriceCtrl_Fn ]);
+                                         'toastr','DataSetService', 'Session', 'masterDataService', 'ABF_CONSTANTS', 'Session', MasterOnshorePriceCtrl_Fn ]);
 
- function MasterOnshorePriceCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
+ function MasterOnshorePriceCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS, Session){
  	
- 	$scope.onshoreprices = dataSetService.onshoreprices;
- 	$scope.blines = dataSetService.blines;
- 	$scope.grades = dataSetService.grades;
- 	$scope.roles = dataSetService.roles;
+ 	$scope.onshoreprices = DataSetService.onshoreprices;
+ 	$scope.blines = DataSetService.blines;
+ 	$scope.grades = DataSetService.grades;
+ 	$scope.roles = DataSetService.roles;
 	
  	$scope.price= {
  			onshorepriceId:'0',
@@ -18,7 +18,7 @@ webappApp.controller('MasterOnshorePriceCtrl', [ '$scope', '$location',
  			gradeType:'',
  			roleId:'-1',
  			roleType:'',
- 			lastUpdatedBy:dataSetService.loggedInUser.loginId
+ 			lastUpdatedBy:Session.sessionUser.loginId
  	};
  	
  	$scope.currentView='';
@@ -29,8 +29,7 @@ webappApp.controller('MasterOnshorePriceCtrl', [ '$scope', '$location',
  		masterDataService.fetchAll(url)
  		.then(function(response){
  			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
- 				console.log("Success : " + JSON.stringify(response));
- 				$scope.onshoreprices = dataSetService.onshoreprices = response.data.successResponse;
+ 				$scope.onshoreprices = DataSetService.onshoreprices = response.data.successResponse;
  				$scope.goBack();
  				toastr.info("Onshore price updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.ONSHORE_PRICES);
  			}else{
@@ -127,7 +126,7 @@ webappApp.controller('MasterOnshorePriceCtrl', [ '$scope', '$location',
  	 			gradeType:'',
  	 			roleId:'-1',
  	 			roleType:'',
- 	 	 		lastUpdatedBy:dataSetService.loggedInUser.loginId
+ 	 	 		lastUpdatedBy:DataSetService.loggedInUser.loginId
  	 	};
  	};
  	
@@ -142,7 +141,7 @@ webappApp.controller('MasterOnshorePriceCtrl', [ '$scope', '$location',
  	masterDataService.fetchAll('./businessline/all')
  	.then(function(response){
  		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
- 			$scope.blines = dataSetService.blines = response.data.successResponse;
+ 			$scope.blines = DataSetService.blines = response.data.successResponse;
  		}else{
  			toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
  		}
@@ -154,7 +153,7 @@ webappApp.controller('MasterOnshorePriceCtrl', [ '$scope', '$location',
  	masterDataService.fetchAll('./role/all')
  	.then(function(response){
  		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
- 			$scope.roles = dataSetService.roles = response.data.successResponse;
+ 			$scope.roles = DataSetService.roles = response.data.successResponse;
  		}else{
  			toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
  		}
@@ -166,8 +165,7 @@ webappApp.controller('MasterOnshorePriceCtrl', [ '$scope', '$location',
  	masterDataService.fetchAll('./grade/all')
  	.then(function(response){
  		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
- 			console.log("Success : " + JSON.stringify(response));
- 			$scope.grades = dataSetService.grades = response.data.successResponse;
+ 			$scope.grades = DataSetService.grades = response.data.successResponse;
  		}else{
  			toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
  		}

@@ -1,9 +1,9 @@
 webappApp.controller('MasterResourceTypeCtrl', [ '$scope', '$location',
-                                         'toastr','dataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterResourceTypeCtrl_Fn ]);
+                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterResourceTypeCtrl_Fn ]);
 
-function MasterResourceTypeCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
+function MasterResourceTypeCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
 	
-	$scope.rTypes = dataSetService.rTypes;
+	$scope.rTypes = DataSetService.rTypes;
 	
 	$scope.rType= {
 			resourcetypeId:'',
@@ -17,8 +17,7 @@ function MasterResourceTypeCtrl_Fn($scope, $location,toastr, dataSetService, mas
 		masterDataService.fetchAll(url)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				$scope.rTypes = dataSetService.rTypes = response.data.successResponse;
-				console.log("Success : " + JSON.stringify(response));
+				$scope.rTypes = DataSetService.rTypes = response.data.successResponse;
 				toastr.info("rTypes updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.RESOURCE_TYPES);
 			}else{
 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
@@ -77,7 +76,6 @@ function MasterResourceTypeCtrl_Fn($scope, $location,toastr, dataSetService, mas
 		masterDataService.fetch('./resourcetype/find/', rTypeId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response));
 				$scope.rType=response.data.successResponse;
 				toastr.info("Resource Type is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.RESOURCE_TYPES);
 			}else{

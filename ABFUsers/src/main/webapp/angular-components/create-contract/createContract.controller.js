@@ -1,10 +1,9 @@
 'use strict';
 
-webappApp.controller('createContractCtrl', ['$scope','createContractService', '$location', 'dataSetService', 'toastr','ABF_CONSTANTS', createContractCtrl_Fn]);
+webappApp.controller('createContractCtrl', ['$scope','createContractService', '$location', 'Session', 'toastr','ABF_CONSTANTS', createContractCtrl_Fn]);
 
 	
-function createContractCtrl_Fn($scope, createContractService, $location, dataSetService, toastr, ABF_CONSTANTS) { 
-	
+function createContractCtrl_Fn($scope, createContractService, $location, Session, toastr, ABF_CONSTANTS) { 
 	
 	$scope.contract = {
 			contractId: '',
@@ -12,10 +11,10 @@ function createContractCtrl_Fn($scope, createContractService, $location, dataSet
 			customerName:'',
 			companyName:'',
 			comments:'',
-			contractCreatedBy:dataSetService.loggedInUser.userName,
+			contractCreatedBy:Session.sessionUser.userName,
 			contractStartDate:'',
 			contractEndDate:'',
-			loginId:dataSetService.loggedInUser.loginId
+			loginId:Session.sessionUser.loginId
 		};
 	
 	$scope.fromDt = {
@@ -31,31 +30,29 @@ function createContractCtrl_Fn($scope, createContractService, $location, dataSet
 	$scope.contractList = [];
 	
 	function resetContract(){
+		
 		$scope.contract = {
 				contractId: '',
 			    contractName:'',
 				customerName:'',
 				companyName:'',
 				comments:'',
-				contractCreatedBy:'venkata.kalyanam@gmail.com',
+				contractCreatedBy:Session.sessionUser.userName,
 				contractStartDate:'',
 				contractEndDate:'',
-				loginId:'2'
+				loginId:Session.sessionUser.loginId
 			};
 	}
 	
 	$scope.createContract = function() {
-		toastr.options = dataSetService.errorAlertOptions;
+		
 		createContractService
 		.createContract($scope.contract)
 		.then(
 				function(response) {
 					if (angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)) {
 						resetContract();
-						toastr.options = dataSetService.successAlertOptions;
-						toastr.success(
-								'Contract created successfully!!',
-								'Message');
+						toastr.success('Contract created successfully!!',ABF_CONSTANTS.INFO_HEADER);
 						$location.path('/landing');
 
 					} else {
@@ -74,26 +71,20 @@ function createContractCtrl_Fn($scope, createContractService, $location, dataSet
 	};
 	
 	$scope.bookHours = function() {
-		toastr.options = dataSetService.errorAlertOptions;
 		if (angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)) {
 			createContractService
 					.createContract($scope.contract)
 					.then(
 							function(response) {
 								resetContract();
-								toastr.options = dataSetService.successAlertOptions;
-								toastr.success(
-										'Contract created successfully!!',
-										'Message');
+								toastr.success('Contract created successfully!!', ABF_CONSTANTS.INFO_HEADER);
 								$location.path('/hours');
 							},
 							function(error) {
 								toastr.error(ABF_CONSTANTS.FAILURE_MESSAGE, ABF_CONSTANTS.FAILURE_HEADER);
-								console.error(JSON.stringify(error, null, 2));
 							});
 		} else {
 			toastr.error(ABF_CONSTANTS.FAILURE_MESSAGE, ABF_CONSTANTS.FAILURE_HEADER);
-			console.error(JSON.stringify(error, null, 2));
 		}
 	}	
 }

@@ -1,11 +1,11 @@
 webappApp.controller('MasterBlineCtrl', [ '$scope', '$location',
-                                         'toastr','dataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterBlineCtrl_Fn ]);
+                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterBlineCtrl_Fn ]);
 
-function MasterBlineCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
+function MasterBlineCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
 	
-	$scope.blines = dataSetService.blines;
-	$scope.rTypes = dataSetService.rTypes;
-	$scope.skills= dataSetService.skills;
+	$scope.blines = DataSetService.blines;
+	$scope.rTypes = DataSetService.rTypes;
+	$scope.skills= DataSetService.skills;
 	
 	$scope.bline= {businesslineId:"",businesslineName:"",resourceTypeId:"-1",skillId:"-1"};
 	
@@ -17,8 +17,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 		masterDataService.fetchAll(url)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response));
-				$scope.blines = dataSetService.blines = response.data.successResponse;
+				$scope.blines = DataSetService.blines = response.data.successResponse;
 				$scope.goBack();
 				toastr.info("Business line updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BUSINESS_LINES);
 			}else{
@@ -79,7 +78,6 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 		masterDataService.fetch('./businessline/find/', blineId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response));
 				$scope.bline=response.data.successResponse;
 				toastr.info("Business line is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BUSINESS_LINES);
 				
@@ -117,7 +115,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 	masterDataService.fetchAll('./resourcetype/all')
 	.then(function(response){
 		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-			$scope.rTypes = dataSetService.rTypes = response.data.successResponse;
+			$scope.rTypes = DataSetService.rTypes = response.data.successResponse;
 		}else{
 			toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
 		}
@@ -128,8 +126,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, dataSetService, masterData
 	masterDataService.fetchAll('./skill/all')
 	.then(function(response){
 		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-			console.log("Success : " + JSON.stringify(response));
-			$scope.skills = dataSetService.blines = response.data.successResponse;
+			$scope.skills = DataSetService.blines = response.data.successResponse;
 		}else{
 			toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
 		}

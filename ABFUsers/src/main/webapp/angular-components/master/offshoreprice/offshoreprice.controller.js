@@ -1,12 +1,12 @@
 webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
-                                         'toastr','dataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterOffshorePriceCtrl_Fn ]);
+                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', 'Session', MasterOffshorePriceCtrl_Fn ]);
 
- function MasterOffshorePriceCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
+ function MasterOffshorePriceCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS, Session){
  	
- 	$scope.offshoreprices = dataSetService.offshoreprices;
- 	$scope.blines = dataSetService.blines;
- 	$scope.bands = dataSetService.bands;
- 	$scope.stayTypes= dataSetService.stayTypes;
+ 	$scope.offshoreprices = DataSetService.getOffshorePrices();
+ 	$scope.blines = DataSetService.getBusinessLines();
+ 	$scope.bands = DataSetService.getBands();
+ 	$scope.stayTypes= DataSetService.getStayTypes();
  	
  	$scope.price= {
  			offshorepriceId:'0',
@@ -18,7 +18,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  			bandName:'',
  			stayTypeId:'-1',
  			stayTypeName:'',
- 			lastUpdatedBy:dataSetService.loggedInUser.loginId
+ 			lastUpdatedBy:Session.sessionUser.loginId
  	};
  	
  	$scope.currentView='';
@@ -29,8 +29,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  		masterDataService.fetchAll(url)
  		.then(function(response){
  			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
- 				console.log("Success : " + JSON.stringify(response));
- 				$scope.offshoreprices = dataSetService.offshoreprices = response.data.successResponse;
+ 				$scope.offshoreprices = DataSetService.offshoreprices = response.data.successResponse;
  				$scope.goBack();
  				toastr.info("Offshore price updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.OFFSHORE_PRICES);
  			}else{
@@ -91,7 +90,6 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  		masterDataService.fetch('./offshorePrice/find/', priceId)
  		.then(function(response){
  			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
- 				console.log("Success : " + JSON.stringify(response));
  				$scope.price=response.data.successResponse;
  				toastr.info("Offshore price is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.OFFSHORE_PRICES);
  				
@@ -126,7 +124,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  	 			bandName:'',
  	 			stayTypeId:'-1',
  	 			stayTypeName:'',
- 	 			lastUpdatedBy:dataSetService.loggedInUser.loginId
+ 	 			lastUpdatedBy:DataSetService.loggedInUser.loginId
  	 	};
  	};
  	
@@ -141,7 +139,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  	masterDataService.fetchAll('./businessline/all')
  	.then(function(response){
  		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
- 			$scope.blines = dataSetService.blines = response.data.successResponse;
+ 			$scope.blines = DataSetService.blines = response.data.successResponse;
  		}else{
  			toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
  		}
@@ -153,7 +151,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  	masterDataService.fetchAll('./band/all')
  	.then(function(response){
  		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
- 			$scope.bands = dataSetService.bands = response.data.successResponse;
+ 			$scope.bands = DataSetService.bands = response.data.successResponse;
  		}else{
  			toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
  		}
@@ -165,8 +163,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  	masterDataService.fetchAll('./stayType/all')
  	.then(function(response){
  		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
- 			console.log("Success : " + JSON.stringify(response));
- 			$scope.stayTypes = dataSetService.stayTypes = response.data.successResponse;
+ 			$scope.stayTypes = DataSetService.stayTypes = response.data.successResponse;
  		}else{
  			toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
  		}

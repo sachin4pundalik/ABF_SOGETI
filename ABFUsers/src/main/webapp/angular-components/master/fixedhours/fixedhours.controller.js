@@ -1,9 +1,9 @@
 webappApp.controller('MasterFixedHourCtrl', [ '$scope', '$location',
-                                         'toastr','dataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterFixedHourCtrl_Fn ]);
+                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterFixedHourCtrl_Fn ]);
 
-function MasterFixedHourCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
+function MasterFixedHourCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
 	
-	$scope.fixedHours = dataSetService.fixedHours;
+	$scope.fixedHours = DataSetService.fixedHours;
 	
 	$scope.fHour= {
 			fixedcostId:'',
@@ -18,8 +18,7 @@ function MasterFixedHourCtrl_Fn($scope, $location,toastr, dataSetService, master
 		masterDataService.fetchAll(url)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response));
-				$scope.fixedHours = dataSetService.fixedHours = response.data.successResponse;
+				$scope.fixedHours = DataSetService.fixedHours = response.data.successResponse;
 				toastr.info("Fixed Hours loaded from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.FIXED_HOURS);
 			}else{
 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
@@ -78,7 +77,6 @@ function MasterFixedHourCtrl_Fn($scope, $location,toastr, dataSetService, master
 		masterDataService.fetch('./fixedCost/find/', fHourId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response));
 				$scope.fHour=response.data.successResponse;
 				toastr.info("Fixed Hour is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.FIXED_HOURS);
 			}else{

@@ -1,9 +1,9 @@
 webappApp.controller('MasterBandCtrl', [ '$scope', '$location',
-                                         'toastr','dataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterBandCtrl_Fn ]);
+                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterBandCtrl_Fn ]);
 
-function MasterBandCtrl_Fn($scope, $location,toastr, dataSetService, masterDataService, ABF_CONSTANTS){
+function MasterBandCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
 	
-	$scope.bands = dataSetService.bands;
+	$scope.bands = DataSetService.bands;
 	
 	$scope.band= {
 			bandId:'',
@@ -17,8 +17,7 @@ function MasterBandCtrl_Fn($scope, $location,toastr, dataSetService, masterDataS
 		masterDataService.fetchAll(url)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response));
-				$scope.bands = dataSetService.bands = response.data.successResponse;
+				$scope.bands = DataSetService.bands = response.data.successResponse;
 				$scope.goBack();
 				toastr.info("Bands updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BANDS);
 			}else{
@@ -26,7 +25,6 @@ function MasterBandCtrl_Fn($scope, $location,toastr, dataSetService, masterDataS
 			}
 		}, function(error){
 			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
-			console.log(JSON.stringify(error));
 		});
 	};
 	
@@ -76,7 +74,6 @@ function MasterBandCtrl_Fn($scope, $location,toastr, dataSetService, masterDataS
 		masterDataService.fetch('./band/find/', bandId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				console.log("Success : " + JSON.stringify(response));
 				$scope.band=response.data.successResponse;
 				toastr.info("Band is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BANDS);
 			}else{
