@@ -128,7 +128,12 @@ public class AMContractController {
 		AMContractResourceBean resourceBean = new AMContractResourceBean();
 		resourceBean.setAmContractResourceId(resource.getAmContractId());
 		
-		if(resource.getOnshorePrice() != null && resource.getOnshorePrice().getOnshorepriceId() != 0){		
+		resourceBean.setContractId(resource.getContract().getContractId());
+		
+		
+		if(resource.getOnshorePrice() != null && resource.getOnshorePrice().getOnshorepriceId() != 0){	
+			resourceBean.setPrice(resource.getOnshorePrice().getPrice().floatValue());
+			
 			ResourceTypeDT resourceType = new ResourceTypeDT();
 			resourceType.setResourcetypeId(resource.getOnshorePrice().getBusinessLine().getResourceType().getResourcetypeId());
 			resourceType.setResourceType(resource.getOnshorePrice().getBusinessLine().getResourceType().getResourceType());
@@ -156,6 +161,8 @@ public class AMContractController {
 			resourceBean.setSkill(skill);
 			
 		}else{
+			resourceBean.setPrice(resource.getOffshorePrice().getPrice().floatValue());
+			
 			ResourceTypeDT resourceType = new ResourceTypeDT();
 			resourceType.setResourcetypeId(resource.getOffshorePrice().getBusinessLine().getResourceType().getResourcetypeId());
 			resourceType.setResourceType(resource.getOffshorePrice().getBusinessLine().getResourceType().getResourceType());

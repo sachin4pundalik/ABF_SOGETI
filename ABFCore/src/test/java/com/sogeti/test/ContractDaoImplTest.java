@@ -57,8 +57,8 @@ import junit.framework.TestCase;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ContractDaoImplTest extends TestCase {
 
-	private static final Logger logger = Logger.getLogger(ContractDaoImplTest.class);	
-	ContractDaoImpl contractDaoImpl = new ContractDaoImpl();
+	   private static final Logger logger = Logger.getLogger(ContractDaoImplTest.class);	
+	
 	   @Mock
 	   private EntityManager entityManager;
 	   
@@ -77,7 +77,6 @@ public class ContractDaoImplTest extends TestCase {
 	@Rollback(true)
 	public void testcreateContract() throws Exception{
 		logger.debug("ContractDaoImplTest ::testcreateContract -START");
-		//contractDaoImpl = new ContractDaoImpl();
 		try
 		{
 			Contract contractEntity = new Contract();
@@ -87,7 +86,6 @@ public class ContractDaoImplTest extends TestCase {
 			contractDAO.createContract(contractEntity);			
 			List<Contract> contractList = contractDAO.allContracts();
 			assertEquals(contractEntity.getContractName(), contractList.get(0).getContractName());			
-			//assertTrue("added",true);
 			logger.debug("ContractDaoImplTest ::testcreateContract -END");
 		}
 		catch (Exception e){
