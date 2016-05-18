@@ -45,6 +45,10 @@ public class AmContractServiceImpl implements AmContractService {
 		return amContractDao.deleteAmContract(amContract);
 	}
 	
+	public int getMaxAmContractId() throws TechnicalException{
+		return amContractDao.getMaxAmContractId();
+	}
+	
 	private void setDataFields(AmContract AmContract){		
 		AmContract.setId(Integer.toString(AmContract.getAmContractId()));		
 		if(AmContract.getOnshorePrice() != null && AmContract.getOnshorePrice().getOnshorepriceId() != 0){			

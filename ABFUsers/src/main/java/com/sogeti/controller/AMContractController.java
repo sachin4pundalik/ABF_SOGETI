@@ -1,11 +1,13 @@
 package com.sogeti.controller;
 
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.log4j.Logger;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
 import com.sogeti.db.models.AmContract;
+import com.sogeti.db.models.Contract;
+import com.sogeti.db.models.OffshorePrice;
+import com.sogeti.db.models.OnshorePrice;
 import com.sogeti.model.ABFResponse;
 import com.sogeti.model.AMContractResourceBean;
 import com.sogeti.model.BandDT;
@@ -29,6 +34,9 @@ import com.sogeti.model.RoleDT;
 import com.sogeti.model.SkillDT;
 import com.sogeti.model.StayTypeDT;
 import com.sogeti.service.AmContractService;
+import com.sogeti.service.ContractManager;
+import com.sogeti.service.OffshorePriceService;
+import com.sogeti.service.OnshorePriceService;
 import com.sogeti.xmlbeans.Resource;
 
 @RestController
@@ -40,10 +48,39 @@ public class AMContractController {
 	@Autowired(required = true)
 	AmContractService amContractService;
 	
+	@Autowired
+	ContractManager contractManager;
+	
+	@Autowired
+	OffshorePriceService offshorePriceService;
+	
+	@Autowired
+	OnshorePriceService onshorePriceService;
+	
 	@RequestMapping( value = "/create", method = RequestMethod.POST)
-	public ABFResponse createAmContract(@RequestBody List<AmContract> contractResources) {
-		
-		return null;
+	public ABFResponse createAmContract(@RequestBody List<AMContractResourceBean> contractResources) {
+		ABFResponse response = new ABFResponse();
+		try{
+			for(AMContractResourceBean amResource : contractResources){
+				AmContract amContract = new AmContract();
+				Contract contract = contractManager.getContract(amResource.getContractId());
+				OnshorePrice onshorePrice = onshorePriceService.find(amResource.getOnShorePrice());
+				OffshorePrice offShorePrice = offshorePriceService.find(amResource.getOffShorePrice());			
+				String resourceXml = getXmlString(amResource, amContractService.getMaxAmContractId()); 
+				amContract.setContract(contract);
+				amContract.setOffshorePrice(offShorePrice);
+				amContract.setOnshorePrice(onshorePrice);
+				amContract.setDetailsXml(resourceXml);			
+				amContractService.saveAmContract(amContract);
+				
+				response.setStatus(ABFConstants.STATUS_SUCCESS);
+				response.setSuccessResponse("Success");
+			}
+		}catch(TechnicalException e){
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+			response.setFailureResponse(e.getMessage());
+		}		
+		return response;
 	}
 	
 	@RequestMapping( value = "/fetchcontractamhours/{contractId}", method = RequestMethod.GET)
@@ -151,5 +188,22 @@ public class AMContractController {
 			e.printStackTrace();
 		}		
 		return resourceBean;
+	}
+	
+	
+	private String getXmlString(AMContractResourceBean resourceBean, int maxAmContractId) throws TechnicalException{		
+		StringWriter sw = new StringWriter();
+		try {
+			Resource resource = new Resource();
+			resource.setId(maxAmContractId + 1);
+			resource.setMonths(resourceBean.getMonths());
+		    JAXBContext context = JAXBContext.newInstance(Resource.class);
+		    Marshaller marshaller = context.createMarshaller();
+		    marshaller.marshal(resource, sw );
+		    System.out.println(sw.toString());
+		} catch (JAXBException e) {
+		    throw new TechnicalException("XML Conversion error", e);
+		}
+		return sw.toString();		
 	}
 }

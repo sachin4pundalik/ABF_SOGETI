@@ -19,5 +19,7 @@ public interface AmContractDao {
 	public Contract getContractById(int contractId);
 	
 	public boolean deleteAmContract(AmContract amContract) throws TechnicalException;
+	
+	public int getMaxAmContractId() throws TechnicalException;
 
 }

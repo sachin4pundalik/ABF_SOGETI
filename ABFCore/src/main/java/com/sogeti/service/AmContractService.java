@@ -16,5 +16,7 @@ public List<AmContract> getAmContractsByContractId(int contractId) throws Techni
 	public boolean saveAmContractBatch(List<AmContract> AmContracts) throws TechnicalException;
 	
 	public boolean deleteAmContract(AmContract amContract) throws TechnicalException;
+	
+	public int getMaxAmContractId() throws TechnicalException;
 
 }
