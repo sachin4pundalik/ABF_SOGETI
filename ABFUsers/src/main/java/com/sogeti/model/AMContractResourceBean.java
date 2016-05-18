@@ -6,6 +6,8 @@ public class AMContractResourceBean {
 		
 	private int amContractResourceId;
 	
+	private int contractId;
+	
 	private ResourceTypeDT resourceType;
 	
 	private BusinessLineDT businessLine;
@@ -22,9 +24,9 @@ public class AMContractResourceBean {
 			
 	private float price;		
 			
-	private float onShorePrice;
+	private int onShorePrice;
 	
-	private float offShorePrice;
+	private int offShorePrice;
 	
 	private Months months;
 
@@ -100,19 +102,19 @@ public class AMContractResourceBean {
 		this.price = price;
 	}
 
-	public float getOnShorePrice() {
+	public int getOnShorePrice() {
 		return onShorePrice;
 	}
 
-	public void setOnShorePrice(float onShorePrice) {
+	public void setOnShorePrice(int onShorePrice) {
 		this.onShorePrice = onShorePrice;
 	}
 
-	public float getOffShorePrice() {
+	public int getOffShorePrice() {
 		return offShorePrice;
 	}
 
-	public void setOffShorePrice(float offShorePrice) {
+	public void setOffShorePrice(int offShorePrice) {
 		this.offShorePrice = offShorePrice;
 	}
 
@@ -122,6 +124,14 @@ public class AMContractResourceBean {
 
 	public void setMonths(Months months) {
 		this.months = months;
+	}
+
+	public int getContractId() {
+		return contractId;
+	}
+
+	public void setContractId(int contractId) {
+		this.contractId = contractId;
 	}
 
 	
