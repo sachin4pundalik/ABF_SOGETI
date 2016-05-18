@@ -35,8 +35,8 @@
 				<table class="table table-bordered table-hover table-condensed" >
 						<tbody>
 							<tr>
-								<td data-ng-repeat="month in resource.months">
-									<button class="btn btn-sm btn-default" data-ng-click="openWeek(month.month)">{{month.total | currency}}</button>
+								<td data-ng-repeat="month in resource.months.month">
+									<button class="btn btn-sm btn-default" data-ng-click="openWeek(month.name)">{{month.total | currency}}</button>
 								</td>
 							</tr>
 						</tbody>
@@ -50,7 +50,7 @@
 					Back <span class="glyphicon glyphicon-circle-arrow-left"></span>
 				</button>
 				<button class="btn btn-warning pull-right"
-					data-ng-click="manageView('showWeekly')">
+					data-ng-click="bookHours()">
 					Book Hours <span class="glyphicon glyphicon-floppy-disk"></span>
 				</button>
 			</div>

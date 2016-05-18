@@ -1,6 +1,6 @@
-webappApp.service('masterDataService', ['$http', 'ABF_CONSTANTS', MasterDataService_fn]);
+webappApp.service('masterDataService', ['$http', MasterDataService_fn]);
 
-function MasterDataService_fn($http, ABF_CONSTANTS){
+function MasterDataService_fn($http){
 	
 	var service = this;
 	

@@ -24,7 +24,7 @@ function createContractCtrl_Fn($scope, createContractService, $location, Session
 	
 	$scope.toDt = {
 			minDate:moment().add(2, 'day').format("YYYY-MM-DD"),
-			maxDate:moment().add(1, 'year').format("YYYY-MM-DD")
+			maxDate:moment().add(2, 'year').format("YYYY-MM-DD")
 	};
 	
 	$scope.contractList = [];

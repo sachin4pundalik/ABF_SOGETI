@@ -114,7 +114,7 @@ public class ContractDaoImpl implements ContractDao {
 	 */
 	public List<Contract> allContracts() {
 
-		Query query = this.em.createQuery("SELECT c FROM Contract c");
+		Query query = this.em.createQuery("SELECT c FROM Contract c order by c.contractId desc");
 		List<Contract> contractList = null;
 		if (query != null) {
 			contractList = query.getResultList();
@@ -127,7 +127,7 @@ public class ContractDaoImpl implements ContractDao {
 	 */
 	public List<Contract> allContractsByMe(int loginId) {
 
-		Query query = this.em.createQuery("SELECT c FROM Contract c WHERE c.loginId  = :loginId" );	
+		Query query = this.em.createQuery("SELECT c FROM Contract c WHERE c.loginId  = :loginId order by c.contractId desc" );	
 		query.setParameter("loginId", loginId);
 		List<Contract> contractList = null;
 		if (query != null) {

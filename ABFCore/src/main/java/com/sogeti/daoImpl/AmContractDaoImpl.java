@@ -100,8 +100,8 @@ public class AmContractDaoImpl implements AmContractDao {
 	public int getMaxAmContractId() throws TechnicalException{
 		int maxAmContractId = 0;		
 		try {
-			AmContract amContract = (AmContract) this.entityManager.createQuery("select max(amc.amContractId) from AmContract amc").getSingleResult();
-			maxAmContractId = amContract.getAmContractId();
+			Integer intId = (Integer) this.entityManager.createQuery("select max(amc.amContractId) from AmContract amc").getSingleResult();
+			maxAmContractId = intId.intValue();
 		}catch(PersistenceException e){
 			throw new TechnicalException("Technical Exception in KnowLedgeBaseServiceDaoImpl.removeknowledgeBaseForUser()", e);
 		}

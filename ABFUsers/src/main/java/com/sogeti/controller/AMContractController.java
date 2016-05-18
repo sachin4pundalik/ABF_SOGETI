@@ -74,9 +74,10 @@ public class AMContractController {
 				amContractService.saveAmContract(amContract);
 				
 				response.setStatus(ABFConstants.STATUS_SUCCESS);
-				response.setSuccessResponse("Success");
+				response.setSuccessResponse(ABFConstants.STATUS_SUCCESS);
 			}
 		}catch(TechnicalException e){
+			logger.error(e);
 			response.setStatus(ABFConstants.STATUS_FAILURE);
 			response.setFailureResponse(e.getMessage());
 		}		
@@ -110,7 +111,7 @@ public class AMContractController {
 		ABFResponse response = new ABFResponse();
 		try{
 			AmContract amContract = amContractService.getAmContractById(Integer.parseInt(amContractId));
-			boolean deleteFlag = amContractService.deleteAmContract(amContract);
+			amContractService.deleteAmContract(amContract);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 			response.setSuccessResponse(amContract);
 		}catch(TechnicalException e){
@@ -144,10 +145,15 @@ public class AMContractController {
 			grade.setGradeId(resource.getOnshorePrice().getGrade().getGradeId());
 			grade.setGradeType(resource.getOnshorePrice().getGrade().getGradeType());
 			
+			SkillDT skill = new SkillDT();
+			skill.setSkillId(resource.getOffshorePrice().getBusinessLine().getSkill().getSkillId());
+			skill.setSkillName(resource.getOffshorePrice().getBusinessLine().getSkill().getSkillName());
+			
 			resourceBean.setResourceType(resourceType);
 			resourceBean.setBusinessLine(businessLine);
 			resourceBean.setRole(role);
 			resourceBean.setGrade(grade);
+			resourceBean.setSkill(skill);
 			
 		}else{
 			ResourceTypeDT resourceType = new ResourceTypeDT();
@@ -158,9 +164,6 @@ public class AMContractController {
 			businessLine.setBusinesslineId(resource.getOffshorePrice().getBusinessLine().getBusinesslineId());
 			businessLine.setBusinesslineName(resource.getOffshorePrice().getBusinessLine().getBusinesslineName());
 			
-			SkillDT skill = new SkillDT();
-			skill.setSkillId(resource.getOffshorePrice().getBusinessLine().getSkill().getSkillId());
-			skill.setSkillName(resource.getOffshorePrice().getBusinessLine().getSkill().getSkillName());
 			
 			BandDT band = new BandDT();
 			band.setBandId(resource.getOffshorePrice().getBand().getBandId());
@@ -172,7 +175,6 @@ public class AMContractController {
 			
 			resourceBean.setResourceType(resourceType);
 			resourceBean.setBusinessLine(businessLine);
-			resourceBean.setSkill(skill);
 			resourceBean.setBand(band);
 			resourceBean.setStayType(stayType);
 		}

@@ -24,17 +24,17 @@
 							{{resource.skill.skillName}}, {{resource.role.roleType}}, {{resource.grade.gradeType}}, {{resource.price | currency}}</td>
 						<td><input type="text" maxlength="4" size="4"
 							pattern="\d{0,4}" data-ng-blur="calculateWeekTotal()"
-							data-ng-model="resource.months[week.monthIndex].weeks.w1" /></td>
+							data-ng-model="resource.months.month[week.monthIndex].weeks.w1" /></td>
 						<td><input type="text" maxlength="4" size="4"
 							pattern="\d{0,4}" data-ng-blur="calculateWeekTotal()"
-							data-ng-model="resource.months[week.monthIndex].weeks.w2" /></td>
+							data-ng-model="resource.months.month[week.monthIndex].weeks.w2" /></td>
 						<td><input type="text" maxlength="4" size="4"
 							pattern="\d{0,4}" data-ng-blur="calculateWeekTotal()"
-							data-ng-model="resource.months[week.monthIndex].weeks.w3" /></td>
+							data-ng-model="resource.months.month[week.monthIndex].weeks.w3" /></td>
 						<td><input type="text" maxlength="4" size="4"
 							pattern="\d{0,4}" data-ng-blur="calculateWeekTotal()"
-							data-ng-model="resource.months[week.monthIndex].weeks.w4" /></td>
-						<td>{{resource.months[week.monthIndex].total | currency}}</td>
+							data-ng-model="resource.months.month[week.monthIndex].weeks.w4" /></td>
+						<td>{{resource.months.month[week.monthIndex].total | currency}}</td>
 					</tr>
 				</tbody>
 				<tfoot>

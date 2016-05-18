@@ -136,7 +136,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  	
  	$scope.getoffshoreprices();
  	
- 	masterDataService.fetchAll('./businessline/all')
+ 	masterDataService.fetchAll('./businessline/resourceType/2')
  	.then(function(response){
  		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
  			$scope.blines = DataSetService.blines = response.data.successResponse;

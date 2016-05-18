@@ -115,19 +115,23 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="stay" class="col-lg-2 control-label">Price</label>
+								<label for="stay" class="col-lg-2 control-label">Price <button data-ng-click="getPrice()" 
+									class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-hand-down"></span> Fetch</button></label>
 								<div class="col-lg-10">
 									<input type="text" readonly="readonly" maxlength="4"
 										pattern="\d{1,4}" data-ng-model="resource.price"
 										class="form-control" />
+									
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-2">
-									<button type="reset" class="btn btn-default">Reset</button>
-									<button type="button" class="btn btn-primary"
+									<button type="reset" class="btn btn-default btn-sm">Reset</button>
+									<button type="button" class="btn btn-primary btn-sm"
 										data-ng-disable="!NewResourceForm.$invalid"
 										data-ng-click="newResource()">Add</button>
+									<button type="button" class="btn btn-info btn-sm"
+										data-ng-click="goBack()">Contract(s)</button>
 								</div>
 							</div>
 						</fieldset>

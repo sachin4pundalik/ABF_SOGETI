@@ -233,7 +233,7 @@ public class OffshorePriceController {
 				response.setSuccessResponse(offshorePriceDT);
 				response.setStatus(ABFConstants.STATUS_SUCCESS);
 			} catch (TechnicalException e) {
-				response.setFailureResponse(e.getMessage());
+				response.setFailureResponse("Unable to find price for the given combination");
 				response.setStatus(ABFConstants.STATUS_FAILURE);
 			}
 

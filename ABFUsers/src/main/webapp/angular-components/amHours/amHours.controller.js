@@ -1,21 +1,29 @@
-webappApp.controller('amHoursCtrl', [ '$scope', 'amHoursService', 'toastr',
+webappApp.controller('amHoursCtrl', [ '$scope', '$location', 'masterDataService', 'toastr',
 		'DataSetService', 'Session', 'ABF_CONSTANTS', amHoursCtrl_fn ]);
 
-function amHoursCtrl_fn($scope, amHoursService, toastr, DataSetService, Session, ABF_CONSTANTS) {
+function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetService, Session, ABF_CONSTANTS) {
 	
 	$scope.contract = DataSetService.currContract;
 	$scope.currentUser = Session.sessionUser;
 	
 	$scope.initDataSet= function(){
 		
-		DataSetService.fetchResourceTypes();
-		DataSetService.fetchSkills();
-		DataSetService.fetchRoles();
-		DataSetService.fetchGrades();
-		DataSetService.fetchStayTypes();
-		DataSetService.fetchBands();
+		try{
+			
+			DataSetService.fetchResourceTypes();
+			DataSetService.fetchSkills();
+			DataSetService.fetchRoles();
+			DataSetService.fetchGrades();
+			DataSetService.fetchStayTypes();
+			DataSetService.fetchBands();
 
-		getMonthHeaders();
+			getMonthHeaders();
+			
+			$scope.fetchExistingResources();
+		}catch (e) {
+			toastr.error(e, ABF_CONSTANTS.FAILURE_HEADER);
+		}
+		
 	};
 	
 	$scope.resources = [];
@@ -46,8 +54,80 @@ function amHoursCtrl_fn($scope, amHoursService, toastr, DataSetService, Session,
 	$scope.bands = DataSetService.getBands();
 	$scope.skills = DataSetService.getSkills();
 	
+	$scope.fetchExistingResources = function(){
+		try {
+			if (angular.isObject($scope.contract) && $scope.contract.contractId > 0) {
+				let url = "./amhours/fetchcontractamhours/"+$scope.contract.contractId;
+				masterDataService.fetchAll(url).then(
+						function(response) {
+							var resData = response.data;
+							if (angular.equals(resData.status,ABF_CONSTANTS.SUCCESS)) {
+								$scope.resources = resData.successResponse;
+							} else if (angular.equals(resData.status, ABF_CONSTANTS.FAILURE)) {
+								toastr.info(resData.failureResponse);
+							}
+						},
+						function(error) {
+							throw new Error(error.status + " " + error.statusText);
+						});
+			}
+		}catch(e){
+			toastr.error(e.message, ABF_CONSTANTS_FAILURE_HEADER);
+		}
+	};
+	
 	$scope.getPrice = function (){
 		
+		try{
+			var rType = JSON.parse($scope.resource["resourceType"]);
+			var bline = JSON.parse($scope.resource["businessLine"]);
+			
+			var url = '';
+			if(rType && bline){
+				if(angular.equals(rType.resourceType, ABF_CONSTANTS.ONSHORE)){
+					var role = JSON.parse($scope.resource["role"]);
+					var grade = JSON.parse($scope.resource["grade"]);
+					if(role && grade){
+						url="./onshorePrice/find/"+bline.businesslineId+"/"+role.roleId+"/"+grade.gradeId;  //'{bline}/{role}/{grade}";
+					}else{
+						throw new Error("Please complete selection");
+					}
+				}else if(angular.equals(rType.resourceType, ABF_CONSTANTS.OFFSHORE)){
+					var band = JSON.parse($scope.resource["band"]);
+					var stay = JSON.parse($scope.resource["stayType"]);
+					if(band && stay){
+						url="./offshorePrice/find/"+bline.businesslineId+"/"+band.bandId+"/"+stay.stayTypeId; //{bline}/{band}/{stayType}";
+					}else{
+						throw new Error("Please complete selection");
+					}	
+				}
+				
+				masterDataService.fetch(url, '')
+					.then(function(response){
+						var resData = response.data;
+						if(angular.equals(resData.status, ABF_CONSTANTS.SUCCESS)){
+							var item= resData.successResponse;
+							$scope.resource.price = item.price || 50;
+							$scope.resource.onShorePrice=item.onshorepriceId || -1;
+							$scope.resource.offShorePrice=item.offshorepriceId || -1;
+							
+						}else if(angular.equals(resData.status, ABF_CONSTANTS.FAILURE)){
+							toastr.info(resData.failureResponse);
+						}
+				}, function(error){
+					throw new Error(error.status+" "+error.statusText);
+				});
+			}else{
+				throw new Error("Please complete selection");
+			}
+			
+		}catch(e){
+			toastr.error(e.message, ABF_CONSTANTS.FAILURE_HEADER);
+		}
+	};
+	
+	$scope.goBack = function(){
+		$location.path("/landing");
 	};
 	
 	$scope.week = {
@@ -65,7 +145,7 @@ function amHoursCtrl_fn($scope, amHoursService, toastr, DataSetService, Session,
 	
 	$scope.openWeek = function (monthNm) {
 		$scope.week.currMonth= monthNm;
-		$scope.week.monthIndex = _.findIndex($scope.resources[0].months, function(m) { return m.month === $scope.week.currMonth; });
+		$scope.week.monthIndex = _.findIndex($scope.resources[0].months.month, function(m) { return m.name === $scope.week.currMonth; });
 		$scope.week.weeklyTmpl = "./angular-components/amHours/weeklyView.html";
 		$scope.views="showWeekly"; //= true;
 	};
@@ -73,18 +153,18 @@ function amHoursCtrl_fn($scope, amHoursService, toastr, DataSetService, Session,
 	$scope.resetHours = function (){
 		
 		angular.forEach($scope.resources, function(resource, key) {
-			resource.months[$scope.week.monthIndex].w1= 0;
-			resource.months[$scope.week.monthIndex].w2= 0;
-			resource.months[$scope.week.monthIndex].w3= 0;
-			resource.months[$scope.week.monthIndex].w4= 0;
+			resource.months.month[$scope.week.monthIndex].w1= 0;
+			resource.months.month[$scope.week.monthIndex].w2= 0;
+			resource.months.month[$scope.week.monthIndex].w3= 0;
+			resource.months.month[$scope.week.monthIndex].w4= 0;
 			
-			resource.months[$scope.week.monthIndex].total = 0;
+			resource.months.month[$scope.week.monthIndex].total = 0;
 			});
 	};
 	
 	$scope.resetResource = function (){
 		
-		$scope.resource = {amContractResourceId:0, resourceType:null, businessLine:null, skill:null, band:null, role:null, grade:null, stayType:null, price:50, onShorePrice:120, offShorePrice:0, months:[]};		
+		$scope.resource = {amContractResourceId:0, contractId:-1, resourceType:null, businessLine:null, skill:null, band:null, role:null, grade:null, stayType:null, price:50, onShorePrice:-1, offShorePrice:-1, months:{month:[]}};		
 		
 	};
 	
@@ -92,12 +172,12 @@ function amHoursCtrl_fn($scope, amHoursService, toastr, DataSetService, Session,
 		
 		angular.forEach($scope.resources, function(resource, key) {
 			var price = _.toNumber(resource.price || 1);
-			var w1 = _.toNumber(resource.months[$scope.week.monthIndex].weeks.w1 || 0);
-			var w2 = _.toNumber(resource.months[$scope.week.monthIndex].weeks.w2 || 0);
-			var w3 = _.toNumber(resource.months[$scope.week.monthIndex].weeks.w3 || 0);
-			var w4 = _.toNumber(resource.months[$scope.week.monthIndex].weeks.w4 || 0);
+			var w1 = _.toNumber(resource.months.month[$scope.week.monthIndex].weeks.w1 || 0);
+			var w2 = _.toNumber(resource.months.month[$scope.week.monthIndex].weeks.w2 || 0);
+			var w3 = _.toNumber(resource.months.month[$scope.week.monthIndex].weeks.w3 || 0);
+			var w4 = _.toNumber(resource.months.month[$scope.week.monthIndex].weeks.w4 || 0);
 			var resWeekTotal = validateNumber(w1)+validateNumber(w2)+validateNumber(w3)+validateNumber(w4);
-			resource.months[$scope.week.monthIndex].total = (price * resWeekTotal);
+			resource.months.month[$scope.week.monthIndex].total = (price * resWeekTotal);
 			});
 	}
 	  
@@ -105,15 +185,15 @@ function amHoursCtrl_fn($scope, amHoursService, toastr, DataSetService, Session,
 		try{
 			angular.forEach($scope.resources, function(resource, key) {
 				var price = _.toNumber(resource.price || 1);
-				var w1 = _.toNumber(resource.months[$scope.week.monthIndex].weeks.w1 || 0);
-				var w2 = _.toNumber(resource.months[$scope.week.monthIndex].weeks.w2 || 0);
-				var w3 = _.toNumber(resource.months[$scope.week.monthIndex].weeks.w3 || 0);
-				var w4 = _.toNumber(resource.months[$scope.week.monthIndex].weeks.w4 || 0);
+				var w1 = _.toNumber(resource.months.month[$scope.week.monthIndex].weeks.w1 || 0);
+				var w2 = _.toNumber(resource.months.month[$scope.week.monthIndex].weeks.w2 || 0);
+				var w3 = _.toNumber(resource.months.month[$scope.week.monthIndex].weeks.w3 || 0);
+				var w4 = _.toNumber(resource.months.month[$scope.week.monthIndex].weeks.w4 || 0);
 				var resWeekTotal = validateNumber(w1)+validateNumber(w2)+validateNumber(w3)+validateNumber(w4);
-				resource.months[$scope.week.monthIndex].total = (price * resWeekTotal);
+				resource.months.month[$scope.week.monthIndex].total = (price * resWeekTotal);
 				
-					angular.forEach(resource.months, function(month, key){
-						if(month.month !== $scope.week.currMonth){
+					angular.forEach(resource.months.month, function(month, key){
+						if(month.name !== $scope.week.currMonth){
 							month.weeks.w1= w1;
 							month.weeks.w2= w2;
 							month.weeks.w3= w3;
@@ -135,18 +215,18 @@ function amHoursCtrl_fn($scope, amHoursService, toastr, DataSetService, Session,
 			var start = DataSetService.startContract.get('month'); //moment().month(Number|String);
 			var end = DataSetService.endContract.get('month');
 			var noofMonths = moment(DataSetService.endContract).diff(moment(DataSetService.startContract), 'months', true);
-			console.log('Months diff '+ noofMonths+ ' <> start '+start+ ' <> end '+end);
+			//console.log('Months diff '+ noofMonths+ ' <> start '+start+ ' <> end '+end);
 			for(var i=start; i<(noofMonths+start);i++ ){
 				var mName = moment().month(i).format('MMM')+" "+ moment().month(i).format('YY');
 				$scope.headerMonths.push(mName);
 			}
 		}catch(e){
-			toastr.error("No contract details available", ABF_CONSTANTS.FAILURE_HEADER);
+			$scope.goBack();
 		}
 	}
 	
 	
-	$scope.resource = {amContractResourceId:0, resourceType:null, businessLine:null, skill:null, band:null, role:null, grade:null, stayType:null, price:50, onShorePrice:120, offShorePrice:0, months:[]};		
+	$scope.resource = {amContractResourceId:0, contractId:-1, resourceType:null, businessLine:null, skill:null, band:null, role:null, grade:null, stayType:null, price:50, onShorePrice:-1, offShorePrice:-1, months:{month:[]}};		
 	
 	$scope.resourceChange= function(){
 		
@@ -207,23 +287,61 @@ function amHoursCtrl_fn($scope, amHoursService, toastr, DataSetService, Session,
 				$scope.resource[prop] = JSON.parse($scope.resource[prop]);
 			}
 		}
-		
+		//Specific to contractId
+		$scope.resource.contractId=$scope.contract.contractId;
 		for(month in $scope.headerMonths ){
-			var month = {month:$scope.headerMonths[month], total:0, weeks:{w1:0, w2:0, w3:0, w4:0}};			
+			var month = {name:$scope.headerMonths[month], total:0, weeks:{w1:0, w2:0, w3:0, w4:0}};			
 			//append to main resource obj
-			$scope.resource.months.push(month);
+			$scope.resource.months.month.push(month);
 		}
-		
 		$scope.resources.push($scope.resource);
 		$scope.resetResource();
+	}
+	
+	$scope.bookHours = function(){
+		if(angular.isArray($scope.resources) && $scope.resources.length > 0){
+			masterDataService.save('./amhours/create',$scope.resources)
+			.then(function(response){
+				var resData =  response.data;
+				
+				if(angular.equals(resData.status, ABF_CONSTANTS.SUCCESS)){
+					//Back to default view.
+					$scope.views="";
+				}else if(angular.equals(resData.status, ABF_CONSTANTS.FAILURE)){
+					toastr.error(resData.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
+				}
+			}, function(error){
+				toastr.error(error, ABF_CONSTANTS.FAILURE_HEADER);
+			});
+		}else{
+			toastr.warning("Please select atleast one resource for the contract.", ABF_CONSTANTS.INFO_HEADER);
+		}
 	}
 	
 	$scope.deleteResource= function (item){
 		
 		try{
-			_.remove($scope.resources, function(currentObject) {
-			    return currentObject === item;
-			}); 
+			if(angular.isNumber(item.amContractResourceId) && item.amContractResourceId>0){
+				masterDataService.remove(item.amContractResourceId)
+				.then(function(response){
+					var resData =  response.data;
+					
+					if(angular.equals(resData.status, ABF_CONSTANTS.SUCCESS)){
+						_.remove($scope.resources, function(currentObject) {
+						    return currentObject === item;
+						}); 
+					}else if(angular.equals(resData.status, ABF_CONSTANTS.FAILURE)){
+						toastr.error(resData.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
+					}
+					
+				}, function(error){
+					toastr.error(ABF_CONSTANTS.FAILURE_MESSAGE, ABF_CONSTANTS.FAILURE_HEADER);
+				});
+			}else{
+				_.remove($scope.resources, function(currentObject) {
+				    return currentObject === item;
+				}); 
+			}
 			toastr.success("Delete resource from list.", "Resource Deletion");
 		}catch(e){
 			toastr.error("Unable to remove item from the list.","Resource Deletion");
