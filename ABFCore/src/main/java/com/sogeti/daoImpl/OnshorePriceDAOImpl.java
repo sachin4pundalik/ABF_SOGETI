@@ -31,10 +31,10 @@ public class OnshorePriceDAOImpl extends GenericDaoImpl<OnshorePrice> implements
 		OnshorePrice onshorePrice = null;
 		try
 	      {
-	         Query query = this.entityManager.createQuery("select onp from OnshorePrice onp where onp.businessLine = :bline and onp.grade = :grade and onp.role = :role");
+	         Query query = this.entityManager.createQuery("select onp from OnshorePrice onp where onp.businessLine = :bline and onp.role = :role and onp.grade = :grade ");
 	         query.setParameter("bline", bline);
-	         query.setParameter("grade", role);
-	         query.setParameter("role", grade);
+	         query.setParameter("role", role);
+	         query.setParameter("grade", grade);
 	         onshorePrice = (OnshorePrice) query.getSingleResult();
 	         
 	      }
