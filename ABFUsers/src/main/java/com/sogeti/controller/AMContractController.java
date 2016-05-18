@@ -133,6 +133,7 @@ public class AMContractController {
 		
 		if(resource.getOnshorePrice() != null && resource.getOnshorePrice().getOnshorepriceId() != 0){	
 			resourceBean.setPrice(resource.getOnshorePrice().getPrice().floatValue());
+			resourceBean.setOnShorePrice(resource.getOnshorePrice().getOnshorepriceId());
 			
 			ResourceTypeDT resourceType = new ResourceTypeDT();
 			resourceType.setResourcetypeId(resource.getOnshorePrice().getBusinessLine().getResourceType().getResourcetypeId());
@@ -162,6 +163,7 @@ public class AMContractController {
 			
 		}else{
 			resourceBean.setPrice(resource.getOffshorePrice().getPrice().floatValue());
+			resourceBean.setOnShorePrice(resource.getOffshorePrice().getOffshorepriceId());
 			
 			ResourceTypeDT resourceType = new ResourceTypeDT();
 			resourceType.setResourcetypeId(resource.getOffshorePrice().getBusinessLine().getResourceType().getResourcetypeId());
