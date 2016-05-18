@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
+import com.sogeti.db.models.BusinessLine;
+import com.sogeti.db.models.Grade;
 import com.sogeti.db.models.OnshorePrice;
+import com.sogeti.db.models.Role;
 import com.sogeti.model.ABFResponse;
 import com.sogeti.model.OnshorePriceDT;
 import com.sogeti.service.BusinessLineService;
@@ -212,6 +215,38 @@ public class OnshorePriceController {
 			response.setStatus(ABFConstants.STATUS_FAILURE);
 		}
 
+		return response;
+	}
+	
+	@RequestMapping(value ="/find/{bline}/{role}/{grade}", method = RequestMethod.GET)
+	public ABFResponse fineOnShorePriceFor(@PathVariable("bline") int blineId, @PathVariable("role") int roleId, @PathVariable("grade") int gradeId){
+		ABFResponse response = new ABFResponse();
+		
+		try {
+			
+			BusinessLine bline = businessLineService.find(blineId);
+			Role role = roleService.find(roleId);
+			Grade grade = gradeService.find(gradeId);
+			
+			OnshorePrice onshorePrice = onshorePriceService.getOnShorePriceIdFor(bline, role, grade);
+			OnshorePriceDT onshorePriceDT = new OnshorePriceDT();
+			onshorePriceDT.setOnshorepriceId(onshorePrice.getOnshorepriceId());
+			onshorePriceDT.setPrice(onshorePrice.getPrice());
+			onshorePriceDT.setLastUpdatedBy(onshorePrice.getLastUpdatedBy());
+			onshorePriceDT.setLastUpdatedDatetime(onshorePrice.getLastUpdatedDatetime()+"");
+			onshorePriceDT.setDescription(onshorePrice.getDescription());
+			onshorePriceDT.setGradeType(onshorePrice.getGrade().getGradeType());
+			onshorePriceDT.setRoleId(onshorePrice.getRole().getRoleId());
+			onshorePriceDT.setRoleType(onshorePrice.getRole().getRoleType());
+			onshorePriceDT.setGradeId(onshorePrice.getGrade().getGradeId());
+			onshorePriceDT.setBusinessLineId(onshorePrice.getBusinessLine().getBusinesslineId());
+			onshorePriceDT.setBusinessLineName(onshorePrice.getBusinessLine().getBusinesslineName());
+			response.setSuccessResponse(onshorePriceDT);
+			response.setStatus(ABFConstants.STATUS_SUCCESS);
+		} catch (TechnicalException e) {
+			response.setFailureResponse(e.getMessage());
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+		}
 		return response;
 	}
 
