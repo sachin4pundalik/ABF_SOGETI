@@ -35,8 +35,7 @@ public class OnshorePriceDAOImpl extends GenericDaoImpl<OnshorePrice> implements
 	         query.setParameter("bline", bline);
 	         query.setParameter("role", role);
 	         query.setParameter("grade", grade);
-	         onshorePrice = (OnshorePrice) query.getSingleResult();
-	         
+	         onshorePrice = (OnshorePrice) query.getSingleResult();	         
 	      }
 	      catch (PersistenceException e)
 	      {

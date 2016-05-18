@@ -244,7 +244,7 @@ public class OnshorePriceController {
 			response.setSuccessResponse(onshorePriceDT);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 		} catch (TechnicalException e) {
-			response.setFailureResponse(e.getMessage());
+			response.setFailureResponse("Unable to find price for the given combination");
 			response.setStatus(ABFConstants.STATUS_FAILURE);
 		}
 		return response;
