@@ -1,13 +1,11 @@
 package com.sogeti.controller;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
+import com.sogeti.db.models.Band;
+import com.sogeti.db.models.BusinessLine;
 import com.sogeti.db.models.OffshorePrice;
+import com.sogeti.db.models.StayType;
 import com.sogeti.model.ABFResponse;
 import com.sogeti.model.OffshorePriceDT;
 import com.sogeti.service.BandService;
@@ -203,6 +204,41 @@ public class OffshorePriceController {
 		}
 
 		return response;
+	}
+	
+	@RequestMapping(value = "/find/{bline}/{band}/{stayType}", method = RequestMethod.GET)
+	public ABFResponse findOffShorePriceFor(@PathVariable("bline") int blineId, @PathVariable("band") int bandId, @PathVariable("stayType") int stayTypeId){
+		{
+			ABFResponse response = new ABFResponse();
+
+			try {
+				BusinessLine bline = businessLineService.find(blineId);
+				Band band = bandService.find(bandId);
+				StayType stayType = stayTypeService.find(stayTypeId);
+				
+				OffshorePrice offshorePrice = offshorePriceService.getOnShorePriceIdFor(bline, band, stayType);
+				OffshorePriceDT offshorePriceDT = new OffshorePriceDT();
+				offshorePriceDT.setOffshorepriceId(offshorePrice.getOffshorepriceId());
+				offshorePriceDT.setPrice(offshorePrice.getPrice());
+				offshorePriceDT.setLastUpdatedBy(offshorePrice.getLastUpdatedBy());
+				offshorePriceDT.setLastUpdatedDatetime(offshorePrice.getLastUpdatedDatetime()+"");
+				offshorePriceDT.setDescription(offshorePrice.getDescription());
+				offshorePriceDT.setBandId(offshorePrice.getBand().getBandId());
+				offshorePriceDT.setBandName(offshorePrice.getBand().getBandName());
+				offshorePriceDT.setStayTypeId(offshorePrice.getStayType().getStayTypeId());
+				offshorePriceDT.setStayTypeName(offshorePrice.getStayType().getStayType());
+				offshorePriceDT.setBusinessLineId(offshorePrice.getBusinessLine().getBusinesslineId());
+				offshorePriceDT.setBusinessLineName(offshorePrice.getBusinessLine().getBusinesslineName());
+			
+				response.setSuccessResponse(offshorePriceDT);
+				response.setStatus(ABFConstants.STATUS_SUCCESS);
+			} catch (TechnicalException e) {
+				response.setFailureResponse(e.getMessage());
+				response.setStatus(ABFConstants.STATUS_FAILURE);
+			}
+
+			return response;
+		}
 	}
 
 }
