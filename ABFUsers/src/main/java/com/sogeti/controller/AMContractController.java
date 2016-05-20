@@ -65,7 +65,7 @@ public class AMContractController {
 				AmContract amContract = new AmContract();
 				Contract contract = contractManager.getContract(amResource.getContractId());
 				OnshorePrice onshorePrice = onshorePriceService.find(amResource.getOnShorePrice());
-				OffshorePrice offShorePrice = offshorePriceService.find(amResource.getOffShorePrice());			
+				OffshorePrice offShorePrice = offshorePriceService.find(amResource.getOffShorePrice());	
 				String resourceXml = getXmlString(amResource, amContractService.getMaxAmContractId()); 
 				amContract.setContract(contract);
 				amContract.setOffshorePrice(offShorePrice);
@@ -149,17 +149,13 @@ public class AMContractController {
 			
 			GradeDT grade = new GradeDT();
 			grade.setGradeId(resource.getOnshorePrice().getGrade().getGradeId());
-			grade.setGradeType(resource.getOnshorePrice().getGrade().getGradeType());
-			
-			SkillDT skill = new SkillDT();
-			skill.setSkillId(resource.getOffshorePrice().getBusinessLine().getSkill().getSkillId());
-			skill.setSkillName(resource.getOffshorePrice().getBusinessLine().getSkill().getSkillName());
+			grade.setGradeType(resource.getOnshorePrice().getGrade().getGradeType());			
 			
 			resourceBean.setResourceType(resourceType);
 			resourceBean.setBusinessLine(businessLine);
 			resourceBean.setRole(role);
 			resourceBean.setGrade(grade);
-			resourceBean.setSkill(skill);
+			
 			
 		}else{
 			resourceBean.setPrice(resource.getOffshorePrice().getPrice().floatValue());
@@ -182,10 +178,15 @@ public class AMContractController {
 			stayType.setStayTypeId(resource.getOffshorePrice().getStayType().getStayTypeId());
 			stayType.setStayType(resource.getOffshorePrice().getStayType().getStayType());
 			
+			SkillDT skill = new SkillDT();
+			skill.setSkillId(resource.getOffshorePrice().getBusinessLine().getSkill().getSkillId());
+			skill.setSkillName(resource.getOffshorePrice().getBusinessLine().getSkill().getSkillName());
+			
 			resourceBean.setResourceType(resourceType);
 			resourceBean.setBusinessLine(businessLine);
 			resourceBean.setBand(band);
 			resourceBean.setStayType(stayType);
+			resourceBean.setSkill(skill);
 		}
 		
 		try {

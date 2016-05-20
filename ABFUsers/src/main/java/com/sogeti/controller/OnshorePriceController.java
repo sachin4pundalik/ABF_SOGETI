@@ -221,7 +221,9 @@ public class OnshorePriceController {
 	@RequestMapping(value ="/find/{bline}/{role}/{grade}", method = RequestMethod.GET)
 	public ABFResponse fineOnShorePriceFor(@PathVariable("bline") int blineId, @PathVariable("role") int roleId, @PathVariable("grade") int gradeId){
 		ABFResponse response = new ABFResponse();
-		
+		System.out.println("BLINE ===>"+blineId);
+		System.out.println("ROLEID ===>"+roleId);
+		System.out.println("GRADEID ===>"+gradeId);
 		try {
 			
 			BusinessLine bline = businessLineService.find(blineId);

@@ -72,12 +72,13 @@ public class AmContractServiceImpl implements AmContractService {
 			AmContract.setBline(Integer.toString(AmContract.getOnshorePrice().getBusinessLine().getBusinesslineId()));
 			AmContract.setRole(Integer.toString(AmContract.getOnshorePrice().getRole().getRoleId()));
 			AmContract.setGrade(Integer.toString(AmContract.getOnshorePrice().getGrade().getGradeId()));
-			AmContract.setSkill(Integer.toString(AmContract.getOnshorePrice().getBusinessLine().getSkill().getSkillId()));
+			
 		} else{			
 			AmContract.setType(Integer.toString(AmContract.getOffshorePrice().getBusinessLine().getResourceType().getResourcetypeId()));			
 			AmContract.setBline(Integer.toString(AmContract.getOffshorePrice().getBusinessLine().getBusinesslineId()));
 			AmContract.setBand(Integer.toString(AmContract.getOffshorePrice().getBand().getBandId()));
-			AmContract.setStay(Integer.toString(AmContract.getOffshorePrice().getStayType().getStayTypeId()));			
+			AmContract.setStay(Integer.toString(AmContract.getOffshorePrice().getStayType().getStayTypeId()));		
+			AmContract.setSkill(Integer.toString(AmContract.getOffshorePrice().getBusinessLine().getSkill().getSkillId()));
 		}		
 	}
 

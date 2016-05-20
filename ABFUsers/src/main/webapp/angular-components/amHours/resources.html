@@ -133,10 +133,11 @@
 			<div class="col-sm-8 col-md-8 col-lg-8">
 				<div class="well bs-component">
 					<table class="table table-bordered table-hover table-condensed">
-						<caption><h5>Onshore resource(s)</h5></caption>
+						<caption><h5>Offshore resource(s)</h5></caption>
 						<thead>
 							<tr>
 								<th>Resource</th>
+								<th>Skill</th>
 								<th>Business Line</th>
 								<th>Band</th>
 								<th>Stay</th>
@@ -146,8 +147,9 @@
 						</thead>
 						<tbody data-ng-repeat="resource in resources" class="fade active in">
 							<tr
-								data-ng-show="resource.resourceType.resourceType==='Onshore'">
+								data-ng-show="resource.resourceType.resourceType==='Offshore'">
 								<td>{{resource.resourceType.resourceType}}</td>
+								<td>{{resource.skill.skillName}}</td>
 								<td>{{resource.businessLine.businesslineName}}</td>
 								<td>{{resource.band.bandName}}</td>
 								<td>{{resource.stayType.stayType}}</td>
@@ -164,12 +166,11 @@
 				</div>
 				<div class="well bs-component">
 					<table class="table table-bordered table-hover table-condensed">
-						<caption><h5>Offshore resource(s)</h5></caption>
+						<caption><h5>Onshore resource(s)</h5></caption>
 						<thead>
 							<tr>
 								<th>Resource</th>
 								<th>Business Line</th>
-								<th>Skill</th>
 								<th>Role</th>
 								<th>Grade</th>
 								<th>Price</th>
@@ -177,10 +178,9 @@
 							</tr>
 						</thead>
 						<tbody data-ng-repeat="resource in resources" class="fade active in">
-							<tr data-ng-show="resource.resourceType.resourceType==='Offshore'">
+							<tr data-ng-show="resource.resourceType.resourceType==='Onshore'">
 								<td>{{resource.resourceType.resourceType}}</td>
 								<td>{{resource.businessLine.businesslineName}}</td>
-								<td>{{resource.skill.skillName}}</td>
 								<td>{{resource.role.roleType}}</td>
 								<td>{{resource.grade.gradeType}}</td>
 								<td>{{resource.price}}</td>

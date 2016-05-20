@@ -91,7 +91,7 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 			
 			var url = '';
 			if(rType && bline){
-				if(angular.equals(rType.resourceType, ABF_CONSTANTS.OFFSHORE)){
+				if(angular.equals(rType.resourceType, ABF_CONSTANTS.ONSHORE)){
 					var role = JSON.parse($scope.resource["role"]);
 					var grade = JSON.parse($scope.resource["grade"]);
 					if(role && grade){
@@ -99,7 +99,7 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 					}else{
 						throw new Error("Please complete selection");
 					}
-				}else if(angular.equals(rType.resourceType, ABF_CONSTANTS.ONSHORE)){
+				}else if(angular.equals(rType.resourceType, ABF_CONSTANTS.OFFSHORE)){
 					var band = JSON.parse($scope.resource["band"]);
 					var stay = JSON.parse($scope.resource["stayType"]);
 					if(band && stay){
