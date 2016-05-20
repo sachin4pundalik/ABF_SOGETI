@@ -56,13 +56,13 @@ public class ABFController {
 
 	@Autowired
 	ContractManager contractManager;
-	
+
 	@Autowired
 	StatusService statusService;
 
 	@RequestMapping( value = "/create", method = RequestMethod.POST)
 	public ABFResponse createContract(@RequestBody Contract contract) {
-		
+
 		ABFResponse response = new ABFResponse();	
 		com.sogeti.db.models.Contract dbContract = new com.sogeti.db.models.Contract();
 		BeanUtils.copyProperties(contract, dbContract);
@@ -84,11 +84,11 @@ public class ABFController {
 
 	@RequestMapping( value = "/all", method = RequestMethod.GET)
 	public ABFResponse getContracts(){ 
-		
+
 		ABFResponse  response = new ABFResponse();			
 		List<com.sogeti.db.models.Contract> contracts =null;
 		List<Contract> finalContracts = new ArrayList<Contract>();
-		
+
 		try {
 			contracts = contractManager.allContracts();	
 			Contract locContract = null;
@@ -127,7 +127,7 @@ public class ABFController {
 		{
 			logger.error("Exception in method ... ABFController.deleteContract" + e);
 			response.setFailureResponse(e.getMessage());
-			 response.setStatus(ABFConstants.STATUS_FAILURE);
+			response.setStatus(ABFConstants.STATUS_FAILURE);
 		}
 
 		return response;
@@ -163,11 +163,16 @@ public class ABFController {
 
 	{
 		ABFResponse  response = new ABFResponse();
-
+		com.sogeti.db.models.Contract contract =null;
+		
 		try
 		{
-			contractManager.getContract(contractId);
-			response.setSuccessResponse(contractId);
+			contract = contractManager.getContract(contractId);	
+			Contract locContract = null;	
+			BeanUtils.copyProperties(contract, locContract);
+			locContract.setStatusId(contract.getStatus().getStatusId());
+			locContract.setStatus(contract.getStatus().getStatusName());
+			response.setSuccessResponse(locContract);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 		}
 		catch (TechnicalException e)
@@ -183,25 +188,32 @@ public class ABFController {
 
 	@RequestMapping( value = "/mycontracts/{loginID}", method = RequestMethod.GET)
 	public ABFResponse allContractsByMe(@PathVariable("loginID") int loginId){
-		ABFResponse  response = new ABFResponse();	
 
-		try
-		{
-			List<com.sogeti.db.models.Contract> contracts = new ArrayList<com.sogeti.db.models.Contract>();
+		ABFResponse  response = new ABFResponse();			
+		List<com.sogeti.db.models.Contract> contracts =null;
+		List<Contract> finalContracts = new ArrayList<Contract>();
+
+		try {
 			contracts = contractManager.allContractsByMe(loginId);	
-			response.setSuccessResponse(contracts);
+			Contract locContract = null;
+			for (com.sogeti.db.models.Contract contract : contracts) {
+				locContract = new Contract();
+				BeanUtils.copyProperties(contract, locContract);
+				locContract.setStatusId(contract.getStatus().getStatusId());
+				locContract.setStatus(contract.getStatus().getStatusName());
+				locContract.setLoginId(contract.getLogin().getLoginId());
+				finalContracts.add(locContract);
+			}
+			response.setSuccessResponse(finalContracts);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
-		}
-		catch (TechnicalException e)
-		{
-
-			logger.error("Exception in method ... ABFController.allContractsByMe" + e);
-			response.setFailureResponse(e.getMessage());
+		} catch (BeansException e) {
 			response.setStatus(ABFConstants.STATUS_FAILURE);
+			response.setFailureResponse(e.getMessage());
 		}
 
 		return response;
 	}
-
-
 }
+
+
+
