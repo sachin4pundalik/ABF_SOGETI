@@ -91,7 +91,7 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 			
 			var url = '';
 			if(rType && bline){
-				if(angular.equals(rType.resourceType, ABF_CONSTANTS.ONSHORE)){
+				if(angular.equals(rType.resourceType, ABF_CONSTANTS.OFFSHORE)){
 					var role = JSON.parse($scope.resource["role"]);
 					var grade = JSON.parse($scope.resource["grade"]);
 					if(role && grade){
@@ -99,7 +99,7 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 					}else{
 						throw new Error("Please complete selection");
 					}
-				}else if(angular.equals(rType.resourceType, ABF_CONSTANTS.OFFSHORE)){
+				}else if(angular.equals(rType.resourceType, ABF_CONSTANTS.ONSHORE)){
 					var band = JSON.parse($scope.resource["band"]);
 					var stay = JSON.parse($scope.resource["stayType"]);
 					if(band && stay){
@@ -114,7 +114,7 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 						var resData = response.data;
 						if(angular.equals(resData.status, ABF_CONSTANTS.SUCCESS)){
 							var item= resData.successResponse;
-							$scope.resource.price = item.price || 50;
+							$scope.resource.price = item.price || 0;
 							$scope.resource.onShorePrice=item.onshorepriceId || -1;
 							$scope.resource.offShorePrice=item.offshorepriceId || -1;
 							
@@ -171,7 +171,7 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 	
 	$scope.resetResource = function (){
 		
-		$scope.resource = {amContractResourceId:0, contractId:-1, resourceType:null, businessLine:null, skill:null, band:null, role:null, grade:null, stayType:null, price:50, onShorePrice:-1, offShorePrice:-1, months:{month:[]}};		
+		$scope.resource = {amContractResourceId:0, contractId:-1, resourceType:null, businessLine:null, skill:null, band:null, role:null, grade:null, stayType:null, price:0, onShorePrice:-1, offShorePrice:-1, months:{month:[]}};		
 		
 	};
 	
@@ -233,14 +233,14 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 	}
 	
 	
-	$scope.resource = {amContractResourceId:0, contractId:-1, resourceType:null, businessLine:null, skill:null, band:null, role:null, grade:null, stayType:null, price:50, onShorePrice:-1, offShorePrice:-1, months:{month:[]}};		
+	$scope.resource = {amContractResourceId:0, contractId:-1, resourceType:null, businessLine:null, skill:null, band:null, role:null, grade:null, stayType:null, price:0, onShorePrice:-1, offShorePrice:-1, months:{month:[]}};		
 	
 	$scope.resourceChange= function(){
 		
 		try{
 			let rType = JSON.parse($scope.resource["resourceType"]);
 			
-			if(angular.equals(rType.resourceType, ABF_CONSTANTS.OFFSHORE)){
+			if(angular.equals(rType.resourceType, ABF_CONSTANTS.ONSHORE)){
 				let url = './businessline/resourceType/$1';
 				url = url.replace("$1", rType.resourcetypeId);
 
@@ -248,7 +248,7 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 				.then(function(response){
 					$scope.blines = response
 				});
-			}else if(!angular.equals(rType.resourceType, ABF_CONSTANTS.ONSHORE)){
+			}else if(!angular.equals(rType.resourceType, ABF_CONSTANTS.OFFSHORE)){
 				DataSetService.fetchBusinessLines('./businessline/all')
 				.then(function(response){
 					$scope.blines = response
@@ -267,14 +267,13 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 			let skill= JSON.parse($scope.resource["skill"]);
 			let rType = JSON.parse($scope.resource["resourceType"]);
 			
-			if(angular.equals(rType.resourceType, ABF_CONSTANTS.ONSHORE)){
+			if(angular.equals(rType.resourceType, ABF_CONSTANTS.OFFSHORE)){
 				
 				let url = './businessline/resourceType/$1/skill/$2';
 				
 				url = url.replace("$1", rType.resourcetypeId);
 				url = url.replace("$2", skill.skillId);
 				
-				console.log("BLines URL : " + url);
 				DataSetService.fetchBusinessLines(url)
 				.then(function(response){
 					$scope.blines = response
@@ -282,27 +281,34 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 			}
 			
 		}catch(e){
-			toastr.error(e,"Data Setup Issue");
+			throw new Error(e);
 		}
 		
 	};
 	
 	$scope.newResource = function (){
-		// reset all string json format to json object.
-		for(prop in $scope.resource){
-			if(angular.isString($scope.resource[prop])){
-				$scope.resource[prop] = JSON.parse($scope.resource[prop]);
+		
+		//First check : price should never be less or equal to 0 zero.
+		if(angular.isNumber($scope.resource.price) && $scope.resource.price > 0){
+			// reset all string json format to json object.
+			for(prop in $scope.resource){
+				if(angular.isString($scope.resource[prop])){
+					$scope.resource[prop] = JSON.parse($scope.resource[prop]);
+				}
 			}
+			//Specific to contractId
+			$scope.resource.contractId=$scope.contract.contractId;
+			for(month in $scope.headerMonths ){
+				var month = {name:$scope.headerMonths[month], total:0, weeks:{w1:0, w2:0, w3:0, w4:0}};			
+				//append to main resource obj
+				$scope.resource.months.month.push(month);
+			}
+			$scope.resources.push($scope.resource);
+			$scope.resetResource();
+		}else{
+			throw new Error("Please select combination for a valid price.");
 		}
-		//Specific to contractId
-		$scope.resource.contractId=$scope.contract.contractId;
-		for(month in $scope.headerMonths ){
-			var month = {name:$scope.headerMonths[month], total:0, weeks:{w1:0, w2:0, w3:0, w4:0}};			
-			//append to main resource obj
-			$scope.resource.months.month.push(month);
-		}
-		$scope.resources.push($scope.resource);
-		$scope.resetResource();
+		
 	}
 	
 	$scope.bookHours = function(){

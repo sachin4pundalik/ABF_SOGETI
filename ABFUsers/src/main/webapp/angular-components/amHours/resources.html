@@ -1,4 +1,4 @@
-<contract-header contract="contract"></contract-header>
+<contract-header contract="contract" collapse="false"></contract-header>
 <div class="row">
 	<div class="col-sm-12 col-md-12 col-lg-12">
 		<div class="page-header">
@@ -34,7 +34,7 @@
 									</select>
 								</div>
 							</div>
-							<div data-ng-show="resource.resourceType.indexOf('Offshore')>-1">
+							<div data-ng-show="resource.resourceType.indexOf('Onshore')>-1">
 								<div class="form-group">
 									<label for="businessline" class="col-lg-2 control-label">Business
 										Line</label>
@@ -65,7 +65,7 @@
 									</div>
 								</div>
 							</div>
-							<div data-ng-show="resource.resourceType.indexOf('Onshore')>-1">
+							<div data-ng-show="resource.resourceType.indexOf('Offshore')>-1">
 								<div class="form-group">
 									<label for="Skill" class="col-lg-2 control-label">Skill</label>
 									<div class="col-lg-10">
@@ -109,7 +109,7 @@
 								<button data-ng-click="getPrice()" 
 									class="col-lg-2 control-label btn btn-sm btn-warning">Fetch Price <span class="glyphicon glyphicon-hand-down"></span></button>
 								<div class="col-lg-10">
-									<input type="text" readonly="readonly" maxlength="4"
+									<input type="text" readonly="readonly" maxlength="4" required="required"
 										pattern="\d{1,4}" data-ng-model="resource.price"
 										class="form-control" />
 									
@@ -119,7 +119,7 @@
 								<div class="col-lg-10 col-lg-offset-2">
 									<button type="reset" class="btn btn-default btn-sm">Reset</button>
 									<button type="button" class="btn btn-primary btn-sm"
-										data-ng-disable="!NewResourceForm.$invalid"
+										data-ng-disable="!NewResourceForm.$invalid && resource.price<0"
 										data-ng-click="newResource()">Add</button>
 									<button type="button" class="btn btn-info btn-sm"
 										data-ng-click="goBack()">Contract(s)</button>
@@ -133,7 +133,7 @@
 			<div class="col-sm-8 col-md-8 col-lg-8">
 				<div class="well bs-component">
 					<table class="table table-bordered table-hover table-condensed">
-						<caption>Offshore resource(s)</caption>
+						<caption>Onshore resource(s)</caption>
 						<thead>
 							<tr>
 								<th>Resource Type</th>
@@ -144,16 +144,16 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody data-ng-repeat="resource in resources">
+						<tbody data-ng-repeat="resource in resources" data-ng-animate"'animate'">
 							<tr
-								data-ng-show="resource.resourceType.resourceType==='Offshore'">
+								data-ng-show="resource.resourceType.resourceType==='Onshore'">
 								<td>{{resource.resourceType.resourceType}}</td>
 								<td>{{resource.businessLine.businesslineName}}</td>
 								<td>{{resource.band.bandName}}</td>
 								<td>{{resource.stayType.stayType}}</td>
 								<td>{{resource.price}}</td>
 								<td>
-									<button class="btn btn-block btn-danger outline" type="button">
+									<button class="btn btn-block btn-danger btn-sm" type="button">
 										<span class="glyphicon glyphicon-trash"
 											data-ng-click="deleteResource(resource)"></span>
 									</button>
@@ -164,7 +164,7 @@
 				</div>
 				<div class="well bs-component">
 					<table class="table table-bordered table-hover table-condensed">
-						<caption>Onshore resource(s)</caption>
+						<caption>Offshore resource(s)</caption>
 						<thead>
 							<tr>
 								<th>Resource Type</th>
@@ -176,8 +176,8 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody data-ng-repeat="resource in resources">
-							<tr data-ng-show="resource.resourceType.resourceType==='Onshore'">
+						<tbody data-ng-repeat="resource in resources" data-ng-animate"'animate'">
+							<tr data-ng-show="resource.resourceType.resourceType==='Offshore'">
 								<td>{{resource.resourceType.resourceType}}</td>
 								<td>{{resource.businessLine.businesslineName}}</td>
 								<td>{{resource.skill.skillName}}</td>
@@ -185,7 +185,7 @@
 								<td>{{resource.grade.gradeType}}</td>
 								<td>{{resource.price}}</td>
 								<td>
-									<button class="btn btn-block btn-danger" type="button">
+									<button class="btn btn-block btn-danger btn-sm" type="button">
 										<span class="glyphicon glyphicon-trash"
 											data-ng-click="deleteResource(resource)"></span>
 									</button>
@@ -193,7 +193,7 @@
 							</tr>
 						</tbody>
 					</table>
-					<button class="btn btn-success  pull-right"
+					<button class="btn btn-success btn-sm pull-right"
 						data-ng-show="resources.length>0"
 						data-ng-click="manageView('showMonthly')">
 						Fill Hours <span class="glyphicon glyphicon-circle-arrow-right"></span>

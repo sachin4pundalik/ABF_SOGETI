@@ -24,6 +24,8 @@ body                            { padding-top:20px; }
 #status-buttons-active span     { background:#00BC8C; display:block; height:30px; margin:0 auto 10px; padding-top:5px; width:30px; 
     border-radius:50%; }
 
+/* fix for ui-bootstrap */
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
     
 /* Animation styles */
     

@@ -3,7 +3,8 @@ angular.module('webappApp')
 		.config(
 				[
 						'$routeProvider',
-						function($routeProvider) {
+						'toastrConfig',
+						function($routeProvider, toastrConfig) {
 							$routeProvider
 									.when(
 											'/landing',
@@ -352,12 +353,12 @@ angular.module('webappApp')
 							 * toast-bottom-left toast-bottom-full-width
 							 */
 							// toastr configuration
-							/*angular.extend(toastrConfig, {
+							angular.extend(toastrConfig, {
 
-								positionClass : 'toast-bottom-right',
+								positionClass : 'toast-bottom-full-width',
 								progressBar : true
 
-							});*/
+							});
 						} ])
 		.run(
 				function($rootScope, $location, $cookieStore, AUTH_EVENTS, AuthService) {
