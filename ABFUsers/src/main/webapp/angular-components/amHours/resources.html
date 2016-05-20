@@ -24,8 +24,7 @@
 						<fieldset>
 							<legend>Add Resource</legend>
 							<div class="form-group">
-								<label for="projecttype" class="col-lg-2 control-label">Resource
-									Type</label>
+								<label for="projecttype" class="col-lg-2 control-label">Resource</label>
 								<div class="col-lg-10">
 									<select data-ng-model="resource.resourceType"
 										class="form-control" required="required"
@@ -35,46 +34,6 @@
 								</div>
 							</div>
 							<div data-ng-show="resource.resourceType.indexOf('Onshore')>-1">
-								<div class="form-group">
-									<label for="businessline" class="col-lg-2 control-label">Business
-										Line</label>
-									<div class="col-lg-10">
-										<select data-ng-model="resource.businessLine"
-											class="form-control" required="required"
-											data-ng-mouseover="blineMouseOverHandler()">
-											<option data-ng-repeat="option in blines" value="{{option}}">{{option.businesslineName}}</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="band" class="col-lg-2 control-label">Band</label>
-									<div class="col-lg-10">
-										<select data-ng-model="resource.band" class="form-control"
-											required="required">
-											<option data-ng-repeat="option in bands" value="{{option}}">{{option.bandName}}</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="stay" class="col-lg-2 control-label">Stay</label>
-									<div class="col-lg-10">
-										<select data-ng-model="resource.stayType" class="form-control"
-											required="required">
-											<option data-ng-repeat="option in stays" value="{{option}}">{{option.stayType}}</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div data-ng-show="resource.resourceType.indexOf('Offshore')>-1">
-								<div class="form-group">
-									<label for="Skill" class="col-lg-2 control-label">Skill</label>
-									<div class="col-lg-10">
-										<select data-ng-model="resource.skill" class="form-control"
-											required="required" data-ng-change="skillChange()">
-											<option data-ng-repeat="option in skills" value="{{option}}">{{option.skillName}}</option>
-										</select>
-									</div>
-								</div>
 								<div class="form-group">
 									<label for="businessline" class="col-lg-2 control-label">Business
 										Line</label>
@@ -101,6 +60,47 @@
 										<select data-ng-model="resource.grade" class="form-control"
 											required="required">
 											<option data-ng-repeat="option in grades" value="{{option}}">{{option.gradeType}}</option>
+										</select>
+									</div>
+								</div>
+								
+							</div>
+							<div data-ng-show="resource.resourceType.indexOf('Offshore')>-1">
+								<div class="form-group">
+									<label for="Skill" class="col-lg-2 control-label">Skill</label>
+									<div class="col-lg-10">
+										<select data-ng-model="resource.skill" class="form-control"
+											required="required" data-ng-change="skillChange()">
+											<option data-ng-repeat="option in skills" value="{{option}}">{{option.skillName}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="businessline" class="col-lg-2 control-label">Business
+										Line</label>
+									<div class="col-lg-10">
+										<select data-ng-model="resource.businessLine"
+											class="form-control" required="required"
+											data-ng-mouseover="blineMouseOverHandler()">
+											<option data-ng-repeat="option in blines" value="{{option}}">{{option.businesslineName}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="band" class="col-lg-2 control-label">Band</label>
+									<div class="col-lg-10">
+										<select data-ng-model="resource.band" class="form-control"
+											required="required">
+											<option data-ng-repeat="option in bands" value="{{option}}">{{option.bandName}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="stay" class="col-lg-2 control-label">Stay</label>
+									<div class="col-lg-10">
+										<select data-ng-model="resource.stayType" class="form-control"
+											required="required">
+											<option data-ng-repeat="option in stays" value="{{option}}">{{option.stayType}}</option>
 										</select>
 									</div>
 								</div>
@@ -133,10 +133,10 @@
 			<div class="col-sm-8 col-md-8 col-lg-8">
 				<div class="well bs-component">
 					<table class="table table-bordered table-hover table-condensed">
-						<caption>Onshore resource(s)</caption>
+						<caption><h5>Onshore resource(s)</h5></caption>
 						<thead>
 							<tr>
-								<th>Resource Type</th>
+								<th>Resource</th>
 								<th>Business Line</th>
 								<th>Band</th>
 								<th>Stay</th>
@@ -144,7 +144,7 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody data-ng-repeat="resource in resources" data-ng-animate"'animate'">
+						<tbody data-ng-repeat="resource in resources" class="fade active in">
 							<tr
 								data-ng-show="resource.resourceType.resourceType==='Onshore'">
 								<td>{{resource.resourceType.resourceType}}</td>
@@ -164,10 +164,10 @@
 				</div>
 				<div class="well bs-component">
 					<table class="table table-bordered table-hover table-condensed">
-						<caption>Offshore resource(s)</caption>
+						<caption><h5>Offshore resource(s)</h5></caption>
 						<thead>
 							<tr>
-								<th>Resource Type</th>
+								<th>Resource</th>
 								<th>Business Line</th>
 								<th>Skill</th>
 								<th>Role</th>
@@ -176,7 +176,7 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody data-ng-repeat="resource in resources" data-ng-animate"'animate'">
+						<tbody data-ng-repeat="resource in resources" class="fade active in">
 							<tr data-ng-show="resource.resourceType.resourceType==='Offshore'">
 								<td>{{resource.resourceType.resourceType}}</td>
 								<td>{{resource.businessLine.businesslineName}}</td>
