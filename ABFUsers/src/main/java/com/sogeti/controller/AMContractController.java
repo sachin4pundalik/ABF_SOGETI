@@ -60,9 +60,14 @@ public class AMContractController {
 	@RequestMapping( value = "/create", method = RequestMethod.POST)
 	public ABFResponse createAmContract(@RequestBody List<AMContractResourceBean> contractResources) {
 		ABFResponse response = new ABFResponse();
+		AmContract amContract = null;
 		try{
 			for(AMContractResourceBean amResource : contractResources){
-				AmContract amContract = new AmContract();
+				if(amResource.getAmContractResourceId() != 0){
+					amContract = amContractService.getAmContractById(amResource.getAmContractResourceId());
+				}else{
+					amContract = new AmContract();
+				}				
 				Contract contract = contractManager.getContract(amResource.getContractId());
 				OnshorePrice onshorePrice = onshorePriceService.find(amResource.getOnShorePrice());
 				OffshorePrice offShorePrice = offshorePriceService.find(amResource.getOffShorePrice());	
