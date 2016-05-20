@@ -1,13 +1,4 @@
-<blockquote>
-	<p>
-		A contract is created with name as <i>{{contract.contractName}}</i>
-		for the customer <b>{{contract.customerName}}</b>. Expected to start
-		contract from {{contract.contractStartDate | date:'dd MMM yyyy'}} and
-		ends on {{contract.contractEndDate | date:'dd MMM yyyy'}}. Contract is
-		<strong>{{contract.status}}</strong> status.
-	</p>
-	<small> <cite title="Source Title">{{currentUser.userName}}</cite></small>
-</blockquote>
+<contract-header contract="contract"></contract-header>
 <div class="row">
 	<div class="col-sm-12 col-md-12 col-lg-12">
 		<div class="page-header">
@@ -115,8 +106,8 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="stay" class="col-lg-2 control-label">Price <button data-ng-click="getPrice()" 
-									class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-hand-down"></span> Fetch</button></label>
+								<button data-ng-click="getPrice()" 
+									class="col-lg-2 control-label btn btn-sm btn-warning">Fetch Price <span class="glyphicon glyphicon-hand-down"></span></button>
 								<div class="col-lg-10">
 									<input type="text" readonly="readonly" maxlength="4"
 										pattern="\d{1,4}" data-ng-model="resource.price"

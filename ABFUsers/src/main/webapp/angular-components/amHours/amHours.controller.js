@@ -6,6 +6,13 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 	$scope.contract = DataSetService.currContract;
 	$scope.currentUser = Session.sessionUser;
 	
+	$scope.isCollapsed= true;
+	
+	$scope.changeCollapse=function(){
+		$scope.isCollapsed = !$scope.isCollapsed;
+		
+	};
+	
 	$scope.initDataSet= function(){
 		
 		try{
@@ -307,6 +314,7 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 				if(angular.equals(resData.status, ABF_CONSTANTS.SUCCESS)){
 					//Back to default view.
 					$scope.views="";
+					$location.path("/fixed");
 				}else if(angular.equals(resData.status, ABF_CONSTANTS.FAILURE)){
 					toastr.error(resData.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
 				}
@@ -330,6 +338,8 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 						_.remove($scope.resources, function(currentObject) {
 						    return currentObject === item;
 						}); 
+						toastr.success("Delete resource from list.", "Resource Deletion");
+						$scope.fetchExistingResources();
 					}else if(angular.equals(resData.status, ABF_CONSTANTS.FAILURE)){
 						toastr.error(resData.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
 					}
@@ -342,7 +352,7 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 				    return currentObject === item;
 				}); 
 			}
-			toastr.success("Delete resource from list.", "Resource Deletion");
+			
 		}catch(e){
 			toastr.error("Unable to remove item from the list.","Resource Deletion");
 		}

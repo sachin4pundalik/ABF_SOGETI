@@ -3,12 +3,15 @@
 <head>
 <title>ABF</title>
 <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
  <!-- CSS -->
  	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="styles/paper.bootstrap.min.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> -->
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/style.css"/>
+    <link rel="stylesheet" type="text/css" href="scripts/xEditable/xeditable.css"/>
     <link rel="stylesheet" type="text/css" href="bower_components/angular-toastr/dist/angular-toastr.min.css" />
     <!-- JS -->
     <!-- load angular, nganimate, and ui-router -->
@@ -38,7 +41,7 @@
 						<ul class="dropdown-menu">
 							<li><a href="#hours">AM Hours</a></li>
 							<li><a href="#/kt">KT Hours</a></li>
-							<li data-ng-show="false"><a href="#/fixed">Fixed Hours</a></li>
+							<li><a href="#/fixed">Fixed Hours</a></li>
 						</ul></li>
 					<li class="masterdropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="masterdropdown" role="button" aria-haspopup="true"
@@ -65,7 +68,7 @@
 					<button type="submit" class="btn btn-default">Submit</button>
 				</form> -->
 				<ul class="nav navbar-nav navbar-right">
-					<li class="userdropdown"><a href="#" class="dropdown-toggle"
+					<li class="userdropdown"><a id="usermenu" href class="dropdown-toggle"
 						data-toggle="userdropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> <span class="glyphicon glyphicon-user"></span>
 							{{currentUser.firstName+', '+currentUser.lastName}} <span class="caret"></span></a>
@@ -87,20 +90,23 @@
 	
 	<script src="bower_components/jquery/dist/jquery.js"></script>
 	<script src="bower_components/angular/angular.min.js"></script>
+	<!-- <script src="http://code.angularjs.org/1.1.5/angular.js"></script> -->
 	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="bower_components/angular-animate/angular-animate.js"></script>
+	
 	<script src="bower_components/angular-cookies/angular-cookies.js"></script>
 	<script src="bower_components/angular-messages/angular-messages.js"></script>
 	<script src="bower_components/angular-resource/angular-resource.js"></script>
 	<script src="bower_components/angular-route/angular-route.js"></script>
 	<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 	<script src="bower_components/angular-touch/angular-touch.js"></script>
+	
 	<script src="bower_components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
 	<script src="bower_components/moment/min/moment.min.js"></script>
 	<script src="bower_components/lodash/dist/lodash.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
 
-	<script src="scripts/xEditable/ui-bootstrap-tpls.min.js"></script>
+	<script src="scripts/xEditable/ui-bootstrap-tpls-0.13.0.min.js"></script>
 	<script src="scripts/xEditable/xeditable.js"></script>
 
 	<script src="scripts/app.js"></script>
@@ -108,7 +114,8 @@
 	<script src="scripts/application.route.js"></script>
 	<script src="scripts/application.session.js"></script>
 	<script src="scripts/application.controller.js"></script>
-	<!-- <script src="scripts/application.exception.js"></script> -->
+	<!-- <script src="scripts/application.animation.js"></script> -->
+	<script src="scripts/application.exception.js"></script>
 	
 	<script src="angular-components/common/common.service.js"></script>
 	
@@ -175,5 +182,7 @@
 	<script src="angular-components/master/userrole/userrole.controller.js"></script>
 	<script src="angular-components/master/master.service.js"></script>
 	
+	<!-- Contract Header directive -->
+	<script src="angular-components/contract-header/contract-header.directive.js"></script>
 </body>
 </html>

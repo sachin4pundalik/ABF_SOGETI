@@ -9,6 +9,7 @@
 				<thead>
 					<tr>
 						<td colspan="8">
+							<input type="text" class="pull-left" data-ng-model="contractFilter"  placeholder="Search..."> 
 							<a href="#/createContract" class="btn btn-primary pull-right"> <span>Create
 									Contract</span>
 							</a>
@@ -23,18 +24,22 @@
 						<th>View</th>
 					</tr>
 				</thead>
-				<tbody data-ng-repeat="contract in contractsbyMe">
+				<tbody data-ng-repeat="contract in contractsbyMe | filter:contractFilter"  data-ng-animate="'animate'"> 
 					<tr>
 						<td>{{contract.contractName}}</td>
 						<td>{{contract.customerName}}</td>
 						<td>{{contract.contractStartDate | date:'dd MMM yyyy'}}</td>
 						<td>{{contract.contractEndDate | date:'dd MMM yyyy'}}</td>
 						<td>{{contract.status}}</td>
-						<td><button data-ng-click="showContract(contract)" class="btn btn-warning btn-xs"> <span class="glyphicon glyphicon-eye-open"></span> </button></td>
+						<td>
+							<button data-ng-click="showContract(contract)"  tooltip="Edit Contract" tooltip-placement="top" class="btn btn-warning btn-xs"> 
+								<span class="glyphicon glyphicon-edit"></span> </button>
+							<button data-ng-click="showContract(contract)"  tooltip="Book Hours" tooltip-placement="top" class="btn btn-primary btn-xs"> 
+								<span class="glyphicon glyphicon-time"></span> </button>
+						</td>
 					</tr>
 				</tbody>
 			</table>
-
 		</div>
 	</div>
 </div>

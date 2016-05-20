@@ -2,7 +2,7 @@
 
 var webappApp = angular.module('webappApp', [ 'ngRoute', 'ngResource',
 		'xeditable', 'ui.bootstrap', 'ngCookies', 'webappApp.directives',
-		'ngAnimate', 'toastr' ]);
+		'ngAnimate','toastr' ]);
 webappApp.run(function(editableOptions) {
 	editableOptions.theme = 'bs2';
 });
