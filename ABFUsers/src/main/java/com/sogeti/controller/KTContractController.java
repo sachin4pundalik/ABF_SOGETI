@@ -1,11 +1,13 @@
 package com.sogeti.controller;
 
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.log4j.Logger;
@@ -18,7 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
+import com.sogeti.db.models.Contract;
 import com.sogeti.db.models.KtContract;
+import com.sogeti.db.models.OffshorePrice;
+import com.sogeti.db.models.OnshorePrice;
 import com.sogeti.model.ABFResponse;
 import com.sogeti.model.BandDT;
 import com.sogeti.model.BusinessLineDT;
@@ -28,7 +33,10 @@ import com.sogeti.model.ResourceTypeDT;
 import com.sogeti.model.RoleDT;
 import com.sogeti.model.SkillDT;
 import com.sogeti.model.StayTypeDT;
+import com.sogeti.service.ContractManager;
 import com.sogeti.service.KtContractService;
+import com.sogeti.service.OffshorePriceService;
+import com.sogeti.service.OnshorePriceService;
 import com.sogeti.xmlbeans.Resource;
 
 @RestController
@@ -41,14 +49,50 @@ public class KTContractController {
 	@Autowired(required = true)
 	KtContractService ktContractService;
 	
+	@Autowired
+	ContractManager contractManager;
+	
+	@Autowired
+	OffshorePriceService offshorePriceService;
+	
+	@Autowired
+	OnshorePriceService onshorePriceService;
+	
 	@RequestMapping( value = "/create", method = RequestMethod.POST)
-	public ABFResponse createKtContract(@RequestBody List<KtContract> contractResources) {
+	public ABFResponse createKtContract(@RequestBody List<KTContractResourceBean> contractResources) {
 		
-		return null;
+		ABFResponse response = new ABFResponse();
+		KtContract ktContract = null;
+		try{
+			for(KTContractResourceBean ktResource : contractResources){
+				if(ktResource.getKtContractResourceId() != 0){
+					ktContract = ktContractService.getKtContractById(ktResource.getKtContractResourceId());
+				}else{
+					ktContract = new KtContract();
+				}				
+				Contract contract = contractManager.getContract(ktResource.getContractId());
+				OnshorePrice onshorePrice = onshorePriceService.find(ktResource.getOnShorePrice());
+				OffshorePrice offShorePrice = offshorePriceService.find(ktResource.getOffShorePrice());	
+				String resourceXml = getXmlString(ktResource, ktContractService.getMaxAmContractId()); 
+				ktContract.setContract(contract);
+				ktContract.setOffshorePrice(offShorePrice);
+				ktContract.setOnshorePrice(onshorePrice);
+				ktContract.setDetailsXml(resourceXml);			
+				ktContractService.saveKtContract(ktContract);
+				
+				response.setStatus(ABFConstants.STATUS_SUCCESS);
+				response.setSuccessResponse(ABFConstants.STATUS_SUCCESS);
+			}
+		}catch(TechnicalException e){
+			logger.error(e);
+			response.setStatus(ABFConstants.STATUS_FAILURE);
+			response.setFailureResponse(e.getMessage());
+		}		
+		return response;
 	}
 	
 	@RequestMapping( value = "/fetchcontractkthours/{contractId}", method = RequestMethod.GET)
-	public ABFResponse getAmContractForContract(@PathVariable("contractId") String contractId){
+	public ABFResponse getKtContractForContract(@PathVariable("contractId") String contractId){
 		ABFResponse response = new ABFResponse();
 			
 		try {
@@ -74,7 +118,7 @@ public class KTContractController {
 		ABFResponse response = new ABFResponse();
 		try{
 			KtContract ktContract = ktContractService.getKtContractById(Integer.parseInt(ktContractId));
-			boolean deleteFlag = ktContractService.deleteKtContract(ktContract);
+			ktContractService.deleteKtContract(ktContract);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 			response.setSuccessResponse(ktContract);
 		}catch(TechnicalException e){
@@ -89,7 +133,7 @@ public class KTContractController {
 	
 	private KTContractResourceBean fillResourceData(KtContract resource){
 		KTContractResourceBean resourceBean = new KTContractResourceBean();
-		resourceBean.setAmContractResourceId(resource.getKtContractId());
+		resourceBean.setKtContractResourceId(resource.getKtContractId());
 		
 		if(resource.getOnshorePrice() != null && resource.getOnshorePrice().getOnshorepriceId() != 0){		
 			ResourceTypeDT resourceType = new ResourceTypeDT();
@@ -152,6 +196,22 @@ public class KTContractController {
 			e.printStackTrace();
 		}		
 		return resourceBean;
+	}
+	
+	private String getXmlString(KTContractResourceBean resourceBean, int maxKtContractId) throws TechnicalException{		
+		StringWriter sw = new StringWriter();
+		try {
+			Resource resource = new Resource();
+			resource.setId(maxKtContractId + 1);
+			resource.setMonths(resourceBean.getMonths());
+		    JAXBContext context = JAXBContext.newInstance(Resource.class);
+		    Marshaller marshaller = context.createMarshaller();
+		    marshaller.marshal(resource, sw );
+		    System.out.println(sw.toString());
+		} catch (JAXBException e) {
+		    throw new TechnicalException("XML Conversion error", e);
+		}
+		return sw.toString();		
 	}
 
 

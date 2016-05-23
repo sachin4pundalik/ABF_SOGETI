@@ -4,7 +4,9 @@ import com.sogeti.xmlbeans.Months;
 
 public class KTContractResourceBean {
 	
-private int amContractResourceId;
+	private int ktContractResourceId;	
+	
+	private int contractId;
 	
 	private ResourceTypeDT resourceType;
 	
@@ -22,19 +24,13 @@ private int amContractResourceId;
 			
 	private float price;		
 			
-	private float onShorePrice;
+	private int onShorePrice;
 	
-	private float offShorePrice;
+	private int offShorePrice;
 	
 	private Months months;
 
-	public int getAmContractResourceId() {
-		return amContractResourceId;
-	}
-
-	public void setAmContractResourceId(int amContractResourceId) {
-		this.amContractResourceId = amContractResourceId;
-	}
+	
 
 	public ResourceTypeDT getResourceType() {
 		return resourceType;
@@ -100,28 +96,44 @@ private int amContractResourceId;
 		this.price = price;
 	}
 
-	public float getOnShorePrice() {
+	public int getOnShorePrice() {
 		return onShorePrice;
 	}
-
-	public void setOnShorePrice(float onShorePrice) {
-		this.onShorePrice = onShorePrice;
-	}
-
-	public float getOffShorePrice() {
-		return offShorePrice;
-	}
-
-	public void setOffShorePrice(float offShorePrice) {
-		this.offShorePrice = offShorePrice;
-	}
-
+	
 	public Months getMonths() {
 		return months;
 	}
 
 	public void setMonths(Months months) {
 		this.months = months;
+	}
+
+	public int getKtContractResourceId() {
+		return ktContractResourceId;
+	}
+
+	public void setKtContractResourceId(int ktContractResourceId) {
+		this.ktContractResourceId = ktContractResourceId;
+	}
+
+	public int getOffShorePrice() {
+		return offShorePrice;
+	}
+
+	public void setOffShorePrice(int offShorePrice) {
+		this.offShorePrice = offShorePrice;
+	}
+
+	public void setOnShorePrice(int onShorePrice) {
+		this.onShorePrice = onShorePrice;
+	}
+
+	public int getContractId() {
+		return contractId;
+	}
+
+	public void setContractId(int contractId) {
+		this.contractId = contractId;
 	}
 
 }

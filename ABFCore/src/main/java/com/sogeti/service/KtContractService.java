@@ -17,5 +17,7 @@ public interface KtContractService {
 	public boolean saveKtContractBatch(List<KtContract> ktContracts) throws TechnicalException;
 	
 	public boolean deleteKtContract(KtContract ktContract) throws TechnicalException;
+	
+	public int getMaxAmContractId() throws TechnicalException;
 
 }

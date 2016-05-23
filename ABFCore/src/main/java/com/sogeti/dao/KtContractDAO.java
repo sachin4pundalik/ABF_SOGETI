@@ -20,5 +20,7 @@ public List<KtContract> getKtContractsByContractId(Contract contractId) throws T
 	public Contract getContractById(int contractId);
 	
 	public boolean deleteKtContract(KtContract KtContract) throws TechnicalException;
+	
+	public int getMaxAmContractId() throws TechnicalException;
 
 }

@@ -95,6 +95,17 @@ public class KtContractDaoImpl implements KtContractDAO {
 	      }
 	}
 	
+	public int getMaxAmContractId() throws TechnicalException{
+		int maxKtContractId = 0;		
+		try {
+			Integer intId = (Integer) this.entityManager.createQuery("select max(ktc.ktContractId) from KtContract ktc").getSingleResult();
+			maxKtContractId = intId.intValue();
+		}catch(PersistenceException e){
+			throw new TechnicalException("Technical Exception in KtContractDaoImpl.getMaxAmContractId()", e);
+		}
+		return maxKtContractId;
+	}
+	
 	private void flushAndClear() {
         entityManager.flush();
         entityManager.clear();

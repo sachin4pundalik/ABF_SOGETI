@@ -98,4 +98,8 @@ public class KtContractServiceImpl implements KtContractService {
 		}		
 	}
 
+	public int getMaxAmContractId() throws TechnicalException {
+		return ktContractDao.getMaxAmContractId();
+	}
+
 }
