@@ -30,6 +30,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, DataSetService, MasterData
 	};
 	
 	$scope.newBline = function(){
+		loadMasterData();
 		$scope.currentView ="new";
 		$scope.reset();
 	}
@@ -71,34 +72,41 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, DataSetService, MasterData
 	
 	$scope.edit= function(blineId){
 		$scope.currentView = 'edit';
-		//Fetch resource types
-		MasterDataService.fetchAll('./resourcetype/all')
-		.then(function(response){
-			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				$scope.rTypes = response.data.successResponse;
-			}else{
-				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
-			}
-		}, function(error){
-			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
-			console.log(JSON.stringify(error));
-		});
-		
-		//fetch skills
-		MasterDataService.fetchAll('./skill/all')
-		.then(function(response){
-			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
-				$scope.skills =  response.data.successResponse;
-				$scope.getbline(blineId);
-			}else{
-				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
-			}
-		}, function(error){
-			toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
-			console.log(JSON.stringify(error));
-		});
-		
+		loadMasterData();
+		$scope.getbline(blineId);
 	};
+	
+	function loadMasterData(){
+		//Fetch resource types
+		if(angular.isArray($scope.rTypes) && $scope.rTypes.length ==0 ){
+			MasterDataService.fetchAll('./resourcetype/all')
+			.then(function(response){
+				if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
+					$scope.rTypes = DataSetService.rTypes = response.data.successResponse;
+				}else{
+					toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
+				}
+			}, function(error){
+				toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
+				console.log(JSON.stringify(error));
+			});
+		}
+		//fetch skills
+		if(angular.isArray($scope.skills) && $scope.skills.length ==0 ){
+			MasterDataService.fetchAll('./skill/all')
+			.then(function(response){
+				if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
+					$scope.skills  = DataSetService.skills =  response.data.successResponse;
+				}else{
+					toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
+				}
+			}, function(error){
+				toastr.error("Unable to perform operation!!", ABF_CONSTANTS.FAILURE_HEADER);
+				console.log(JSON.stringify(error));
+			});
+		}
+		
+	}
 	
 	$scope.getbline = function ( blineId ){
 		MasterDataService.fetch('./businessline/find/', blineId)

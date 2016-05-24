@@ -39,8 +39,8 @@ function MasterSkillCtrl_Fn($scope, $location,toastr, DataSetService, MasterData
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getskills()
-				goBack();
-				toastr.info("rTypes updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.SKILLS);
+				$scope.goBack();
+				toastr.info("Skills updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.SKILLS);
 			}else{
 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
 			}
@@ -56,7 +56,7 @@ function MasterSkillCtrl_Fn($scope, $location,toastr, DataSetService, MasterData
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getskills();
-				goBack();
+				$scope.goBack();
 				toastr.info("skills updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.SKILLS);
 			}else{
 				toastr.error(response.data.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
