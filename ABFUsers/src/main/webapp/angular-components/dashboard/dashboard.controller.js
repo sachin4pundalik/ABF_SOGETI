@@ -24,6 +24,12 @@ function dashboardCtrl_fn($scope, dashboardService, toastr, ABF_CONSTANTS, DataS
 		
 	};
 	
+	$scope.editContract= function(contract){
+		DataSetService.currContract = contract;
+		DataSetService.editContract = true;
+		$location.path("/createContract");
+	};
+	
 	$scope.showContract = function(contract){
 		
 		DataSetService.currContract = contract;

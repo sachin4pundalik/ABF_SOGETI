@@ -1,7 +1,7 @@
 webappApp.controller('MasterSkillCtrl', [ '$scope', '$location',
-                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterSkillCtrl_Fn ]);
+                                         'toastr','DataSetService', 'MasterDataService', 'ABF_CONSTANTS', MasterSkillCtrl_Fn ]);
 
-function MasterSkillCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
+function MasterSkillCtrl_Fn($scope, $location,toastr, DataSetService, MasterDataService, ABF_CONSTANTS){
 	
 	$scope.skills = DataSetService.skills;
 	
@@ -14,7 +14,7 @@ function MasterSkillCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	$scope.getskills = function (){
 		var url = './skill/all'; //'./masterdata/skills';
 		
-		masterDataService.fetchAll(url)
+		MasterDataService.fetchAll(url)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.skills = DataSetService.skills = response.data.successResponse;
@@ -35,7 +35,7 @@ function MasterSkillCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	}
 	
 	$scope.update=function(){
-		masterDataService.update('./skill/update', $scope.skill)
+		MasterDataService.update('./skill/update', $scope.skill)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getskills()
@@ -52,7 +52,7 @@ function MasterSkillCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	
 	$scope.save= function(){
 		
-		masterDataService.save('./skill/create', $scope.skill)
+		MasterDataService.save('./skill/create', $scope.skill)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getskills();
@@ -74,7 +74,7 @@ function MasterSkillCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	};
 	
 	$scope.getskill = function ( skillId ){
-		masterDataService.fetch('./skill/find/', skillId)
+		MasterDataService.fetch('./skill/find/', skillId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.skill=response.data.successResponse;
@@ -90,7 +90,7 @@ function MasterSkillCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	}
 	
 	$scope.remove=function(skillId){
-		masterDataService.remove('./skill/delete/', skillId)
+		MasterDataService.remove('./skill/delete/', skillId)
 		.then(function(response){
 			$scope.getskills();
 			toastr.success("Skill is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.SKILLS);

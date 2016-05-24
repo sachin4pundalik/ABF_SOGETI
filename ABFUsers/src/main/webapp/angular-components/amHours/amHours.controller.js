@@ -1,7 +1,7 @@
-webappApp.controller('amHoursCtrl', [ '$scope', '$location', 'masterDataService', 'toastr',
+webappApp.controller('amHoursCtrl', [ '$scope', '$location', 'MasterDataService', 'toastr',
 		'DataSetService', 'Session', 'ABF_CONSTANTS', amHoursCtrl_fn ]);
 
-function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetService, Session, ABF_CONSTANTS) {
+function amHoursCtrl_fn($scope, $location, MasterDataService, toastr, DataSetService, Session, ABF_CONSTANTS) {
 	
 	$scope.contract = DataSetService.currContract;
 	$scope.currentUser = Session.sessionUser;
@@ -65,7 +65,7 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 		try {
 			if (angular.isObject($scope.contract) && $scope.contract.contractId > 0) {
 				let url = "./amhours/fetchcontractamhours/"+$scope.contract.contractId;
-				masterDataService.fetchAll(url).then(
+				MasterDataService.fetchAll(url).then(
 						function(response) {
 							var resData = response.data;
 							if (angular.equals(resData.status,ABF_CONSTANTS.SUCCESS)) {
@@ -109,7 +109,7 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 					}	
 				}
 				
-				masterDataService.fetch(url, '')
+				MasterDataService.fetch(url, '')
 					.then(function(response){
 						var resData = response.data;
 						if(angular.equals(resData.status, ABF_CONSTANTS.SUCCESS)){
@@ -313,7 +313,7 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 	
 	$scope.bookHours = function(){
 		if(angular.isArray($scope.resources) && $scope.resources.length > 0){
-			masterDataService.save('./amhours/create',$scope.resources)
+			MasterDataService.save('./amhours/create',$scope.resources)
 			.then(function(response){
 				var resData =  response.data;
 				
@@ -336,7 +336,7 @@ function amHoursCtrl_fn($scope, $location, masterDataService, toastr, DataSetSer
 		
 		try{
 			if(angular.isNumber(item.amContractResourceId) && item.amContractResourceId>0){
-				masterDataService.remove(item.amContractResourceId)
+				MasterDataService.remove(item.amContractResourceId)
 				.then(function(response){
 					var resData =  response.data;
 					

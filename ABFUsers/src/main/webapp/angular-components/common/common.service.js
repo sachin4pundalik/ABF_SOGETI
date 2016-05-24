@@ -1,10 +1,11 @@
-webappApp.service('DataSetService', [ 'masterDataService', 'toastr',
+webappApp.service('DataSetService', [ 'MasterDataService', 'toastr',
 		'ABF_CONSTANTS', DataSetService_Fn ]);
 
-function DataSetService_Fn(masterDataService, toastr, ABF_CONSTANTS) {
+function DataSetService_Fn(MasterDataService, toastr, ABF_CONSTANTS) {
 
 	var self = this;
 	self.currContract = {};
+	self.editContract= false;
 	
 	self.startContract;
 	self.endContract;
@@ -87,7 +88,7 @@ function DataSetService_Fn(masterDataService, toastr, ABF_CONSTANTS) {
 		if (angular.isArray(self.rTypes) && self.rTypes.length == 0) {
 			// Resource Types
 			let url = './resourcetype/all';
-			masterDataService.fetchAll(url).then(
+			MasterDataService.fetchAll(url).then(
 					function(response) {
 						if (angular.equals(response.data.status,
 								ABF_CONSTANTS.SUCCESS)) {
@@ -102,7 +103,7 @@ function DataSetService_Fn(masterDataService, toastr, ABF_CONSTANTS) {
 		// Bands
 		if (angular.isArray(self.bands) && self.bands.length == 0) {
 			let url = './band/all';
-			masterDataService.fetchAll(url).then(
+			MasterDataService.fetchAll(url).then(
 					function(response) {
 						if (angular.equals(response.data.status,
 								ABF_CONSTANTS.SUCCESS)) {
@@ -116,7 +117,7 @@ function DataSetService_Fn(masterDataService, toastr, ABF_CONSTANTS) {
 	self.fetchBusinessLines = function(url) {
 
 		// Business Lines /resourceType/{resourceTypeId}/skill/{skillId}
-		return masterDataService.fetch(url, '').then(function(response) {
+		return MasterDataService.fetch(url, '').then(function(response) {
 			if (angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)) {
 				self.blines = response.data.successResponse;
 				return self.blines;
@@ -129,7 +130,7 @@ function DataSetService_Fn(masterDataService, toastr, ABF_CONSTANTS) {
 		if (angular.isArray(self.grades) && self.grades.length == 0) {
 			// Grades
 			let url = './grade/all';
-			masterDataService.fetchAll(url).then(
+			MasterDataService.fetchAll(url).then(
 					function(response) {
 						if (angular.equals(response.data.status,
 								ABF_CONSTANTS.SUCCESS)) {
@@ -142,7 +143,7 @@ function DataSetService_Fn(masterDataService, toastr, ABF_CONSTANTS) {
 	self.fetchAllOffshorePrices = function() {
 		// Offshore prices
 		url = './offshorePrice/all';
-		masterDataService.fetchAll(url).then(function(response) {
+		MasterDataService.fetchAll(url).then(function(response) {
 			if (angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)) {
 				self.offshoreprices = response.data.successResponse;
 			}
@@ -153,7 +154,7 @@ function DataSetService_Fn(masterDataService, toastr, ABF_CONSTANTS) {
 	self.fetchAllOnshorePrices = function() {
 		// Onshore prices
 		url = './onshorePrice/all';
-		masterDataService.fetchAll(url).then(function(response) {
+		MasterDataService.fetchAll(url).then(function(response) {
 			if (angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)) {
 				self.onshoreprices = response.data.successResponse;
 
@@ -164,7 +165,7 @@ function DataSetService_Fn(masterDataService, toastr, ABF_CONSTANTS) {
 	self.fetchOnshorePrice = function(params) {
 
 		url = './onshorePrice/all';
-		masterDataService.fetch(url, params).then(function(response) {
+		MasterDataService.fetch(url, params).then(function(response) {
 			if (angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)) {
 				self.onshorePrice = response.data.successResponse;
 
@@ -175,7 +176,7 @@ function DataSetService_Fn(masterDataService, toastr, ABF_CONSTANTS) {
 	self.fetchOffshorePrice = function(params) {
 
 		url = './offshorePrice/all';
-		masterDataService.fetchAll(url).then(function(response) {
+		MasterDataService.fetchAll(url).then(function(response) {
 			if (angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)) {
 				self.offshorePrice = response.data.successResponse;
 			}
@@ -186,7 +187,7 @@ function DataSetService_Fn(masterDataService, toastr, ABF_CONSTANTS) {
 		if (angular.isArray(self.roles) && self.roles.length == 0) {
 			// Roles
 			url = './role/all'; // './json/roles.json';
-			masterDataService.fetchAll(url).then(
+			MasterDataService.fetchAll(url).then(
 					function(response) {
 						if (angular.equals(response.data.status,
 								ABF_CONSTANTS.SUCCESS)) {
@@ -201,7 +202,7 @@ function DataSetService_Fn(masterDataService, toastr, ABF_CONSTANTS) {
 		if (angular.isArray(self.skills) && self.skills.length == 0) {
 			// Skills
 			url = './skill/all';
-			masterDataService.fetchAll(url).then(
+			MasterDataService.fetchAll(url).then(
 					function(response) {
 						if (angular.equals(response.data.status,
 								ABF_CONSTANTS.SUCCESS)) {
@@ -216,7 +217,7 @@ function DataSetService_Fn(masterDataService, toastr, ABF_CONSTANTS) {
 		if (angular.isArray(self.stayTypes) && self.stayTypes.length == 0) {
 			//Stay types
 			url = './stayType/all';
-			masterDataService.fetchAll(url).then(function(response) {
+			MasterDataService.fetchAll(url).then(function(response) {
 				self.stayTypes = response.data.successResponse;
 			});
 		}

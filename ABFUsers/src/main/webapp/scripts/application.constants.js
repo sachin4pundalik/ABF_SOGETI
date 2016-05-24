@@ -41,5 +41,8 @@ angular.module('webappApp').constant("ABF_CONSTANTS", {
 	"STATUS" : "Status(s)",
 	"SKILLS" : "Skill(s)",
 	"BUSINESS_LINES" : "Business Line(s)",
-	"FIXED_HOURS" : "Fixed Hour(s)"
+	"FIXED_HOURS" : "Fixed Hour(s)",
+	
+	"EDIT":"edit",
+	"NEW":"new"
 });

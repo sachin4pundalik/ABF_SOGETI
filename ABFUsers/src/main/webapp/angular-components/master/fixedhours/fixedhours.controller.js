@@ -1,7 +1,7 @@
 webappApp.controller('MasterFixedHourCtrl', [ '$scope', '$location',
-                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterFixedHourCtrl_Fn ]);
+                                         'toastr','DataSetService', 'MasterDataService', 'ABF_CONSTANTS', MasterFixedHourCtrl_Fn ]);
 
-function MasterFixedHourCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
+function MasterFixedHourCtrl_Fn($scope, $location,toastr, DataSetService, MasterDataService, ABF_CONSTANTS){
 	
 	$scope.fixedHours = DataSetService.fixedHours;
 	
@@ -15,7 +15,7 @@ function MasterFixedHourCtrl_Fn($scope, $location,toastr, DataSetService, master
 	$scope.getfixedHours = function (){
 		var url = './fixedCost/all';// './json/fixedHours.json'; //'./masterdata/fixedHours';
 		
-		masterDataService.fetchAll(url)
+		MasterDataService.fetchAll(url)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.fixedHours = DataSetService.fixedHours = response.data.successResponse;
@@ -36,7 +36,7 @@ function MasterFixedHourCtrl_Fn($scope, $location,toastr, DataSetService, master
 	}
 	
 	$scope.update=function(){
-		masterDataService.update('./fixedCost/update', $scope.fHour)
+		MasterDataService.update('./fixedCost/update', $scope.fHour)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getfixedHours();
@@ -53,7 +53,7 @@ function MasterFixedHourCtrl_Fn($scope, $location,toastr, DataSetService, master
 	
 	$scope.save= function(){
 		
-		masterDataService.save('./fixedCost/create', $scope.fHour)
+		MasterDataService.save('./fixedCost/create', $scope.fHour)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getfixedHours();
@@ -74,7 +74,7 @@ function MasterFixedHourCtrl_Fn($scope, $location,toastr, DataSetService, master
 	};
 	
 	$scope.getfHour = function ( fHourId ){
-		masterDataService.fetch('./fixedCost/find/', fHourId)
+		MasterDataService.fetch('./fixedCost/find/', fHourId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.fHour=response.data.successResponse;
@@ -90,7 +90,7 @@ function MasterFixedHourCtrl_Fn($scope, $location,toastr, DataSetService, master
 	}
 	
 	$scope.remove=function(fhourId){
-		masterDataService.remove('./fixedCost/delete/', fhourId)
+		MasterDataService.remove('./fixedCost/delete/', fhourId)
 		.then(function(response){
 			$scope.getfixedHours();
 			toastr.success("Fixed Hours is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.FIXED_HOURS);

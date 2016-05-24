@@ -1,7 +1,7 @@
 webappApp.controller('MasterApprovalStatusCtrl', [ '$scope', '$location',
-                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterApprovalStatusCtrl_Fn ]);
+                                         'toastr','DataSetService', 'MasterDataService', 'ABF_CONSTANTS', MasterApprovalStatusCtrl_Fn ]);
 
-function MasterApprovalStatusCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
+function MasterApprovalStatusCtrl_Fn($scope, $location,toastr, DataSetService, MasterDataService, ABF_CONSTANTS){
 	
 	$scope.statuses = DataSetService.statuses;
 	
@@ -14,7 +14,7 @@ function MasterApprovalStatusCtrl_Fn($scope, $location,toastr, DataSetService, m
 	$scope.currentView='';
 	
 	$scope.getstatuses = function (){
-		masterDataService.fetchAll('./status/all')
+		MasterDataService.fetchAll('./status/all')
 		.then(function(response){
 			$scope.statuses = DataSetService.statuses = response.data.successResponse;
 			toastr.info("statuses updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.STATUS);
@@ -30,7 +30,7 @@ function MasterApprovalStatusCtrl_Fn($scope, $location,toastr, DataSetService, m
 	}
 	
 	$scope.update=function(){
-		masterDataService.update('./grade/update', $scope.grade)
+		MasterDataService.update('./grade/update', $scope.grade)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getstatuses();
@@ -47,7 +47,7 @@ function MasterApprovalStatusCtrl_Fn($scope, $location,toastr, DataSetService, m
 	
 	$scope.save= function(){
 		
-		masterDataService.save('./status/create', $scope.status)
+		MasterDataService.save('./status/create', $scope.status)
 		.then(function(response){
 			$scope.getstatuses();
 			$scope.goBack();
@@ -64,7 +64,7 @@ function MasterApprovalStatusCtrl_Fn($scope, $location,toastr, DataSetService, m
 	};
 	
 	$scope.getstatus = function ( statuseId ){
-		masterDataService.fetch('./status/find/', statuseId)
+		MasterDataService.fetch('./status/find/', statuseId)
 		.then(function(response){
 			$scope.status=response.data.successResponse;
 			toastr.info("statuse is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.STATUS);
@@ -74,7 +74,7 @@ function MasterApprovalStatusCtrl_Fn($scope, $location,toastr, DataSetService, m
 		});
 	}
 	$scope.remove=function(statusId){
-		masterDataService.remove('./status/delete/', statusId)
+		MasterDataService.remove('./status/delete/', statusId)
 		.then(function(response){
 			$scope.getstatuses();
 			toastr.success("Status is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.STATUS);

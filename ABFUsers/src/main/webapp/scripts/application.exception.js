@@ -3,7 +3,7 @@ angular.module('webappApp').factory('$exceptionHandler',
 			return function(exception, cause) {
 				var toastr = $injector.get("toastr");
 				exception.message += ' (caused by "' + cause + '")';
-				toastr.error("exception"+exception, "Exception");
+				toastr.error("Exception:\n"+exception, "Exception");
 			};
 		} ]);
 
@@ -31,7 +31,7 @@ function extendExceptionHandler($delegate, $injector) {
 		 * or log locally. Or throw hard. It is entirely up to you.
 		 * throw exception;
 		 */
-		toastr.error("extendExceptionHandler:: "+exception.msg, errorData);
+		toastr.error("extendExceptionHandler:: "+exception, "Exception");
 	};
 }
 

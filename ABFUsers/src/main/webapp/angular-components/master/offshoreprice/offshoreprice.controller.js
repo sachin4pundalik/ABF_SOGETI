@@ -1,7 +1,7 @@
 webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
-                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', 'Session', MasterOffshorePriceCtrl_Fn ]);
+                                         'toastr','DataSetService', 'MasterDataService', 'ABF_CONSTANTS', 'Session', MasterOffshorePriceCtrl_Fn ]);
 
- function MasterOffshorePriceCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS, Session){
+ function MasterOffshorePriceCtrl_Fn($scope, $location,toastr, DataSetService, MasterDataService, ABF_CONSTANTS, Session){
  	
  	$scope.offshoreprices = DataSetService.getOffshorePrices();
  	$scope.blines = DataSetService.getBusinessLines();
@@ -26,7 +26,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  	$scope.getoffshoreprices = function (){
  		var url = './offshorePrice/all'; //'./json/roles.json';
  		
- 		masterDataService.fetchAll(url)
+ 		MasterDataService.fetchAll(url)
  		.then(function(response){
  			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
  				$scope.offshoreprices = DataSetService.offshoreprices = response.data.successResponse;
@@ -47,7 +47,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  	}
  	
  	$scope.update=function(){
- 		masterDataService.update('./offshorePrice/update', $scope.price)
+ 		MasterDataService.update('./offshorePrice/update', $scope.price)
  		.then(function(response){
  			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
  				
@@ -65,7 +65,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  	
  	$scope.save= function(){
  		
- 		masterDataService.save('./offshorePrice/create', $scope.price)
+ 		MasterDataService.save('./offshorePrice/create', $scope.price)
  		.then(function(response){
  			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
  				
@@ -87,7 +87,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  	};
  	
  	$scope.getprice = function ( priceId ){
- 		masterDataService.fetch('./offshorePrice/find/', priceId)
+ 		MasterDataService.fetch('./offshorePrice/find/', priceId)
  		.then(function(response){
  			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
  				$scope.price=response.data.successResponse;
@@ -102,7 +102,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  		});
  	}
  	$scope.remove=function(priceId){
- 		masterDataService.remove('./offshorePrice/delete/', priceId)
+ 		MasterDataService.remove('./offshorePrice/delete/', priceId)
  		.then(function(response){
  			$scope.getoffshoreprices();
  			toastr.success("Offshore price is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.OFFSHORE_PRICES);
@@ -136,7 +136,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  	
  	$scope.getoffshoreprices();
  	
- 	masterDataService.fetchAll('./businessline/resourceType/2')
+ 	MasterDataService.fetchAll('./businessline/resourceType/2')
  	.then(function(response){
  		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
  			$scope.blines = DataSetService.blines = response.data.successResponse;
@@ -148,7 +148,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  		console.log(JSON.stringify(error));
  	});
  	
- 	masterDataService.fetchAll('./band/all')
+ 	MasterDataService.fetchAll('./band/all')
  	.then(function(response){
  		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
  			$scope.bands = DataSetService.bands = response.data.successResponse;
@@ -160,7 +160,7 @@ webappApp.controller('MasterOffshorePriceCtrl', [ '$scope', '$location',
  		console.log(JSON.stringify(error));
  	});
  	
- 	masterDataService.fetchAll('./stayType/all')
+ 	MasterDataService.fetchAll('./stayType/all')
  	.then(function(response){
  		if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
  			$scope.stayTypes = DataSetService.stayTypes = response.data.successResponse;

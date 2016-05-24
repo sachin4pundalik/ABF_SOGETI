@@ -1,7 +1,7 @@
 
-webappApp.controller('fixedHoursCtrl', ['$scope','$http','fixedHoursService', 'toastr', 'masterDataService', 'ABF_CONSTANTS','DataSetService', fixedHoursCtrl_fn]);
+webappApp.controller('fixedHoursCtrl', ['$scope','$http','fixedHoursService', 'toastr', 'MasterDataService', 'ABF_CONSTANTS','DataSetService', fixedHoursCtrl_fn]);
 
-function fixedHoursCtrl_fn($scope,$http, fixedHoursService, toastr, masterDataService, ABF_CONSTANTS, DataSetService) {
+function fixedHoursCtrl_fn($scope,$http, fixedHoursService, toastr, MasterDataService, ABF_CONSTANTS, DataSetService) {
 	
 	$scope.fixedProjectHoursList = [];
 	$scope.selectedFixedTypes = [];
@@ -34,7 +34,7 @@ function fixedHoursCtrl_fn($scope,$http, fixedHoursService, toastr, masterDataSe
 	$scope.removeItem = function(fixedHour){
 		
 		if(fixedHour.fixedId>0){
-			masterDataService.remove('./fixedContract/', fixedHour.fixedId)
+			MasterDataService.remove('./fixedContract/', fixedHour.fixedId)
 			.then(function(response){
 				if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 					toastr.success("Option \""+fixedHour.typeName+"\" removed!", "Message");
@@ -80,7 +80,7 @@ function fixedHoursCtrl_fn($scope,$http, fixedHoursService, toastr, masterDataSe
 	$scope.getFixedContracts = function(){
 		
 		if(angular.isDefined(DataSetService.currContract.contractId)){
-			masterDataService.fetch('./fixedContract/contract/find/', DataSetService.currContract.contractId)
+			MasterDataService.fetch('./fixedContract/contract/find/', DataSetService.currContract.contractId)
 			.then(function(response){
 				if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 					angular.forEach(response.data.successResponse, function(item){
@@ -98,7 +98,7 @@ function fixedHoursCtrl_fn($scope,$http, fixedHoursService, toastr, masterDataSe
 	
 	$scope.getFixedContracts();
 	
-	masterDataService.fetchAll('./fixedCost/all')
+	MasterDataService.fetchAll('./fixedCost/all')
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.fixedHoursDataSet = DataSetService.fixedHours = response.data.successResponse;

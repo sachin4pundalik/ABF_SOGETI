@@ -1,7 +1,7 @@
 webappApp.controller('MasterUserRoleCtrl', [ '$scope', '$location',
-                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterUserRoleCtrl_Fn ]);
+                                         'toastr','DataSetService', 'MasterDataService', 'ABF_CONSTANTS', MasterUserRoleCtrl_Fn ]);
 
-function MasterUserRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
+function MasterUserRoleCtrl_Fn($scope, $location,toastr, DataSetService, MasterDataService, ABF_CONSTANTS){
 	
 	$scope.userRoles = DataSetService.userRoles;
 	
@@ -12,7 +12,7 @@ function MasterUserRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterD
 	$scope.currentView='';
 	
 	$scope.getuserRoles = function (){
-		masterDataService.fetchAll('./userRole/all')
+		MasterDataService.fetchAll('./userRole/all')
 		.then(function(response){
 			$scope.userRoles = DataSetService.userRoles = response.data.successResponse;
 			toastr.info("User Role loaded from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.USER_ROLES);
@@ -27,7 +27,7 @@ function MasterUserRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterD
 	}
 	
 	$scope.update=function(){
-		masterDataService.update('./userRole/update', $scope.userRole)
+		MasterDataService.update('./userRole/update', $scope.userRole)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getuserRoles();
@@ -44,7 +44,7 @@ function MasterUserRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterD
 	
 	$scope.save= function(){
 		
-		masterDataService.save('./userRole/create', $scope.userRole)
+		MasterDataService.save('./userRole/create', $scope.userRole)
 		.then(function(response){
 			$scope.getuserRoles();
 			$scope.goBack();
@@ -61,7 +61,7 @@ function MasterUserRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterD
 	};
 	
 	$scope.getuserRole = function ( userRoleId ){
-		masterDataService.fetch('./userRole/find/', userRoleId)
+		MasterDataService.fetch('./userRole/find/', userRoleId)
 		.then(function(response){
 			$scope.userRole=response.data.successResponse;
 			toastr.info("User Role is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.USER_ROLES);
@@ -79,7 +79,7 @@ function MasterUserRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterD
 	};
 	
 	$scope.remove=function(userRoleId){
-		masterDataService.remove('./userRole/delete/', userRoleId)
+		MasterDataService.remove('./userRole/delete/', userRoleId)
 		.then(function(response){
 			$scope.getuserRoles();
 			toastr.success("User Role is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.USER_ROLES);

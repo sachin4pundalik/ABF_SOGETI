@@ -1,7 +1,7 @@
 webappApp.controller('MasterRoleCtrl', [ '$scope', '$location',
-                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterRoleCtrl_Fn ]);
+                                         'toastr','DataSetService', 'MasterDataService', 'ABF_CONSTANTS', MasterRoleCtrl_Fn ]);
 
-function MasterRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
+function MasterRoleCtrl_Fn($scope, $location,toastr, DataSetService, MasterDataService, ABF_CONSTANTS){
 	
 	$scope.roles = DataSetService.roles;
 	
@@ -14,7 +14,7 @@ function MasterRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	$scope.getroles = function (){
 		var url = './role/all'; //'./json/roles.json';
 		
-		masterDataService.fetchAll(url)
+		MasterDataService.fetchAll(url)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.roles = DataSetService.roles = response.data.successResponse;
@@ -34,7 +34,7 @@ function MasterRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	}
 	
 	$scope.update=function(){
-		masterDataService.update('./role/update', $scope.role)
+		MasterDataService.update('./role/update', $scope.role)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getroles();
@@ -50,7 +50,7 @@ function MasterRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	}
 	$scope.save= function(){
 		
-		masterDataService.save('./role/create', $scope.role)
+		MasterDataService.save('./role/create', $scope.role)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getroles();
@@ -71,7 +71,7 @@ function MasterRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	};
 	
 	$scope.getrole = function ( roleId ){
-		masterDataService.fetch('./role/find/', roleId)
+		MasterDataService.fetch('./role/find/', roleId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.role= response.data.successResponse;
@@ -86,7 +86,7 @@ function MasterRoleCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 		});
 	}
 	$scope.remove=function(roleId){
-		masterDataService.remove('./role/delete/', roleId)
+		MasterDataService.remove('./role/delete/', roleId)
 		.then(function(response){
 			$scope.getroles();
 			toastr.success("Role is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.ROLES);

@@ -21,11 +21,12 @@
 					<label class="col-lg-2 control-label">Contract</label>
 					<div class="col-xs-2 col-md-2 col-lg-2">
 						Start 
-						<input type="date" min="{{fromDt.minDate | date:'yyyy-MM-dd'}}" max="{{fromDt.maxDate | date:'yyyy-MM-dd'}}" data-ng-model="contract.contractStartDate">
+						<input type="date" min="{{fromDt.minDate | date:'yyyy-MM-dd'}}" max="{{fromDt.maxDate | date:'yyyy-MM-dd'}}" 
+								data-ng-change="startDtChanged()"	value="{{contract.contractStartDate}}" data-ng-model="contract.contractStartDate">
 					</div>
 					<div class="col-xs-2 col-md-2 col-lg-2">
 						End
- 						<input type="date" min="{{toDt.minDate | date:'yyyy-MM-dd'}}" max="{{toDt.maxDate | date:'yyyy-MM-dd'}}" data-ng-model="contract.contractEndDate"/>
+ 						<input type="date" value="{{contract.contractEndDate}}" min="{{toDt.minDate | date:'yyyy-MM-dd'}}" max="{{toDt.maxDate | date:'yyyy-MM-dd'}}" data-ng-model="contract.contractEndDate"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -43,9 +44,9 @@
 						<button type="button" class="btn btn-primary" data-ng-click="goBack()"> 
 							<span class="glyphicon glyphicon-floppy-disk"></span> Back</button>
 						<button type="button" class="btn btn-primary" data-ng-click="createContract()">
-							<span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+							<span class="glyphicon glyphicon-floppy-disk"></span> Save</button><!-- 
 						<button type="button" class="btn btn-warning pull-right" data-ng-click="bookHours()"> 
-							<span class="glyphicon glyphicon-time"></span> KT Hours</button>
+							<span class="glyphicon glyphicon-time"></span> KT Hours</button> -->
 					</div>
 				</div>
 			</fieldset>

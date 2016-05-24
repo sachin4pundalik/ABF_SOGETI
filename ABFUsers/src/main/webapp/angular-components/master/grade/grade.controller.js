@@ -1,7 +1,7 @@
 webappApp.controller('MasterGradeCtrl', [ '$scope', '$location',
-                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterGradeCtrl_Fn ]);
+                                         'toastr','DataSetService', 'MasterDataService', 'ABF_CONSTANTS', MasterGradeCtrl_Fn ]);
 
-function MasterGradeCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
+function MasterGradeCtrl_Fn($scope, $location,toastr, DataSetService, MasterDataService, ABF_CONSTANTS){
 	
 	$scope.grades = DataSetService.grades;
 	
@@ -14,7 +14,7 @@ function MasterGradeCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	$scope.getgrades = function (){
 		var url = './grade/all'; //'./masterdata/grades';
 		
-		masterDataService.fetchAll(url)
+		MasterDataService.fetchAll(url)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.grades = DataSetService.grades = response.data.successResponse;
@@ -35,7 +35,7 @@ function MasterGradeCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	}
 	
 	$scope.update=function(){
-		masterDataService.update('./grade/update', $scope.grade)
+		MasterDataService.update('./grade/update', $scope.grade)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getgrades();
@@ -52,7 +52,7 @@ function MasterGradeCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	
 	$scope.save= function(){
 		
-		masterDataService.save('./grade/create', $scope.grade)
+		MasterDataService.save('./grade/create', $scope.grade)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getgrades();
@@ -73,7 +73,7 @@ function MasterGradeCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	};
 	
 	$scope.getgrade = function ( gradeId ){
-		masterDataService.fetch('./grade/find/', gradeId)
+		MasterDataService.fetch('./grade/find/', gradeId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.grade = response.data.successResponse;
@@ -88,7 +88,7 @@ function MasterGradeCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	}
 	
 	$scope.remove=function(gradeId){
-		masterDataService.remove('./grade/delete/', gradeId)
+		MasterDataService.remove('./grade/delete/', gradeId)
 		.then(function(response){
 			$scope.getgrades();
 			toastr.success("Grade is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.GRADES);

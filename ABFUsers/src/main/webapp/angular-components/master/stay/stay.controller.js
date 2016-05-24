@@ -1,7 +1,7 @@
 webappApp.controller('MasterStayCtrl', [ '$scope', '$location',
-                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterStayCtrl_Fn ]);
+                                         'toastr','DataSetService', 'MasterDataService', 'ABF_CONSTANTS', MasterStayCtrl_Fn ]);
 
-function MasterStayCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
+function MasterStayCtrl_Fn($scope, $location,toastr, DataSetService, MasterDataService, ABF_CONSTANTS){
 	
 	$scope.stayTypes = DataSetService.stayTypes;
 	
@@ -12,7 +12,7 @@ function MasterStayCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	$scope.currentView='';
 	
 	$scope.getstayTypes = function (){
-		masterDataService.fetchAll('./stayType/all')
+		MasterDataService.fetchAll('./stayType/all')
 		.then(function(response){
 			$scope.stayTypes = DataSetService.stayTypes = response.data.successResponse;
 			toastr.info("Stay Types updated from server.", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.STAY_TYPE);
@@ -27,7 +27,7 @@ function MasterStayCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	}
 	
 	$scope.update=function(){
-		masterDataService.update('./stayType/update', $scope.stay)
+		MasterDataService.update('./stayType/update', $scope.stay)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getstayTypes();
@@ -44,7 +44,7 @@ function MasterStayCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	
 	$scope.save= function(){
 		
-		masterDataService.save('./stayType/create', $scope.stay)
+		MasterDataService.save('./stayType/create', $scope.stay)
 		.then(function(response){
 			$scope.getstayTypes();
 			$scope.goBack();
@@ -61,7 +61,7 @@ function MasterStayCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	};
 	
 	$scope.getstay = function ( stayId ){
-		masterDataService.fetch('./stayType/find/', stayId)
+		MasterDataService.fetch('./stayType/find/', stayId)
 		.then(function(response){
 			$scope.stay=response.data.successResponse;
 			toastr.info("Band is loaded!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.STAY_TYPE);
@@ -79,7 +79,7 @@ function MasterStayCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	};
 	
 	$scope.remove=function(stayTypeId){
-		masterDataService.remove('./stayType/delete/', stayTypeId)
+		MasterDataService.remove('./stayType/delete/', stayTypeId)
 		.then(function(response){
 			$scope.getstayTypes();
 			toastr.success("Stay Type is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.STAY_TYPE);

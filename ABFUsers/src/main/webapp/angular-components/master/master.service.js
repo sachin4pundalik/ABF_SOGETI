@@ -1,4 +1,4 @@
-webappApp.service('masterDataService', ['$http', MasterDataService_fn]);
+webappApp.service('MasterDataService', ['$http', MasterDataService_fn]);
 
 function MasterDataService_fn($http){
 	

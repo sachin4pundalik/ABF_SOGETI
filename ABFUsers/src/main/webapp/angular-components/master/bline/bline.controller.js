@@ -1,7 +1,7 @@
 webappApp.controller('MasterBlineCtrl', [ '$scope', '$location',
-                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterBlineCtrl_Fn ]);
+                                         'toastr','DataSetService', 'MasterDataService', 'ABF_CONSTANTS', MasterBlineCtrl_Fn ]);
 
-function MasterBlineCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
+function MasterBlineCtrl_Fn($scope, $location,toastr, DataSetService, MasterDataService, ABF_CONSTANTS){
 	
 	$scope.blines = DataSetService.getBusinessLines();
 	$scope.rTypes = DataSetService.getResourceTypes();
@@ -14,7 +14,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	$scope.getblines = function (){
 		var url = './businessline/all'; //'./json/roles.json';
 		
-		masterDataService.fetchAll(url)
+		MasterDataService.fetchAll(url)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.blines = DataSetService.blines = response.data.successResponse;
@@ -35,7 +35,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	}
 	
 	$scope.update=function(){
-		masterDataService.update('./businessline/update', $scope.bline)
+		MasterDataService.update('./businessline/update', $scope.bline)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				
@@ -53,7 +53,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	
 	$scope.save= function(){
 		
-		masterDataService.save('./businessline/create', $scope.bline)
+		MasterDataService.save('./businessline/create', $scope.bline)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				
@@ -72,7 +72,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	$scope.edit= function(blineId){
 		$scope.currentView = 'edit';
 		//Fetch resource types
-		masterDataService.fetchAll('./resourcetype/all')
+		MasterDataService.fetchAll('./resourcetype/all')
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.rTypes = response.data.successResponse;
@@ -85,7 +85,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 		});
 		
 		//fetch skills
-		masterDataService.fetchAll('./skill/all')
+		MasterDataService.fetchAll('./skill/all')
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.skills =  response.data.successResponse;
@@ -101,7 +101,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	};
 	
 	$scope.getbline = function ( blineId ){
-		masterDataService.fetch('./businessline/find/', blineId)
+		MasterDataService.fetch('./businessline/find/', blineId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.bline=response.data.successResponse;
@@ -116,7 +116,7 @@ function MasterBlineCtrl_Fn($scope, $location,toastr, DataSetService, masterData
 	}
 	
 	$scope.remove=function(blineId){
-		masterDataService.remove('./businessline/delete/', blineId)
+		MasterDataService.remove('./businessline/delete/', blineId)
 		.then(function(response){
 			$scope.getblines();
 			toastr.success("Business line is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BUSINESS_LINES);

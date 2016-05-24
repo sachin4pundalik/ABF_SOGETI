@@ -1,7 +1,7 @@
 webappApp.controller('MasterBandCtrl', [ '$scope', '$location',
-                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterBandCtrl_Fn ]);
+                                         'toastr','DataSetService', 'MasterDataService', 'ABF_CONSTANTS', MasterBandCtrl_Fn ]);
 
-function MasterBandCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
+function MasterBandCtrl_Fn($scope, $location,toastr, DataSetService, MasterDataService, ABF_CONSTANTS){
 	
 	$scope.bands = DataSetService.bands;
 	
@@ -14,7 +14,7 @@ function MasterBandCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	$scope.getBands = function (){
 		var url = './band/all';// './json/bands.json'; //'./masterdata/bands';
 		
-		masterDataService.fetchAll(url)
+		MasterDataService.fetchAll(url)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.bands = DataSetService.bands = response.data.successResponse;
@@ -33,7 +33,7 @@ function MasterBandCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	}
 	
 	$scope.update=function(){
-		masterDataService.update('./band/update', $scope.band)
+		MasterDataService.update('./band/update', $scope.band)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getBands();
@@ -50,7 +50,7 @@ function MasterBandCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	
 	$scope.save= function(){
 		
-		masterDataService.save('./band/create', $scope.band)
+		MasterDataService.save('./band/create', $scope.band)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getBands();
@@ -71,7 +71,7 @@ function MasterBandCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	};
 	
 	$scope.getBand = function ( bandId ){
-		masterDataService.fetch('./band/find/', bandId)
+		MasterDataService.fetch('./band/find/', bandId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.band=response.data.successResponse;
@@ -87,7 +87,7 @@ function MasterBandCtrl_Fn($scope, $location,toastr, DataSetService, masterDataS
 	}
 	
 	$scope.remove=function(bandId){
-		masterDataService.remove('./band/delete/', bandId)
+		MasterDataService.remove('./band/delete/', bandId)
 		.then(function(response){
 			$scope.getBands();
 			toastr.success("Band is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.BANDS);

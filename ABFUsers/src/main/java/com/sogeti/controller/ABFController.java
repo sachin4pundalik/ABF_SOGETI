@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -142,7 +143,10 @@ public class ABFController {
 		try
 		{
 			com.sogeti.db.models.Contract contractData = new com.sogeti.db.models.Contract();
-			BeanUtils.copyProperties(contract, contractData);			
+			BeanUtils.copyProperties(contract, contractData);	
+			// Set the default status to 1. later change the logic
+			Status initialStatus = statusService.find(1);
+			contractData.setStatus(initialStatus);
 			contractManager.updateContract(contractData);
 			response.setSuccessResponse(contractData);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);

@@ -1,7 +1,7 @@
 webappApp.controller('MasterResourceTypeCtrl', [ '$scope', '$location',
-                                         'toastr','DataSetService', 'masterDataService', 'ABF_CONSTANTS', MasterResourceTypeCtrl_Fn ]);
+                                         'toastr','DataSetService', 'MasterDataService', 'ABF_CONSTANTS', MasterResourceTypeCtrl_Fn ]);
 
-function MasterResourceTypeCtrl_Fn($scope, $location,toastr, DataSetService, masterDataService, ABF_CONSTANTS){
+function MasterResourceTypeCtrl_Fn($scope, $location,toastr, DataSetService, MasterDataService, ABF_CONSTANTS){
 	
 	$scope.rTypes = DataSetService.rTypes;
 	
@@ -14,7 +14,7 @@ function MasterResourceTypeCtrl_Fn($scope, $location,toastr, DataSetService, mas
 	$scope.getrTypes = function (){
 		var url = './resourcetype/all'; //'./json/resourceTypes.json'; 
 		
-		masterDataService.fetchAll(url)
+		MasterDataService.fetchAll(url)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.rTypes = DataSetService.rTypes = response.data.successResponse;
@@ -35,7 +35,7 @@ function MasterResourceTypeCtrl_Fn($scope, $location,toastr, DataSetService, mas
 	}
 	
 	$scope.update=function(){
-		masterDataService.update('./resourcetype/update', $scope.rType)
+		MasterDataService.update('./resourcetype/update', $scope.rType)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.goBack();
@@ -52,7 +52,7 @@ function MasterResourceTypeCtrl_Fn($scope, $location,toastr, DataSetService, mas
 	
 	$scope.save= function(){
 		
-		masterDataService.save('./resourcetype/create', $scope.rType)
+		MasterDataService.save('./resourcetype/create', $scope.rType)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.goBack();
@@ -73,7 +73,7 @@ function MasterResourceTypeCtrl_Fn($scope, $location,toastr, DataSetService, mas
 	};
 	
 	$scope.getrType = function ( rTypeId ){
-		masterDataService.fetch('./resourcetype/find/', rTypeId)
+		MasterDataService.fetch('./resourcetype/find/', rTypeId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.rType=response.data.successResponse;
@@ -90,7 +90,7 @@ function MasterResourceTypeCtrl_Fn($scope, $location,toastr, DataSetService, mas
 	
 	$scope.remove=function(rTypeId){
 		
-		masterDataService.remove('./resourcetype/delete/',rTypeId)
+		MasterDataService.remove('./resourcetype/delete/',rTypeId)
 		.then(function(response){
 			if(angular.equals(response.data.status, ABF_CONSTANTS.SUCCESS)){
 				$scope.getrTypes();
@@ -106,7 +106,7 @@ function MasterResourceTypeCtrl_Fn($scope, $location,toastr, DataSetService, mas
 	}
 	
 	$scope.remove=function(rTypeId){
-		masterDataService.remove('./resourcetype/delete/', rTypeId)
+		MasterDataService.remove('./resourcetype/delete/', rTypeId)
 		.then(function(response){
 			$scope.getrTypes();
 			toastr.success("Resource Type is deleted!!", ABF_CONSTANTS.MASTER_DATA+ ABF_CONSTANTS.RESOURCE_TYPES);
