@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
 import com.sogeti.db.models.AmContract;
@@ -111,7 +112,7 @@ public class AMContractController {
 		return response;		
 	}
 	
-	@RequestMapping( value = "/removeamresource/{amContractId}", method = RequestMethod.GET)
+	@RequestMapping( value = "/removeamresource/{amContractId}", method = RequestMethod.DELETE)
 	public ABFResponse deleteAmContractResource(@PathVariable("amContractId") String amContractId){
 		ABFResponse response = new ABFResponse();
 		try{
