@@ -18,6 +18,6 @@ public interface KtContractService {
 	
 	public boolean deleteKtContract(KtContract ktContract) throws TechnicalException;
 	
-	public int getMaxAmContractId() throws TechnicalException;
+	public int getMaxKtContractId() throws TechnicalException;
 
 }
