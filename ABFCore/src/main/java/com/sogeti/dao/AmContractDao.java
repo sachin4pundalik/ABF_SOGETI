@@ -12,7 +12,7 @@ public interface AmContractDao {
 	
 	public AmContract getAmContractById(int amId) throws TechnicalException;
 	
-	public boolean saveAmContract(AmContract AmContract) throws TechnicalException;
+	public AmContract saveAmContract(AmContract AmContract) throws TechnicalException;
 	
 	public boolean saveAmContractBatch(List<AmContract> AmContracts) throws TechnicalException;
 	

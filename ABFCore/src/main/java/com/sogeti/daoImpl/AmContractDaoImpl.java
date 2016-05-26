@@ -65,17 +65,16 @@ public class AmContractDaoImpl implements AmContractDao {
 	      }
 	}
 
-	public boolean saveAmContract(AmContract AmContract) throws TechnicalException{
-		boolean result = false;
+	public AmContract saveAmContract(AmContract AmContract) throws TechnicalException{
+		AmContract savedAmContract = null;
         try {
-            entityManager.merge(AmContract);
+        	savedAmContract = entityManager.merge(AmContract);
             flushAndClear();
-            result = true;
         } catch (PersistenceException e) {
             throw new TechnicalException("ERROR WHILE SAVING AM CONTRACT RESOURCE",e);
         }
 
-        return result;
+        return savedAmContract;
 
 	}
 

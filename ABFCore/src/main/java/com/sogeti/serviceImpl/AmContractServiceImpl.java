@@ -32,7 +32,7 @@ public class AmContractServiceImpl implements AmContractService {
 		return amContractDao.getAmContractById(amId);
 	}
 
-	public boolean saveAmContract(AmContract AmContract) throws TechnicalException {
+	public AmContract saveAmContract(AmContract AmContract) throws TechnicalException {
 		return amContractDao.saveAmContract(AmContract);
 	}
 

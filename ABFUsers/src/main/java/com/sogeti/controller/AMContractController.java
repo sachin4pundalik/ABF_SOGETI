@@ -77,7 +77,7 @@ public class AMContractController {
 				amContract.setOffshorePrice(offShorePrice);
 				amContract.setOnshorePrice(onshorePrice);
 				amContract.setDetailsXml(resourceXml);			
-				amContractService.saveAmContract(amContract);
+				amContract = amContractService.saveAmContract(amContract);
 				
 				response.setStatus(ABFConstants.STATUS_SUCCESS);
 				response.setSuccessResponse(ABFConstants.STATUS_SUCCESS);
