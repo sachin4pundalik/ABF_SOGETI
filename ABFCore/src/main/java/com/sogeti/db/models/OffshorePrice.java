@@ -1,7 +1,11 @@
 package com.sogeti.db.models;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -24,11 +28,11 @@ public class OffshorePrice implements Serializable {
 
 	@Column(length=500)
 	private String description;
-
+    
 	@Column(name="last_updated_by")
 	private Integer lastUpdatedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
+	
+  	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="last_updated_datetime")
 	private Date lastUpdatedDatetime;
 
@@ -36,6 +40,7 @@ public class OffshorePrice implements Serializable {
 	private BigDecimal price;
 
 	//bi-directional many-to-one association to AmContract
+	@JsonIgnore
 	@OneToMany(mappedBy="offshorePrice")
 	private List<AmContract> amContracts;
 
@@ -49,6 +54,7 @@ public class OffshorePrice implements Serializable {
 	private Band band;
 
 	//bi-directional many-to-one association to BusinessLine
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="businessline_id")
 	private BusinessLine businessLine;
