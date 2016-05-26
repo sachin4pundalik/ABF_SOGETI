@@ -7,20 +7,20 @@ function ktHoursService_fn($http) {
 	ktHoursService.hours= [];
 	ktHoursService.monthlyHours= [];
 	
-	ktHoursService.setktHours= function(hoursItems){
+	ktHoursService.setKtHours= function(hoursItems){
 		ktHoursService.hours = hoursItems;
-		ktHoursService.setKtMonthlyHours();
+		ktHoursService.setKtMontlyHours();
 	};
 	
-	ktHoursService.getktHours= function(hoursItems){
+	ktHoursService.getKtHours= function(hoursItems){
 		return ktHoursService.hours;
 	};
 	
-	ktHoursService.getKtMonthlyHours= function(){
+	ktHoursService.getKtMontlyHours= function(){
 		return ktHoursService.monthlyHours;
 	};
 	
-	ktHoursService.setKtMonthlyHours= function(){
+	ktHoursService.setKtMontlyHours= function(){
 		ktHoursService.monthlyHours= [];
 		for( var i =0; i< ktHoursService.hours.length; i++){
 			var hour = ktHoursService.hours[i];
@@ -33,4 +33,21 @@ function ktHoursService_fn($http) {
 			ktHoursService.monthlyHours.push(monthly);
 		};
 	};
+	
+	ktHoursService.getProjectType = function(){
+		
+	}
+	
+	ktHoursService.getProjectRole = function(projType){
+		
+	} 
+	
+	ktHoursService.getGrade = function(projType, projRole){
+		
+	}
+	
+	ktHoursService.getPrice = function (projType, projRole, grade){
+		
+	}
+	
 }

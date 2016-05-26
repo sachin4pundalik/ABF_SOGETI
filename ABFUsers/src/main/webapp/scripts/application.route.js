@@ -72,7 +72,7 @@ angular.module('webappApp')
 									.when(
 											'/kt',
 											{
-												templateUrl : 'angular-components/ktHours/ktHours.html',
+												templateUrl : 'angular-components/ktHours/resources.html',
 												controller : 'ktHoursCtrl',
 												resolve: {
 												    auth: ["$q", "AuthService", function($q, AuthService) {

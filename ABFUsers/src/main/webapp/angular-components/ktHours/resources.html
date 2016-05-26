@@ -1,0 +1,205 @@
+<contract-header contract="contract" collapse="false"></contract-header>
+<div class="row">
+	<div class="col-sm-12 col-md-12 col-lg-12">
+		<div class="page-header">
+			<h4>KT Hours</h4>
+		</div>
+	</div>
+</div>
+<div class="animate-switch-container" data-ng-switch data-on="views">
+	<div class="animate-switch" data-ng-switch-when="showMonthly">	
+		<!-- Monthly price section start -->
+		<monthly-view></monthly-view>
+	</div>
+	<div class="animate-switch" data-ng-switch-when="showWeekly">
+		<!-- Monthly price section end -->
+		<div class="row" data-ng-include="week.weeklyTmpl"></div>
+	</div>
+	<div class="animate-switch" data-ng-switch-default>
+		<div class="row"
+			data-ng-init="initDataSet()">
+			<div class="col-sm-4 col-md-4 col-lg-4">
+				<div class="well bs-component">
+					<form class="form-horizontal" name="NewResourceForm">
+						<fieldset>
+							<legend>Add Resource</legend>
+							<div class="form-group">
+								<label for="projecttype" class="col-lg-2 control-label">Resource</label>
+								<div class="col-lg-10">
+									<select data-ng-model="resource.resourceType"
+										class="form-control" required="required"
+										data-ng-change="resourceChange()">
+										<option data-ng-repeat="option in rTypes" value="{{option}}">{{option.resourceType}}</option>
+									</select>
+								</div>
+							</div>
+							<div data-ng-show="resource.resourceType.indexOf('Onshore')>-1">
+								<div class="form-group">
+									<label for="businessline" class="col-lg-2 control-label">Business
+										Line</label>
+									<div class="col-lg-10">
+										<select data-ng-model="resource.businessLine"
+											class="form-control" required="required"
+											data-ng-mouseover="blineMouseOverHandler()">
+											<option data-ng-repeat="option in blines" value="{{option}}">{{option.businesslineName}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="role" class="col-lg-2 control-label">Role</label>
+									<div class="col-lg-10">
+										<select data-ng-model="resource.role" class="form-control"
+											required="required">
+											<option data-ng-repeat="option in roles" value="{{option}}">{{option.roleType}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="grade" class="col-lg-2 control-label">Grade</label>
+									<div class="col-lg-10">
+										<select data-ng-model="resource.grade" class="form-control"
+											required="required">
+											<option data-ng-repeat="option in grades" value="{{option}}">{{option.gradeType}}</option>
+										</select>
+									</div>
+								</div>
+								
+							</div>
+							<div data-ng-show="resource.resourceType.indexOf('Offshore')>-1">
+								<div class="form-group">
+									<label for="Skill" class="col-lg-2 control-label">Skill</label>
+									<div class="col-lg-10">
+										<select data-ng-model="resource.skill" class="form-control"
+											required="required" data-ng-change="skillChange()">
+											<option data-ng-repeat="option in skills" value="{{option}}">{{option.skillName}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="businessline" class="col-lg-2 control-label">Business
+										Line</label>
+									<div class="col-lg-10">
+										<select data-ng-model="resource.businessLine"
+											class="form-control" required="required"
+											data-ng-mouseover="blineMouseOverHandler()">
+											<option data-ng-repeat="option in blines" value="{{option}}">{{option.businesslineName}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="band" class="col-lg-2 control-label">Band</label>
+									<div class="col-lg-10">
+										<select data-ng-model="resource.band" class="form-control"
+											required="required">
+											<option data-ng-repeat="option in bands" value="{{option}}">{{option.bandName}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="stay" class="col-lg-2 control-label">Stay</label>
+									<div class="col-lg-10">
+										<select data-ng-model="resource.stayType" class="form-control"
+											required="required">
+											<option data-ng-repeat="option in stays" value="{{option}}">{{option.stayType}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<button data-ng-click="getPrice()" 
+									class="col-lg-2 control-label btn btn-sm btn-warning">Fetch Price <span class="glyphicon glyphicon-hand-down"></span></button>
+								<div class="col-lg-10">
+									<input type="text" readonly="readonly" maxlength="4" required="required"
+										pattern="\d{1,4}" data-ng-model="resource.price"
+										class="form-control" />
+									
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-lg-10 col-lg-offset-2">
+									<button type="reset" class="btn btn-default btn-sm">Reset</button>
+									<button type="button" class="btn btn-primary btn-sm"
+										data-ng-disable="!NewResourceForm.$invalid && resource.price<0"
+										data-ng-click="newResource()">Add</button>
+									<button type="button" class="btn btn-info btn-sm"
+										data-ng-click="goBack()">Contract(s)</button>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<!--  Table section -->
+			<div class="col-sm-8 col-md-8 col-lg-8">
+				<div class="well bs-component">
+					<table class="table table-bordered table-hover table-condensed">
+						<caption><h5>Offshore resource(s)</h5></caption>
+						<thead>
+							<tr>
+								<th>Resource</th>
+								<th>Skill</th>
+								<th>Business Line</th>
+								<th>Band</th>
+								<th>Stay</th>
+								<th>Price</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody data-ng-repeat="resource in resources" class="fade active in">
+							<tr
+								data-ng-show="resource.resourceType.resourceType==='Offshore'">
+								<td>{{resource.resourceType.resourceType}}</td>
+								<td>{{resource.skill.skillName}}</td>
+								<td>{{resource.businessLine.businesslineName}}</td>
+								<td>{{resource.band.bandName}}</td>
+								<td>{{resource.stayType.stayType}}</td>
+								<td>{{resource.price}}</td>
+								<td>
+									<button class="btn btn-block btn-danger btn-sm" type="button">
+										<span class="glyphicon glyphicon-trash"
+											data-ng-click="deleteResource(resource)"></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="well bs-component">
+					<table class="table table-bordered table-hover table-condensed">
+						<caption><h5>Onshore resource(s)</h5></caption>
+						<thead>
+							<tr>
+								<th>Resource</th>
+								<th>Business Line</th>
+								<th>Role</th>
+								<th>Grade</th>
+								<th>Price</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody data-ng-repeat="resource in resources" class="fade active in">
+							<tr data-ng-show="resource.resourceType.resourceType==='Onshore'">
+								<td>{{resource.resourceType.resourceType}}</td>
+								<td>{{resource.businessLine.businesslineName}}</td>
+								<td>{{resource.role.roleType}}</td>
+								<td>{{resource.grade.gradeType}}</td>
+								<td>{{resource.price}}</td>
+								<td>
+									<button class="btn btn-block btn-danger btn-sm" type="button">
+										<span class="glyphicon glyphicon-trash"
+											data-ng-click="deleteResource(resource)"></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<button class="btn btn-success btn-sm pull-right"
+						data-ng-show="resources.length>0"
+						data-ng-click="manageView('showMonthly')">
+						Fill Hours <span class="glyphicon glyphicon-circle-arrow-right"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

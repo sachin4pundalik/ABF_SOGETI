@@ -19,7 +19,7 @@ import com.sogeti.db.models.KtContract;
 @Repository("ktContractDao")
 @Transactional
 public class KtContractDaoImpl implements KtContractDAO {
-	
+
 	@PersistenceContext
 	private EntityManager entityManager;
 	/**
@@ -32,39 +32,39 @@ public class KtContractDaoImpl implements KtContractDAO {
 
 	public List<KtContract> getKtContractsByContractId(Contract contractId) throws TechnicalException {
 		try
-	      {
-	         Query query = this.entityManager.createQuery("select ktc from KtContract ktc where ktc.contract = :contract");
-	         query.setParameter("contract", contractId);
-	         return query.getResultList();
-	      }
-	      catch (PersistenceException e)
-	      {
-	         throw new TechnicalException("Technical Exception in KtContractDaoImpl.getKtContractsByContractId()", e);
-	      }
+		{
+			Query query = this.entityManager.createQuery("select ktc from KtContract ktc where ktc.contract = :contract");
+			query.setParameter("contract", contractId);
+			return query.getResultList();
+		}
+		catch (PersistenceException e)
+		{
+			throw new TechnicalException("Technical Exception in KtContractDaoImpl.getKtContractsByContractId()", e);
+		}
 	}
 
 	public KtContract getKtContractById(int ktId) throws TechnicalException {
 		try
-	      {
-	         return this.entityManager.find(KtContract.class, ktId);
-	      }
-	      catch (PersistenceException e)
-	      {
-	         throw new TechnicalException("Technical Exception in KtContractDaoImpl.getKtContractById()", e);
-	      }
+		{
+			return this.entityManager.find(KtContract.class, ktId);
+		}
+		catch (PersistenceException e)
+		{
+			throw new TechnicalException("Technical Exception in KtContractDaoImpl.getKtContractById()", e);
+		}
 	}
 
 	public boolean saveKtContract(KtContract ktContract) throws TechnicalException {
 		boolean result = false;
-        try {
-            entityManager.merge(ktContract);
-            flushAndClear();
-            result = true;
-        } catch (PersistenceException e) {
-            throw new TechnicalException("ERROR WHILE SAVING AM CONTRACT RESOURCE",e);
-        }
+		try {
+			entityManager.merge(ktContract);
+			flushAndClear();
+			result = true;
+		} catch (PersistenceException e) {
+			throw new TechnicalException("ERROR WHILE SAVING AM CONTRACT RESOURCE",e);
+		}
 
-        return result;
+		return result;
 	}
 
 	public boolean saveKtContractBatch(List<KtContract> ktContracts) throws TechnicalException {
@@ -74,41 +74,45 @@ public class KtContractDaoImpl implements KtContractDAO {
 
 	public Contract getContractById(int contractId) {
 		try
-	      {
-	         return entityManager.find(Contract.class, contractId);
-	      }
-	      catch (PersistenceException e)
-	      {
-	         throw new TechnicalException("Technical Exception in AmContractDaoImpl.getContractById()", e);
-	      }
+		{
+			return entityManager.find(Contract.class, contractId);
+		}
+		catch (PersistenceException e)
+		{
+			throw new TechnicalException("Technical Exception in AmContractDaoImpl.getContractById()", e);
+		}
 	}
-	
+
 	public boolean deleteKtContract(KtContract KtContract) throws TechnicalException{
 		try
-	      {
-	         this.entityManager.remove(KtContract);
-	         return true;
-	      }
-	      catch (PersistenceException e)
-	      {
-	         throw new TechnicalException("Technical Exception in KtContractDaoImpl.deleteKtContract()", e);
-	      }
+		{
+			this.entityManager.remove(KtContract);
+			return true;
+		}
+		catch (PersistenceException e)
+		{
+			throw new TechnicalException("Technical Exception in KtContractDaoImpl.deleteKtContract()", e);
+		}
 	}
-	
-	public int getMaxAmContractId() throws TechnicalException{
+
+	public int getMaxKtContractId() throws TechnicalException{
 		int maxKtContractId = 0;		
 		try {
 			Integer intId = (Integer) this.entityManager.createQuery("select max(ktc.ktContractId) from KtContract ktc").getSingleResult();
-			maxKtContractId = intId.intValue();
+			if(intId == null){
+				maxKtContractId = 1;
+			}else{
+				maxKtContractId = intId.intValue();
+			}			
 		}catch(PersistenceException e){
 			throw new TechnicalException("Technical Exception in KtContractDaoImpl.getMaxAmContractId()", e);
 		}
 		return maxKtContractId;
 	}
-	
+
 	private void flushAndClear() {
-        entityManager.flush();
-        entityManager.clear();
-    }
+		entityManager.flush();
+		entityManager.clear();
+	}
 
 }

@@ -1,0 +1,86 @@
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<h3 class="panel-title">Monthly billing view</h3>
+	</div>
+	<div class="panel-body" style="overflow:auto;">
+	<table class="table table-bordered table-hover table-condensed">
+		<tr>
+			<td><strong>Resource</strong></td>
+			<td >
+				<table class="table table-condensed">
+					<tbody>
+						<tr>
+							<td data-ng-repeat="header in headerMonths">
+								<input type="text" class="btn btn-sm btn-default" readonly="readonly"
+									maxlength="5" size="5" data-ng-click="openWeek(header)"
+									value="{{header}}" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+		<tr data-ng-repeat="resource in resources">
+			<td data-ng-if="resource.resourceType.resourceType=='Offshore'">
+				<input type="text" readonly="readonly" data-tooltip-placement="auto" data-tooltip-template="'tooltip.html'"
+				 
+				value="{{resource.resourceType.resourceType}} => Price: {{resource.price | currency}}">
+			</td>
+			<td data-ng-if="resource.resourceType.resourceType=='Onshore'">
+				<input type="text" readonly="readonly" data-tooltip-placement="auto" data-tooltip-template="'tooltip.html'"
+				value="{{resource.resourceType.resourceType}} => Price: {{resource.price | currency}}">
+			</td>
+			<td>
+				<table class="table table-bordered table-hover table-condensed" >
+						<tbody>
+							<tr>
+								<td data-ng-repeat="month in resource.months.month">
+									<button class="btn btn-sm btn-default" data-ng-click="openWeek(month.name)">{{month.total | currency}}</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+			</td>
+		</tr>
+	</table>
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-lg-12">
+				<button data-ng-click="manageView('')">
+					Back <span class="glyphicon glyphicon-circle-arrow-left"></span>
+				</button>
+				<button class="btn btn-warning pull-right"
+					data-ng-click="bookHours()">
+					Book Hours <span class="glyphicon glyphicon-floppy-disk"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/ng-template" id="tooltip.html">
+<table>
+<tr>
+	<td>Resource Type: {{resource.resourceType.resourceType}}</td>
+</tr>
+<tr>
+	<td>Business Line: {{resource.businessLine.businesslineName}}</td>
+</tr>
+<tr ng-show="resource.band.bandName">
+	<td>Band: {{resource.band.bandName}}</td>
+</tr>
+<tr ng-show="resource.stayType.stayType">
+	<td>Stay: {{resource.stayType.stayType}}</td>
+</tr>
+<tr ng-show="resource.skill.skillName">
+	<td>Skill: {{resource.skill.skillName}}</td>
+</tr>
+<tr ng-show="resource.role.roleType">
+	<td>Role: {{resource.role.roleType}}</td>
+</tr>
+<tr ng-show="resource.grade.gradeType">
+	<td>Grade: {{resource.grade.gradeType}}</td>
+</tr>
+<tr>
+	<td>Price: {{resource.price}}</td>
+</tr>
+</table>
+</script>
