@@ -43,6 +43,7 @@ public class OnshorePrice implements Serializable {
 	private BigDecimal price;
 
 	//bi-directional many-to-one association to AmContract
+	@JsonIgnore
 	@OneToMany(mappedBy="onshorePrice")
 	private List<AmContract> amContracts;
 
