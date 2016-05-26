@@ -1,7 +1,13 @@
 package com.sogeti.db.models;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +17,7 @@ import java.util.List;
  * The persistent class for the onshore_price database table.
  * 
  */
+
 @Entity
 @Table(name="onshore_price")
 @NamedQuery(name="OnshorePrice.findAll", query="SELECT o FROM OnshorePrice o")
@@ -24,7 +31,7 @@ public class OnshorePrice implements Serializable {
 
 	@Column(length=500)
 	private String description;
-
+    
 	@Column(name="last_updated_by")
 	private Integer lastUpdatedBy;
 
@@ -44,6 +51,7 @@ public class OnshorePrice implements Serializable {
 	private List<KtContract> ktContracts;
 
 	//bi-directional many-to-one association to BusinessLine
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="businessline_id")
 	private BusinessLine businessLine;
