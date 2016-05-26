@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -73,6 +72,16 @@ public class AmContractDaoImplTest extends TestCase{
 		amContract.setOnshorePrice(null);
 		AmContract savedAmContract = amContractDao.saveAmContract(amContract);
 		assertNotNull(savedAmContract);
+	}
+	
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testGetAmContractById(){
+		testSaveAmContract();
+		AmContract amContract = amContractDao.getAmContractById(1);
+		assertNotNull(amContract);
+		assertEquals(1, amContract.getAmContractId());		
 	}
 
 }
