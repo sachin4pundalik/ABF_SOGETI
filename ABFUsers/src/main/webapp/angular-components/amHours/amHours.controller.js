@@ -320,7 +320,9 @@ function amHoursCtrl_fn($scope, $location, MasterDataService, toastr, DataSetSer
 				if(angular.equals(resData.status, ABF_CONSTANTS.SUCCESS)){
 					//Back to default view.
 					$scope.views="";
-					$location.path("/fixed");
+					$scope.resetResource();
+					$scope.resources = [];
+					$location.path("/kt");
 				}else if(angular.equals(resData.status, ABF_CONSTANTS.FAILURE)){
 					toastr.error(resData.failureResponse, ABF_CONSTANTS.FAILURE_HEADER);
 				}
