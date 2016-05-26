@@ -73,7 +73,7 @@ public class KTContractController {
 				Contract contract = contractManager.getContract(ktResource.getContractId());
 				OnshorePrice onshorePrice = onshorePriceService.find(ktResource.getOnShorePrice());
 				OffshorePrice offShorePrice = offshorePriceService.find(ktResource.getOffShorePrice());	
-				String resourceXml = getXmlString(ktResource, ktContractService.getMaxAmContractId()); 
+				String resourceXml = getXmlString(ktResource, ktContractService.getMaxKtContractId()); 
 				ktContract.setContract(contract);
 				ktContract.setOffshorePrice(offShorePrice);
 				ktContract.setOnshorePrice(onshorePrice);
