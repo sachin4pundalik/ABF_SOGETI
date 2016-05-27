@@ -4,12 +4,10 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
 import com.sogeti.db.models.Contract;
@@ -113,7 +110,7 @@ public class KTContractController {
 		return response;		
 	}
 	
-	@RequestMapping( value = "/removektresource/{ktContractId}", method = RequestMethod.GET)
+	@RequestMapping( value = "/removektresource/{ktContractId}", method = RequestMethod.DELETE)
 	public ABFResponse deleteAmContractResource(@PathVariable("ktContractId") String ktContractId){
 		ABFResponse response = new ABFResponse();
 		try{
