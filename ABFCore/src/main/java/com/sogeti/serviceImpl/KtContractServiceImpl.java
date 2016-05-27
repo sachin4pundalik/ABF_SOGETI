@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.dao.KtContractDAO;
-import com.sogeti.db.models.AmContract;
 import com.sogeti.db.models.Contract;
 import com.sogeti.db.models.KtContract;
 import com.sogeti.service.KtContractService;
@@ -29,8 +28,7 @@ public class KtContractServiceImpl implements KtContractService {
 	}
 
 	public KtContract getKtContractById(int amId) throws TechnicalException {
-		// TODO Auto-generated method stub
-		return null;
+		return ktContractDao.getKtContractById(amId);
 	}
 
 	public boolean saveKtContract(KtContract ktContract) throws TechnicalException {

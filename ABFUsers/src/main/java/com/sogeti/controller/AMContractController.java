@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
 import com.sogeti.db.models.AmContract;
@@ -165,7 +164,7 @@ public class AMContractController {
 			
 		}else{
 			resourceBean.setPrice(resource.getOffshorePrice().getPrice().floatValue());
-			resourceBean.setOnShorePrice(resource.getOffshorePrice().getOffshorepriceId());
+			resourceBean.setOffShorePrice(resource.getOffshorePrice().getOffshorepriceId());
 			
 			ResourceTypeDT resourceType = new ResourceTypeDT();
 			resourceType.setResourcetypeId(resource.getOffshorePrice().getBusinessLine().getResourceType().getResourcetypeId());

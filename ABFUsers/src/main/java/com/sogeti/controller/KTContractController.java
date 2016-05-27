@@ -4,10 +4,12 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.constants.ABFConstants;
 import com.sogeti.db.models.Contract;
@@ -62,6 +65,7 @@ public class KTContractController {
 		KtContract ktContract = null;
 		try{
 			for(KTContractResourceBean ktResource : contractResources){
+				
 				if(ktResource.getKtContractResourceId() != 0){
 					ktContract = ktContractService.getKtContractById(ktResource.getKtContractResourceId());
 				}else{
@@ -110,7 +114,7 @@ public class KTContractController {
 		return response;		
 	}
 	
-	@RequestMapping( value = "/removektresource/{ktContractId}", method = RequestMethod.DELETE)
+	@RequestMapping( value = "/removektresource/{ktContractId}", method = RequestMethod.GET)
 	public ABFResponse deleteAmContractResource(@PathVariable("ktContractId") String ktContractId){
 		ABFResponse response = new ABFResponse();
 		try{
@@ -132,7 +136,12 @@ public class KTContractController {
 		KTContractResourceBean resourceBean = new KTContractResourceBean();
 		resourceBean.setKtContractResourceId(resource.getKtContractId());
 		
+		resourceBean.setContractId(resource.getContract().getContractId());
+		
 		if(resource.getOnshorePrice() != null && resource.getOnshorePrice().getOnshorepriceId() != 0){		
+			resourceBean.setPrice(resource.getOnshorePrice().getPrice().floatValue());
+			resourceBean.setOnShorePrice(resource.getOnshorePrice().getOnshorepriceId());
+			
 			ResourceTypeDT resourceType = new ResourceTypeDT();
 			resourceType.setResourcetypeId(resource.getOnshorePrice().getBusinessLine().getResourceType().getResourcetypeId());
 			resourceType.setResourceType(resource.getOnshorePrice().getBusinessLine().getResourceType().getResourceType());
@@ -155,6 +164,9 @@ public class KTContractController {
 			resourceBean.setGrade(grade);
 			
 		}else{
+			resourceBean.setPrice(resource.getOffshorePrice().getPrice().floatValue());
+			resourceBean.setOffShorePrice(resource.getOffshorePrice().getOffshorepriceId());
+			
 			ResourceTypeDT resourceType = new ResourceTypeDT();
 			resourceType.setResourcetypeId(resource.getOffshorePrice().getBusinessLine().getResourceType().getResourcetypeId());
 			resourceType.setResourceType(resource.getOffshorePrice().getBusinessLine().getResourceType().getResourceType());
