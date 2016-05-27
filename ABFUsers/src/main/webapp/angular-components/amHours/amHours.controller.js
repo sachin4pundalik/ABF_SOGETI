@@ -338,7 +338,7 @@ function amHoursCtrl_fn($scope, $location, MasterDataService, toastr, DataSetSer
 		
 		try{
 			if(angular.isNumber(item.amContractResourceId) && item.amContractResourceId>0){
-				MasterDataService.remove(item.amContractResourceId)
+				MasterDataService.remove('./amhours/removeamresource/',item.amContractResourceId)
 				.then(function(response){
 					var resData =  response.data;
 					
