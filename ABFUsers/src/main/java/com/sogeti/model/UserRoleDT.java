@@ -13,6 +13,8 @@ public class UserRoleDT {
 	private String userRole;
 	
 	
+	public UserRoleDT() {
+	}
 	/**
 	 * @param userRoleId
 	 * @param userRole

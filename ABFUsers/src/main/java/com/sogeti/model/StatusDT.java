@@ -6,6 +6,11 @@ public class StatusDT {
 	private String description;
 	private String statusName;
 	
+	
+	public StatusDT(){
+		
+	}
+	
 	/**
 	 * @param statusId
 	 * @param description
