@@ -38,7 +38,7 @@ import com.test.sogeti.config.WebAppContext;
 @WebAppConfiguration
 public class OffshorePriceTestEntity {
 
-	private static final int OffshorePrice_ID = 344;
+	private static final int OffshorePrice_ID = 1;
 	private static final String OffshorePrice_NAME = "OffshorePriceName_modify";
 
 	private MockMvc mockMvc;

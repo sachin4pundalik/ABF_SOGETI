@@ -36,7 +36,7 @@ import static org.hamcrest.CoreMatchers.*;
 @WebAppConfiguration
 public class SkillEntityTest {
 
-	private static final int SKILL_ID = 64;
+	private static final int SKILL_ID = 1;
 	private static final String SKILL_NAME = "SkillName_modify";
 	private static final int SKILLID_NOTINDB = 34566779;
 

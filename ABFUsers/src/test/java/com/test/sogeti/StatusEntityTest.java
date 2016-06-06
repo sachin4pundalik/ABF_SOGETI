@@ -36,7 +36,7 @@ import static org.hamcrest.CoreMatchers.*;
 @WebAppConfiguration
 public class StatusEntityTest {
 
-	private static final int Status_ID = 64;
+	private static final int Status_ID = 1;
 	private static final String STATUS_NAME = "StatusName_modify";
 	private static final int StatusID_NOTINDB = 34566779;
 	private static final String STATUS_DESCRIPTION = "desc";

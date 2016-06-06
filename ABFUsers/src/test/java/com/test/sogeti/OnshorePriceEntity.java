@@ -38,7 +38,7 @@ import com.test.sogeti.config.WebAppContext;
 @WebAppConfiguration
 public class OnshorePriceEntity {
 
-	private static final int OnshorePrice_ID = 344;
+	private static final int OnshorePrice_ID = 1;
 	private static final String OnshorePrice_NAME = "OnshorePriceName_modify";
 
 	private MockMvc mockMvc;
