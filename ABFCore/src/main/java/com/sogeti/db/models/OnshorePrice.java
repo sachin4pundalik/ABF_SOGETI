@@ -49,6 +49,7 @@ public class OnshorePrice implements Serializable {
 
 	//bi-directional many-to-one association to KtContract
 	@OneToMany(mappedBy="onshorePrice")
+	@JsonIgnore
 	private List<KtContract> ktContracts;
 
 	//bi-directional many-to-one association to BusinessLine

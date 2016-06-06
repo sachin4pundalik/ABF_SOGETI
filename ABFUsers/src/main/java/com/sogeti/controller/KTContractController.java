@@ -114,8 +114,8 @@ public class KTContractController {
 		return response;		
 	}
 	
-	@RequestMapping( value = "/removektresource/{ktContractId}", method = RequestMethod.GET)
-	public ABFResponse deleteAmContractResource(@PathVariable("ktContractId") String ktContractId){
+	@RequestMapping( value = "/removektresource/{ktContractId}", method = RequestMethod.DELETE)
+	public ABFResponse deleteKtContractResource(@PathVariable("ktContractId") String ktContractId){
 		ABFResponse response = new ABFResponse();
 		try{
 			KtContract ktContract = ktContractService.getKtContractById(Integer.parseInt(ktContractId));
