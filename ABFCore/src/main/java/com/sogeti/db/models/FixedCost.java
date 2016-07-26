@@ -30,6 +30,24 @@ public class FixedCost implements Serializable {
 	@OneToMany(mappedBy="fixedCost")
 	private List<FixedContract> fixedContracts;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
+	
 	public FixedCost() {
 	}
 

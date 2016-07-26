@@ -31,6 +31,24 @@ public class Band implements Serializable {
 	@OneToMany(mappedBy="band")
 	private List<OffshorePrice> offshorePrices;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
+	
 	public Band() {
 	}
 

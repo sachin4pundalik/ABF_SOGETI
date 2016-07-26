@@ -13,6 +13,22 @@ public class FixedCostDT implements Serializable {
 	private int fixedcostId;
 	private String fixedcostDescription;
 	private String fixedcostName;
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
 
 	public FixedCostDT() {
 	}
@@ -71,6 +87,8 @@ public class FixedCostDT implements Serializable {
 		builder.append(fixedcostDescription);
 		builder.append(", fixedcostName=");
 		builder.append(fixedcostName);
+		builder.append(", active=");
+		builder.append(active);
 		builder.append("]");
 		return builder.toString();
 	}

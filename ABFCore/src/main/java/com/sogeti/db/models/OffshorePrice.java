@@ -64,6 +64,16 @@ public class OffshorePrice implements Serializable {
 	@JoinColumn(name="stay_type_id")
 	private StayType stayType;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
 	public OffshorePrice() {
 	}
 

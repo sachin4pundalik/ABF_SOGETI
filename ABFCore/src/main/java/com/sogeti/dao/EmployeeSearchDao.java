@@ -19,10 +19,10 @@ import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.db.models.Login;
 import com.sogeti.db.models.UserRole;
 
-public interface  EmployeeSearchDao
+public interface  EmployeeSearchDao extends GenericDao<Login>
 {
 
-    Login getEmployee(String email, String password) throws TechnicalException;
+    Login getEmployee(String email) throws TechnicalException;
     
     Login getEmployeeByUserName(String email) throws TechnicalException;
     

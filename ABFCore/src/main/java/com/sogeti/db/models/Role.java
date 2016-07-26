@@ -31,6 +31,17 @@ public class Role implements Serializable {
 	@OneToMany(mappedBy="role")
 	private List<OnshorePrice> onshorePrices;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	
 	public Role() {
 	}
 

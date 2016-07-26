@@ -3,7 +3,23 @@ package com.sogeti.model;
 public class BandDT {
 	private int bandId;
 	private String bandName;
+	private int active;
 	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
+
 	public int getBandId() {
 		return bandId;
 	}
@@ -30,6 +46,8 @@ public class BandDT {
 		builder.append(bandId);
 		builder.append(", bandName=");
 		builder.append(bandName);
+		builder.append(", active=");
+		builder.append(active);
 		builder.append("]");
 		return builder.toString();
 	}

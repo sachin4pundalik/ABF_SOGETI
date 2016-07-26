@@ -100,6 +100,24 @@ public class Contract implements Serializable {
 	@JsonIgnore
 	private List<RiskComment> riskComments;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
+	
 	public Contract() {
 	}
 

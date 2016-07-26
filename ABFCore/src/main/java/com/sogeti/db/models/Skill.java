@@ -31,6 +31,17 @@ public class Skill implements Serializable {
 	@OneToMany(mappedBy="skill")
 	private List<BusinessLine> businessLines;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	
 	public Skill() {
 	}
 

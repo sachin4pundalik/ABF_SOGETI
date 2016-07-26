@@ -8,7 +8,23 @@ public class BusinessLineDT {
 	private Integer skillId;
 	private String resourceType;
 	private String skillName;
+	private int active;
 	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
+
 	public int getBusinesslineId() {
 		return businesslineId;
 	}
@@ -87,6 +103,8 @@ public class BusinessLineDT {
 		builder.append(resourceType);
 		builder.append(", skillName=");
 		builder.append(skillName);
+		builder.append(", active=");
+		builder.append(active);
 		builder.append("]");
 		return builder.toString();
 	}

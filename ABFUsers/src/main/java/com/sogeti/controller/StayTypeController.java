@@ -69,6 +69,7 @@ public class StayTypeController {
 			StayTypeDT tempDT = new StayTypeDT();
 			tempDT.setStayTypeId(stayType.getStayTypeId());
 			tempDT.setStayType(stayType.getStayType());
+			tempDT.setActive(stayType.getActive());
 			stayTypesDT.add(tempDT);
 		}
 		response.setSuccessResponse(stayTypesDT);

@@ -40,6 +40,17 @@ public class KtContract implements Serializable {
 	@JoinColumn(name="onshore_price_id")
 	private OnshorePrice onshorePrice;
 	
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	
 	@Transient
 	private List<String> months;
 	

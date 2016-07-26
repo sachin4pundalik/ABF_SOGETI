@@ -6,9 +6,24 @@ public class GradeDT {
 	private int gradeId;
 
 	private String gradeType;
-
+	private int active;
+	
 	public int getGradeId() {
 		return gradeId;
+	}
+
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
 	}
 
 	public void setGradeId(int gradeId) {
@@ -33,6 +48,8 @@ public class GradeDT {
 		builder.append(gradeId);
 		builder.append(", gradeType=");
 		builder.append(gradeType);
+		builder.append(", active=");
+		builder.append(active);
 		builder.append("]");
 		return builder.toString();
 	}

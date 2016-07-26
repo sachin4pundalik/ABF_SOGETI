@@ -26,7 +26,18 @@ public class UserRole implements Serializable {
 	//bi-directional many-to-one association to Login
 	@OneToMany(mappedBy="userRole")
 	private List<Login> logins;
-
+	
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	
 	public UserRole() {
 	}
 

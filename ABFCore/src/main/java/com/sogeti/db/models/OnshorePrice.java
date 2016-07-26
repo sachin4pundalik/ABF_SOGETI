@@ -68,6 +68,17 @@ public class OnshorePrice implements Serializable {
 	@JoinColumn(name="role_id")
 	private Role role;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	
 	public OnshorePrice() {
 	}
 

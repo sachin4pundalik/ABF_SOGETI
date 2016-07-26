@@ -17,14 +17,16 @@ import java.util.List;
 
 import com.sogeti.GenericExceptions.TechnicalException;
 import com.sogeti.db.models.Login;
-import com.sogeti.db.models.UserRole;
 
 public interface LoginService
 {
 
-    Login getEmployee(String email, String password) throws TechnicalException;
+    Login getEmployee(String email) throws TechnicalException;
     
     Login authenticateUser(String email, String password) throws TechnicalException;
     
     List<Login> getAllNonAdminUsers() throws TechnicalException;
+    
+    Login registerUser(Login login) throws TechnicalException;
+    Login updateEmployee(Login user) throws TechnicalException;
 }

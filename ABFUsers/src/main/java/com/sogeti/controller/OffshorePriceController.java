@@ -96,6 +96,8 @@ public class OffshorePriceController {
 			offshorePriceDT.setStayTypeName(offshorePrice.getStayType().getStayType());
 			offshorePriceDT.setBusinessLineId(offshorePrice.getBusinessLine().getBusinesslineId());
 			offshorePriceDT.setBusinessLineName(offshorePrice.getBusinessLine().getBusinesslineName());
+			offshorePriceDT.setActive(offshorePrice.getActive());
+			
 			offshorePricesDTList.add(offshorePriceDT)	;
 			
 		}
@@ -195,7 +197,8 @@ public class OffshorePriceController {
 			offshorePriceDT.setStayTypeName(offshorePrice.getStayType().getStayType());
 			offshorePriceDT.setBusinessLineId(offshorePrice.getBusinessLine().getBusinesslineId());
 			offshorePriceDT.setBusinessLineName(offshorePrice.getBusinessLine().getBusinesslineName());
-		
+			offshorePriceDT.setActive(offshorePrice.getActive());
+			
 			response.setSuccessResponse(offshorePriceDT);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 		} catch (TechnicalException e) {
@@ -229,7 +232,8 @@ public class OffshorePriceController {
 				offshorePriceDT.setStayTypeName(offshorePrice.getStayType().getStayType());
 				offshorePriceDT.setBusinessLineId(offshorePrice.getBusinessLine().getBusinesslineId());
 				offshorePriceDT.setBusinessLineName(offshorePrice.getBusinessLine().getBusinesslineName());
-			
+				offshorePriceDT.setActive(offshorePrice.getActive());
+				
 				response.setSuccessResponse(offshorePriceDT);
 				response.setStatus(ABFConstants.STATUS_SUCCESS);
 			} catch (TechnicalException e) {

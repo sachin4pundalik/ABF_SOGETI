@@ -31,6 +31,17 @@ public class StayType implements Serializable {
 	@OneToMany(mappedBy="stayType")
 	private List<OffshorePrice> offshorePrices;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	
 	public StayType() {
 	}
 

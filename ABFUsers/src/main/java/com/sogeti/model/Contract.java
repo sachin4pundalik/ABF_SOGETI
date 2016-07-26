@@ -24,7 +24,21 @@ public class Contract {
 	private int loginId;
 	private int statusId;
 	private String status;
+	private int active;
 	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
 	/**
 	 * @return the contractId
 	 */
@@ -157,20 +171,26 @@ public class Contract {
 		builder.append(comments);
 		builder.append(", companyName=");
 		builder.append(companyName);
-		builder.append(", contractCreatedDatetime=");
-		builder.append(contractCreatedDatetime);
-		builder.append(", contractEndDate=");
-		builder.append(contractEndDate);
-		builder.append(", contractModifiedDateTime=");
-		builder.append(contractModifiedDateTime);
 		builder.append(", contractName=");
 		builder.append(contractName);
 		builder.append(", contractStartDate=");
 		builder.append(contractStartDate);
+		builder.append(", contractEndDate=");
+		builder.append(contractEndDate);
+		builder.append(", contractCreatedDatetime=");
+		builder.append(contractCreatedDatetime);
+		builder.append(", contractModifiedDateTime=");
+		builder.append(contractModifiedDateTime);
 		builder.append(", customerName=");
 		builder.append(customerName);
 		builder.append(", loginId=");
 		builder.append(loginId);
+		builder.append(", statusId=");
+		builder.append(statusId);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", active=");
+		builder.append(active);
 		builder.append("]");
 		return builder.toString();
 	}

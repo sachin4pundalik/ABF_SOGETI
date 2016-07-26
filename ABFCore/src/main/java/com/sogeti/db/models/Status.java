@@ -34,6 +34,17 @@ public class Status implements Serializable {
 	@OneToMany(mappedBy="status")
 	private List<Contract> contracts;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	
 	public Status() {
 	}
 

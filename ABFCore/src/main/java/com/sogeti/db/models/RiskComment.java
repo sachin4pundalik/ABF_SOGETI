@@ -27,6 +27,17 @@ public class RiskComment implements Serializable {
 	@JoinColumn(name="contract_id")
 	private Contract contract;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	
 	public RiskComment() {
 	}
 

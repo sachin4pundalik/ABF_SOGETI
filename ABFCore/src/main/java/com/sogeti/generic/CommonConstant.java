@@ -35,5 +35,8 @@ public final class CommonConstant
    public static final String emailPassword = "Sogeti@123";
 
    //----------End Email ------------------
-
+   //Each record active or not
+   public static final int RECORD_ACTIVE = 1;
+   public static final int RECORD_INACTIVE = 2;
+   
 }

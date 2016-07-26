@@ -69,7 +69,9 @@ public class LoginController {
  */
 package com.sogeti.controller;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -113,14 +115,24 @@ public class LoginController {
 		logger.info(" login controller password :: " + userObj.getPassword());
 
 		try {
-			user = loginService.getEmployee(userObj.getUserName(), userObj.getPassword());
-			user.setRoleId(user.getUserRole().getUserRoleId());
-			user.setRole(user.getUserRole().getUserRole());
-			//user = loginService.authenticateUser(userObj.getUserName(), userObj.getPassword());
-			request.getSession().setAttribute("currentUser", user);
-			logger.info("Login successful");
-			response.setSuccessResponse(user);
-			response.setStatus(ABFConstants.STATUS_SUCCESS);			
+			//user = loginService.getEmployee(userObj.getUserName(), userObj.getPassword());
+			user = loginService.authenticateUser(userObj.getUserName(), userObj.getPassword());
+			if(!Objects.isNull(user)){
+				user.setRoleId(user.getUserRole().getUserRoleId());
+				user.setRole(user.getUserRole().getUserRole());
+				
+				request.getSession().setAttribute("currentUser", user);
+				logger.info("Login successful");
+				response.setSuccessResponse(user);
+				response.setStatus(ABFConstants.STATUS_SUCCESS);
+				
+				//To maintain cycle of login time
+				user.setLastLoginDatetime(new Date(System.currentTimeMillis()));
+				loginService.updateEmployee(user);
+			}else{
+				response.setFailureResponse("Please provide valid credentitals");
+				response.setStatus(ABFConstants.STATUS_FAILURE);
+			}
 		} catch (TechnicalException e) {
 			logger.error("Login error",e);
 			response.setFailureResponse("Unable to validate user.");
@@ -139,10 +151,11 @@ public class LoginController {
 		ABFResponse response = new ABFResponse();
 		try{
 			List<Login> nonAdminUserList = loginService.getAllNonAdminUsers();
-			for(Login login : nonAdminUserList){
+			nonAdminUserList.forEach((login) -> {
 				login.setRoleId(login.getUserRole().getUserRoleId());
 				login.setRole(login.getUserRole().getUserRole());
-			}
+			});
+			
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 			response.setSuccessResponse(nonAdminUserList);
 		}catch(TechnicalException e){

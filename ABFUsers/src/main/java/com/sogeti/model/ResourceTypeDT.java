@@ -6,8 +6,21 @@ public class ResourceTypeDT {
 	private int resourcetypeId;
 
 	private String resourceType;
-
+	private int active;
 	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
 
 	public int getResourcetypeId() {
 		return resourcetypeId;

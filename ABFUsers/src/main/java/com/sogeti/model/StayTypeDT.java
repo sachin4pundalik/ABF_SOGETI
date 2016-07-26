@@ -3,6 +3,21 @@ package com.sogeti.model;
 public class StayTypeDT {
 	private int stayTypeId;
 	private String stayType;
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
 	public int getStayTypeId() {
 		return stayTypeId;
 	}
@@ -25,6 +40,8 @@ public class StayTypeDT {
 		builder.append(stayTypeId);
 		builder.append(", stayType=");
 		builder.append(stayType);
+		builder.append(", active=");
+		builder.append(active);
 		builder.append("]");
 		return builder.toString();
 	}

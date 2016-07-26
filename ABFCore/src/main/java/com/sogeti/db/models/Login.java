@@ -61,6 +61,9 @@ public class Login implements Serializable {
 	@Column(name="last_name", length=100)
 	private String lastName;
 
+	@Column(name="active", nullable=false)
+	private int active;
+	
 	public Login() {
 	}
 
@@ -180,4 +183,19 @@ public class Login implements Serializable {
 		this.lastName = lastName;
 	}
 
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
+
+	
 }

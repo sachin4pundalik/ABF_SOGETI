@@ -50,6 +50,9 @@ public class AmContract implements Serializable {
 	@JoinColumn(name="onshore_price_id")
 	private OnshorePrice onshorePrice;
 	
+	@Column(nullable=false)
+	private int active;
+	
 	@Transient
 	private List<String> months;
 	
@@ -79,10 +82,21 @@ public class AmContract implements Serializable {
 	
 	@Transient
 	private String price;
-
+	
+	@Transient
+	private int editOrDelete;
+	
 	public AmContract() {
 	}
 
+	public int getActive () {
+		return this.active;
+	}
+	
+	public void setActive(int active){
+		this.active = active;
+	}
+	
 	public int getAmContractId() {
 		return this.amContractId;
 	}

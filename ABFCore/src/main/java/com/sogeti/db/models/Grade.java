@@ -31,6 +31,17 @@ public class Grade implements Serializable {
 	@OneToMany(mappedBy="grade")
 	private List<OnshorePrice> onshorePrices;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	
 	public Grade() {
 	}
 

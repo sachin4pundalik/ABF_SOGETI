@@ -3,6 +3,21 @@ package com.sogeti.model;
 public class RoleDT {
 	private int roleId;
 	private String roleType;
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
 	public int getRoleId() {
 		return roleId;
 	}
@@ -25,6 +40,8 @@ public class RoleDT {
 		builder.append(roleId);
 		builder.append(", roleType=");
 		builder.append(roleType);
+		builder.append(", active=");
+		builder.append(active);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -11,19 +11,37 @@ public class UserRoleDT {
 
 	private int userRoleId;
 	private String userRole;
+	private int active;
 	
 	
 	public UserRoleDT() {
 	}
+	
 	/**
 	 * @param userRoleId
 	 * @param userRole
 	 */
-	public UserRoleDT(int userRoleId, String userRole) {
+	public UserRoleDT(int userRoleId, String userRole, int active) {
 		super();
 		this.userRoleId = userRoleId;
 		this.userRole = userRole;
+		this.active = active;
 	}
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
+
 	/**
 	 * @return the userRoleId
 	 */
@@ -58,6 +76,8 @@ public class UserRoleDT {
 		builder.append(userRoleId);
 		builder.append(", userRole=");
 		builder.append(userRole);
+		builder.append(", active=");
+		builder.append(active);
 		builder.append("]");
 		return builder.toString();
 	}

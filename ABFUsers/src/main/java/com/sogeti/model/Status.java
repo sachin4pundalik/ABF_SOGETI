@@ -7,6 +7,22 @@ public class Status {
 	private String statusName;
 
 	private String description;
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
 
 	public int getId() {
 		return id;
@@ -24,6 +40,9 @@ public class Status {
 		this.statusName = statusName;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -33,6 +52,8 @@ public class Status {
 		builder.append(statusName);
 		builder.append(", description=");
 		builder.append(description);
+		builder.append(", active=");
+		builder.append(active);
 		builder.append("]");
 		return builder.toString();
 	}

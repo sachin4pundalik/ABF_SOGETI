@@ -92,6 +92,7 @@ public class OnshorePriceController {
 				onshorePriceDT.setLastUpdatedBy(onshorePrice.getLastUpdatedBy());
 				onshorePriceDT.setLastUpdatedDatetime(onshorePrice.getLastUpdatedDatetime()+"");
 				onshorePriceDT.setDescription(onshorePrice.getDescription());
+				onshorePriceDT.setActive(onshorePrice.getActive());
 				
 				if(ObjectUtils.notEqual(onshorePrice.getGrade(), null)){
 					onshorePriceDT.setGradeType(onshorePrice.getGrade().getGradeType());
@@ -208,6 +209,8 @@ public class OnshorePriceController {
 			onshorePriceDT.setGradeId(onshorePrice.getGrade().getGradeId());
 			onshorePriceDT.setBusinessLineId(onshorePrice.getBusinessLine().getBusinesslineId());
 			onshorePriceDT.setBusinessLineName(onshorePrice.getBusinessLine().getBusinesslineName());
+			onshorePriceDT.setActive(onshorePrice.getActive());
+			
 			response.setSuccessResponse(onshorePriceDT);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 		} catch (TechnicalException e) {
@@ -243,6 +246,8 @@ public class OnshorePriceController {
 			onshorePriceDT.setGradeId(onshorePrice.getGrade().getGradeId());
 			onshorePriceDT.setBusinessLineId(onshorePrice.getBusinessLine().getBusinesslineId());
 			onshorePriceDT.setBusinessLineName(onshorePrice.getBusinessLine().getBusinesslineName());
+			onshorePriceDT.setActive(onshorePrice.getActive());
+			
 			response.setSuccessResponse(onshorePriceDT);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);
 		} catch (TechnicalException e) {

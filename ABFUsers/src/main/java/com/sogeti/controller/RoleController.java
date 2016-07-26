@@ -69,6 +69,7 @@ public class RoleController {
 			RoleDT tempDT = new RoleDT();
 			tempDT.setRoleId(role.getRoleId());
 			tempDT.setRoleType(role.getRoleType());
+			tempDT.setActive(role.getActive());
 			rolesDT.add(tempDT);
 		}
 		response.setSuccessResponse(rolesDT);

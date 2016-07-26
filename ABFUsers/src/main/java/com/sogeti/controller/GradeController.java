@@ -69,6 +69,7 @@ public class GradeController {
 			GradeDT tempDt = new GradeDT();
 			tempDt.setGradeId(grade.getGradeId());
 			tempDt.setGradeType(grade.getGradeType());
+			tempDt.setActive(grade.getActive());
 			gradesDT.add(tempDt);
 		}
 		response.setSuccessResponse(gradesDT);

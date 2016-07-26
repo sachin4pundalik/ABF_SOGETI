@@ -73,6 +73,7 @@ public class FixedCostController {
 				costDT.setFixedcostDescription(fixedCost.getFixedcostDescription());
 				costDT.setFixedcostId(fixedCost.getFixedcostId());
 				costDT.setFixedcostName(fixedCost.getFixedcostName());
+				costDT.setActive(fixedCost.getActive());
 				
 				fixedDt.add(costDT);
 			}

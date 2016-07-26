@@ -13,7 +13,8 @@ public class FixedDT {
 	private String description;
 
 	private BigDecimal price;
-
+	private int active;
+	
 	//bi-directional many-to-one association to Contract
 	@ManyToOne
 	@JoinColumn(name="contract_id")

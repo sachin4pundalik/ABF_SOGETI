@@ -67,6 +67,7 @@ public class ResourceTypeController {
 			ResourceTypeDT tempDT = new ResourceTypeDT();
 			tempDT.setResourcetypeId(resourceType.getResourcetypeId());
 			tempDT.setResourceType(resourceType.getResourceType());
+			tempDT.setActive(resourceType.getActive());
 			resourceTypeDtList.add(tempDT);
 		}
 		response.setSuccessResponse(resourceTypeDtList);

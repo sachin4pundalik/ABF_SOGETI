@@ -72,6 +72,7 @@ public class SkillController {
 			SkillDT tempDT = new SkillDT();
 			tempDT.setSkillId(skill.getSkillId());
 			tempDT.setSkillName(skill.getSkillName());
+			tempDT.setActive(skill.getActive());
 			skillsDT.add(tempDT);
 		}
 		response.setSuccessResponse(skillsDT);

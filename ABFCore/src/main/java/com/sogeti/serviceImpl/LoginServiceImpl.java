@@ -14,10 +14,10 @@
 package com.sogeti.serviceImpl;
 
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +27,13 @@ import com.sogeti.dao.UserRoleDAO;
 import com.sogeti.db.models.Login;
 import com.sogeti.db.models.UserRole;
 import com.sogeti.service.LoginService;
+import com.sogeti.utils.DigestUtil;
 
 @Service("loginService")
 public class LoginServiceImpl implements LoginService
 {
 
+	private Logger logger = Logger.getLogger(LoginServiceImpl.class);
    /**
     * getEmployee from the database
     */
@@ -41,18 +43,18 @@ public class LoginServiceImpl implements LoginService
    @Autowired
    UserRoleDAO userRoleDao;
 
-   public Login getEmployee(String email, String password) throws TechnicalException{
-      return employeeDao.getEmployee(email, password);
+   public Login getEmployee(String email) throws TechnicalException{
+      return employeeDao.getEmployee(email);
    }
 
+   	public Login updateEmployee(Login user) throws TechnicalException {
+   		return employeeDao.update(user);
+   	}
+   	
 	public Login authenticateUser(String email, String password) throws TechnicalException {
 		 Login user = employeeDao.getEmployeeByUserName(email);
 		 try {
-			MessageDigest md = MessageDigest.getInstance("SHA-256");
-			byte[] hashPassword = md.digest(password.getBytes());
-			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-	        byte[] hashedBytes = digest.digest(password.getBytes("UTF-8"));
-			String hashedPassword = convertByteArrayToHexString(hashedBytes);
+			String hashedPassword = DigestUtil.getEncripted(password);
 			if(hashedPassword.equals(user.getPassword())){
 				return user;
 			}else {
@@ -65,18 +67,23 @@ public class LoginServiceImpl implements LoginService
 		}
 	}
 	
-	private static String convertByteArrayToHexString(byte[] arrayBytes) {
-	    StringBuffer stringBuffer = new StringBuffer();
-	    for (int i = 0; i < arrayBytes.length; i++) {
-	        stringBuffer.append(Integer.toString((arrayBytes[i] & 0xff) + 0x100, 16)
-	                .substring(1));
-	    }
-	    return stringBuffer.toString();
-	}
-	
+
 	public List<Login> getAllNonAdminUsers() throws TechnicalException {
 		UserRole adminUserRole = userRoleDao.getAdminRole("Admin");
 		return employeeDao.getAllNonAdminUsers(adminUserRole);
 	}
 
+	public Login registerUser(Login login) throws TechnicalException {
+		logger.info("register user service" + login);
+		try {
+			login.setPassword(DigestUtil.getEncripted(login.getPassword()));
+			login = employeeDao.create(login);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+			throw new TechnicalException(e.getMessage(), e);
+		}
+		logger.info("register user service" + login);
+		return login;
+	}
 }

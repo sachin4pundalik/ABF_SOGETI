@@ -74,7 +74,7 @@ public class UserRoleController {
 		try {
 			userRoles = userRoleService.findAll();
 			for (UserRole role : userRoles) {
-				roleDT = new UserRoleDT(role.getUserRoleId(), role.getUserRole());
+				roleDT = new UserRoleDT(role.getUserRoleId(), role.getUserRole(), role.getActive());
 				
 				roleDtList.add(roleDT);
 			}
@@ -160,7 +160,7 @@ public class UserRoleController {
 		try {
 			
 			UserRole role = userRoleService.find(UserRoleId);
-			UserRoleDT roleDT = new UserRoleDT(role.getUserRoleId(), role.getUserRole());
+			UserRoleDT roleDT = new UserRoleDT(role.getUserRoleId(), role.getUserRole(), role.getActive());
 			
 			response.setSuccessResponse(roleDT);
 			response.setStatus(ABFConstants.STATUS_SUCCESS);

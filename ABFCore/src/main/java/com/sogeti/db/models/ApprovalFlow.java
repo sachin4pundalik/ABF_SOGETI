@@ -29,6 +29,24 @@ public class ApprovalFlow implements Serializable {
 	@JoinColumn(name="login_id")
 	private Login login;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
+
 	public ApprovalFlow() {
 	}
 

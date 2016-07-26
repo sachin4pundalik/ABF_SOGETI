@@ -11,8 +11,21 @@ public class FixedContractDT {
 	private int fixedId;
 	private int fixedcostId;
 	private String fixedcostName;
+	private int active;
 	
 	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
 	/**
 	 * @return the fixedcostName
 	 */
@@ -71,6 +84,10 @@ public class FixedContractDT {
 		builder.append(fixedId);
 		builder.append(", fixedcostId=");
 		builder.append(fixedcostId);
+		builder.append(", fixedcostName=");
+		builder.append(fixedcostName);
+		builder.append(", active=");
+		builder.append(active);
 		builder.append("]");
 		return builder.toString();
 	}

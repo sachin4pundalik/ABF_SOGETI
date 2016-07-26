@@ -5,7 +5,7 @@ public class StatusDT {
 	private int statusId;
 	private String description;
 	private String statusName;
-	
+	private int active;
 	
 	public StatusDT(){
 		
@@ -16,12 +16,29 @@ public class StatusDT {
 	 * @param description
 	 * @param statusName
 	 */
-	public StatusDT(int statusId, String description, String statusName) {
+	public StatusDT(int statusId, String description, String statusName, int active) {
 		super();
 		this.statusId = statusId;
 		this.description = description;
 		this.statusName = statusName;
+		this.active = active;
 	}
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
+
 	/**
 	 * @return the statusId
 	 */

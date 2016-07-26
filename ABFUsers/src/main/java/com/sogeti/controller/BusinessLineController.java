@@ -82,6 +82,7 @@ public class BusinessLineController {
 				businessLineDT.setBusinesslineName(businessLine.getBusinesslineName());
 				businessLineDT.setResourceTypeId(businessLine.getResourceType().getResourcetypeId());
 				businessLineDT.setResourceType(businessLine.getResourceType().getResourceType());
+				businessLineDT.setActive(businessLine.getActive());
 				if(businessLine.getSkill()!=null){
 					businessLineDT.setSkillId(businessLine.getSkill().getSkillId());
 					businessLineDT.setSkillName(businessLine.getSkill().getSkillName());
@@ -187,6 +188,7 @@ public class BusinessLineController {
 			businessLineDT.setBusinesslineName(businessLine.getBusinesslineName());
 			businessLineDT.setResourceTypeId(businessLine.getResourceType().getResourcetypeId());
 			businessLineDT.setResourceType(businessLine.getResourceType().getResourceType());
+			businessLineDT.setActive(businessLine.getActive());
 			if(businessLine.getSkill()!=null){
 				businessLineDT.setSkillId(businessLine.getSkill().getSkillId());
 				businessLineDT.setSkillName(businessLine.getSkill().getSkillName());
@@ -221,6 +223,7 @@ public class BusinessLineController {
 				businessLineDT.setBusinesslineName(businessLine.getBusinesslineName());
 				businessLineDT.setResourceTypeId(businessLine.getResourceType().getResourcetypeId());
 				businessLineDT.setResourceType(businessLine.getResourceType().getResourceType());
+				businessLineDT.setActive(businessLine.getActive());
 				if (businessLine.getSkill() != null) {
 					businessLineDT.setSkillId(businessLine.getSkill().getSkillId());
 					businessLineDT.setSkillName(businessLine.getSkill().getSkillName());
@@ -259,6 +262,7 @@ public class BusinessLineController {
 				businessLineDT.setBusinesslineName(businessLine.getBusinesslineName());
 				businessLineDT.setResourceTypeId(businessLine.getResourceType().getResourcetypeId());
 				businessLineDT.setResourceType(businessLine.getResourceType().getResourceType());
+				businessLineDT.setActive(businessLine.getActive());
 				if (businessLine.getSkill() != null) {
 					businessLineDT.setSkillId(businessLine.getSkill().getSkillId());
 					businessLineDT.setSkillName(businessLine.getSkill().getSkillName());

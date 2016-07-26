@@ -59,7 +59,7 @@ public class StatusEntityTest {
 	@Test
 	public void addStatusTest() throws Exception {
 
-		StatusDT StatusDT1 = new StatusDT(0, STATUS_DESCRIPTION, STATUS_NAME_CREAATED);
+		StatusDT StatusDT1 = new StatusDT(0, STATUS_DESCRIPTION, STATUS_NAME_CREAATED, 1);
 		StatusDT StatusDT = new StatusDT();
 		StatusDT.setDescription(STATUS_DESCRIPTION);
 		StatusDT.setStatusName(STATUS_NAME);
@@ -71,7 +71,7 @@ public class StatusEntityTest {
 	@Test
 	public void addStatusTestWithDBError() throws Exception {
 
-		StatusDT StatusDT = new StatusDT(999999, STATUS_DESCRIPTION, STATUS_NAME_CREAATED);
+		StatusDT StatusDT = new StatusDT(999999, STATUS_DESCRIPTION, STATUS_NAME_CREAATED, 1);
 		mockMvc.perform(post("/status/create").contentType(MediaType.APPLICATION_JSON)
 				.content(TestUtil.convertObjectToJsonBytes(StatusDT))).andExpect(status().isOk()).andExpect(
 						jsonPath("$.failureResponse").value(containsString("org.hibernate.PersistentObjectException")));
@@ -94,7 +94,7 @@ public class StatusEntityTest {
 	@Test
 	public void updateStatusTestTthowException() {
 
-		StatusDT StatusDT = new StatusDT(999999, null, null);
+		StatusDT StatusDT = new StatusDT(999999, null, null, 1);
 		try {
 			mockMvc.perform(put("/status/update").contentType(MediaType.APPLICATION_JSON)
 					.content(TestUtil.convertObjectToJsonBytes(null))).andExpect(status().isOk());
@@ -107,7 +107,7 @@ public class StatusEntityTest {
 
 	@Test
 	public void updateStatusTest() throws Exception {
-		StatusDT StatusDT = new StatusDT(999999, STATUS_DESCRIPTION, STATUS_NAME);
+		StatusDT StatusDT = new StatusDT(999999, STATUS_DESCRIPTION, STATUS_NAME, 1);
 		StatusDT.setStatusId(999999);
 		StatusDT.setDescription(STATUS_DESCRIPTION);
 		StatusDT.setStatusName(STATUS_NAME);

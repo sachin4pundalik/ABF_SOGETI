@@ -36,6 +36,24 @@ public class FixedContract implements Serializable {
 	@JoinColumn(name="fixed_cost_id")
 	private FixedCost fixedCost;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
+	
 	public FixedContract() {
 	}
 

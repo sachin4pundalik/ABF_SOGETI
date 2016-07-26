@@ -72,6 +72,7 @@ public class BandController {
 			BandDT tempDt = new BandDT();
 			tempDt.setBandId(band.getBandId());
 			tempDt.setBandName(band.getBandName());
+			tempDt.setActive(band.getActive());
 			bandsDt.add(tempDt);
 		}
 		response.setSuccessResponse(bandsDt);

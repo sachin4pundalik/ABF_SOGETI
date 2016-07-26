@@ -26,6 +26,8 @@ public class OffshorePriceDT {
 	
 	private String businessLineName;
 
+	private int active;
+	
 	public String getDescription() {
 		return description;
 	}
@@ -115,5 +117,26 @@ public class OffshorePriceDT {
 		this.businessLineName = businessLineName;
 	}
 
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
 
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
+
+	/**
+	 * @param businessLineId the businessLineId to set
+	 */
+	public void setBusinessLineId(Integer businessLineId) {
+		this.businessLineId = businessLineId;
+	}
+
+	
 }

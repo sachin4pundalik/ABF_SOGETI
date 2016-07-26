@@ -11,6 +11,21 @@ public class TypeOfProject {
 
 	private String id;
 	private String projType;
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
 	/**
 	 * @return the id
 	 */
@@ -45,6 +60,8 @@ public class TypeOfProject {
 		builder.append(id);
 		builder.append(", projType=");
 		builder.append(projType);
+		builder.append(", active=");
+		builder.append(active);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -7,6 +7,22 @@ public class SkillDT {
 	
 	private int skillId;
 	private String skillName;
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
 
 	public int getSkillId() {
 		return skillId;
@@ -34,6 +50,8 @@ public class SkillDT {
 		builder.append(skillId);
 		builder.append(", skillName=");
 		builder.append(skillName);
+		builder.append(", active=");
+		builder.append(active);
 		builder.append("]");
 		return builder.toString();
 	}

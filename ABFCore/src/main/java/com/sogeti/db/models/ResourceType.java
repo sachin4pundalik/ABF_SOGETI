@@ -27,6 +27,17 @@ public class ResourceType implements Serializable {
 	@OneToMany(mappedBy="resourceType")
 	private List<BusinessLine> businessLines;
 
+	@Column(nullable=false)
+	private int active;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+	
 	public ResourceType() {
 	}
 

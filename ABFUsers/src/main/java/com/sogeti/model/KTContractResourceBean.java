@@ -29,7 +29,7 @@ public class KTContractResourceBean {
 	private int offShorePrice;
 	
 	private Months months;
-
+	private int active;
 	
 
 	public ResourceTypeDT getResourceType() {
@@ -135,5 +135,20 @@ public class KTContractResourceBean {
 	public void setContractId(int contractId) {
 		this.contractId = contractId;
 	}
+
+	/**
+	 * @return the active
+	 */
+	public int getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(int active) {
+		this.active = active;
+	}
+	
 
 }
