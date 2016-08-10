@@ -68,8 +68,8 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/{MYSQL_DATABASE}?autoReconnect=true" />
-		<property name="username" value={MYSQL_USER} />
-		<property name="password" value={MYSQL_PASSWORD} />
+		<property name="username" value="{MYSQL_USER}" />
+		<property name="password" value="{MYSQL_PASSWORD}" />
 	</bean>  
 	
 	
